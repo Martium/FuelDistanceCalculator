@@ -41,17 +41,25 @@ namespace FuelDistanceCalculator
             this.ArrivalCityTextBox = new System.Windows.Forms.TextBox();
             this.ArrivalCityLabel = new System.Windows.Forms.Label();
             this.DepartureCityTextBox = new System.Windows.Forms.TextBox();
-            this.DepartureCity = new System.Windows.Forms.Label();
+            this.DepartureCityLabel = new System.Windows.Forms.Label();
             this.MapPanel = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.AdditionalKmLabel = new System.Windows.Forms.Label();
             this.SaveKmPriceButton = new System.Windows.Forms.Button();
             this.AdditionalKmButton = new System.Windows.Forms.Button();
+            this.DepartureAddressLabel = new System.Windows.Forms.Label();
+            this.DepartueAddressTextBox = new System.Windows.Forms.TextBox();
+            this.ArrivalAdressLabel = new System.Windows.Forms.Label();
+            this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
+            this.InfoPanel.Controls.Add(this.ArrivalAdressLabel);
+            this.InfoPanel.Controls.Add(this.DepartueAddressTextBox);
+            this.InfoPanel.Controls.Add(this.DepartureAddressLabel);
             this.InfoPanel.Controls.Add(this.AdditionalKmButton);
             this.InfoPanel.Controls.Add(this.SaveKmPriceButton);
             this.InfoPanel.Controls.Add(this.AdditionalKmLabel);
@@ -67,7 +75,7 @@ namespace FuelDistanceCalculator
             this.InfoPanel.Controls.Add(this.ArrivalCityTextBox);
             this.InfoPanel.Controls.Add(this.ArrivalCityLabel);
             this.InfoPanel.Controls.Add(this.DepartureCityTextBox);
-            this.InfoPanel.Controls.Add(this.DepartureCity);
+            this.InfoPanel.Controls.Add(this.DepartureCityLabel);
             this.InfoPanel.Location = new System.Drawing.Point(-3, 0);
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
@@ -82,7 +90,7 @@ namespace FuelDistanceCalculator
             // 
             // DistanceTextBox
             // 
-            this.DistanceTextBox.Location = new System.Drawing.Point(148, 242);
+            this.DistanceTextBox.Location = new System.Drawing.Point(148, 263);
             this.DistanceTextBox.Name = "DistanceTextBox";
             this.DistanceTextBox.Size = new System.Drawing.Size(106, 20);
             this.DistanceTextBox.TabIndex = 10;
@@ -108,7 +116,7 @@ namespace FuelDistanceCalculator
             // DistanceLabel
             // 
             this.DistanceLabel.AutoSize = true;
-            this.DistanceLabel.Location = new System.Drawing.Point(40, 242);
+            this.DistanceLabel.Location = new System.Drawing.Point(40, 266);
             this.DistanceLabel.Name = "DistanceLabel";
             this.DistanceLabel.Size = new System.Drawing.Size(72, 13);
             this.DistanceLabel.TabIndex = 7;
@@ -116,7 +124,7 @@ namespace FuelDistanceCalculator
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(148, 176);
+            this.SearchButton.Location = new System.Drawing.Point(148, 178);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(70, 22);
             this.SearchButton.TabIndex = 6;
@@ -141,7 +149,7 @@ namespace FuelDistanceCalculator
             // 
             // ArrivalCityTextBox
             // 
-            this.ArrivalCityTextBox.Location = new System.Drawing.Point(39, 150);
+            this.ArrivalCityTextBox.Location = new System.Drawing.Point(39, 113);
             this.ArrivalCityTextBox.Name = "ArrivalCityTextBox";
             this.ArrivalCityTextBox.Size = new System.Drawing.Size(215, 20);
             this.ArrivalCityTextBox.TabIndex = 3;
@@ -149,7 +157,7 @@ namespace FuelDistanceCalculator
             // ArrivalCityLabel
             // 
             this.ArrivalCityLabel.AutoSize = true;
-            this.ArrivalCityLabel.Location = new System.Drawing.Point(40, 134);
+            this.ArrivalCityLabel.Location = new System.Drawing.Point(40, 97);
             this.ArrivalCityLabel.Name = "ArrivalCityLabel";
             this.ArrivalCityLabel.Size = new System.Drawing.Size(88, 13);
             this.ArrivalCityLabel.TabIndex = 2;
@@ -157,19 +165,19 @@ namespace FuelDistanceCalculator
             // 
             // DepartureCityTextBox
             // 
-            this.DepartureCityTextBox.Location = new System.Drawing.Point(39, 97);
+            this.DepartureCityTextBox.Location = new System.Drawing.Point(39, 35);
             this.DepartureCityTextBox.Name = "DepartureCityTextBox";
             this.DepartureCityTextBox.Size = new System.Drawing.Size(215, 20);
             this.DepartureCityTextBox.TabIndex = 1;
             // 
-            // DepartureCity
+            // DepartureCityLabel
             // 
-            this.DepartureCity.AutoSize = true;
-            this.DepartureCity.Location = new System.Drawing.Point(40, 78);
-            this.DepartureCity.Name = "DepartureCity";
-            this.DepartureCity.Size = new System.Drawing.Size(86, 13);
-            this.DepartureCity.TabIndex = 0;
-            this.DepartureCity.Text = "Išvykimo miestas";
+            this.DepartureCityLabel.AutoSize = true;
+            this.DepartureCityLabel.Location = new System.Drawing.Point(40, 19);
+            this.DepartureCityLabel.Name = "DepartureCityLabel";
+            this.DepartureCityLabel.Size = new System.Drawing.Size(86, 13);
+            this.DepartureCityLabel.TabIndex = 0;
+            this.DepartureCityLabel.Text = "Išvykimo miestas";
             // 
             // MapPanel
             // 
@@ -212,6 +220,38 @@ namespace FuelDistanceCalculator
             this.AdditionalKmButton.Text = "Išsaugoti Km";
             this.AdditionalKmButton.UseVisualStyleBackColor = true;
             // 
+            // DepartureAddressLabel
+            // 
+            this.DepartureAddressLabel.AutoSize = true;
+            this.DepartureAddressLabel.Location = new System.Drawing.Point(40, 58);
+            this.DepartureAddressLabel.Name = "DepartureAddressLabel";
+            this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
+            this.DepartureAddressLabel.TabIndex = 16;
+            this.DepartureAddressLabel.Text = "Išvykimo adresas";
+            // 
+            // DepartueAddressTextBox
+            // 
+            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 74);
+            this.DepartueAddressTextBox.Name = "DepartueAddressTextBox";
+            this.DepartueAddressTextBox.Size = new System.Drawing.Size(215, 20);
+            this.DepartueAddressTextBox.TabIndex = 17;
+            // 
+            // ArrivalAdressLabel
+            // 
+            this.ArrivalAdressLabel.AutoSize = true;
+            this.ArrivalAdressLabel.Location = new System.Drawing.Point(40, 136);
+            this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
+            this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
+            this.ArrivalAdressLabel.TabIndex = 18;
+            this.ArrivalAdressLabel.Text = "Atvykimo adresas";
+            // 
+            // ArrivalAddressTextBox
+            // 
+            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(39, 152);
+            this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
+            this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
+            this.ArrivalAddressTextBox.TabIndex = 19;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,7 +279,7 @@ namespace FuelDistanceCalculator
         private System.Windows.Forms.TextBox ArrivalCityTextBox;
         private System.Windows.Forms.Label ArrivalCityLabel;
         private System.Windows.Forms.TextBox DepartureCityTextBox;
-        private System.Windows.Forms.Label DepartureCity;
+        private System.Windows.Forms.Label DepartureCityLabel;
         private System.Windows.Forms.Panel MapPanel;
         private System.Windows.Forms.Label DistanceLabel;
         private System.Windows.Forms.Button SearchButton;
@@ -251,6 +291,10 @@ namespace FuelDistanceCalculator
         private System.Windows.Forms.Button SaveKmPriceButton;
         private System.Windows.Forms.Label AdditionalKmLabel;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label ArrivalAdressLabel;
+        private System.Windows.Forms.TextBox DepartueAddressTextBox;
+        private System.Windows.Forms.Label DepartureAddressLabel;
+        private System.Windows.Forms.TextBox ArrivalAddressTextBox;
     }
 }
 
