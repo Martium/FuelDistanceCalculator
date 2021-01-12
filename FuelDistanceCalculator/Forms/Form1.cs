@@ -15,6 +15,7 @@ namespace FuelDistanceCalculator
         {
             TripPriceTextBox.Enabled = false;
             DistanceTextBox.Enabled = false;
+            CalculateButton.Enabled = false;
         }
     }
 }
