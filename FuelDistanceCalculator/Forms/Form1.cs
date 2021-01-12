@@ -7,8 +7,10 @@ namespace FuelDistanceCalculator
         public Form1()
         {
             InitializeComponent();
+
             TripPriceTextBox.Enabled = false;
             DistanceTextBox.Enabled = false;
+
         }
       
     }
