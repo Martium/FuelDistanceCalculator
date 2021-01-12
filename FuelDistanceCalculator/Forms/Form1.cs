@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace FuelDistanceCalculator
 {
@@ -15,6 +7,9 @@ namespace FuelDistanceCalculator
         public Form1()
         {
             InitializeComponent();
+            TripPriceTextBox.Enabled = false;
+            DistanceTextBox.Enabled = false;
         }
+      
     }
 }

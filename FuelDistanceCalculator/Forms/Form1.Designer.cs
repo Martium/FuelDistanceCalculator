@@ -30,6 +30,10 @@ namespace FuelDistanceCalculator
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.TripPriceTextBox = new System.Windows.Forms.TextBox();
+            this.DistanceTextBox = new System.Windows.Forms.TextBox();
+            this.TripPriceLabel = new System.Windows.Forms.Label();
+            this.CalculateButton = new System.Windows.Forms.Button();
             this.DistanceLabel = new System.Windows.Forms.Label();
             this.SearchButton = new System.Windows.Forms.Button();
             this.FuelPriceTextBox = new System.Windows.Forms.TextBox();
@@ -39,10 +43,6 @@ namespace FuelDistanceCalculator
             this.DepartureCityTextBox = new System.Windows.Forms.TextBox();
             this.DepartureCity = new System.Windows.Forms.Label();
             this.MapPanel = new System.Windows.Forms.Panel();
-            this.CalculateButton = new System.Windows.Forms.Button();
-            this.TripPriceLabel = new System.Windows.Forms.Label();
-            this.DistanceTextBox = new System.Windows.Forms.TextBox();
-            this.TripPriceTextBox = new System.Windows.Forms.TextBox();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +64,38 @@ namespace FuelDistanceCalculator
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
+            // 
+            // TripPriceTextBox
+            // 
+            this.TripPriceTextBox.Location = new System.Drawing.Point(148, 274);
+            this.TripPriceTextBox.Name = "TripPriceTextBox";
+            this.TripPriceTextBox.Size = new System.Drawing.Size(106, 20);
+            this.TripPriceTextBox.TabIndex = 11;
+            // 
+            // DistanceTextBox
+            // 
+            this.DistanceTextBox.Location = new System.Drawing.Point(148, 242);
+            this.DistanceTextBox.Name = "DistanceTextBox";
+            this.DistanceTextBox.Size = new System.Drawing.Size(106, 20);
+            this.DistanceTextBox.TabIndex = 10;
+            // 
+            // TripPriceLabel
+            // 
+            this.TripPriceLabel.AutoSize = true;
+            this.TripPriceLabel.Location = new System.Drawing.Point(40, 281);
+            this.TripPriceLabel.Name = "TripPriceLabel";
+            this.TripPriceLabel.Size = new System.Drawing.Size(76, 13);
+            this.TripPriceLabel.TabIndex = 9;
+            this.TripPriceLabel.Text = "Keliones kaina";
+            // 
+            // CalculateButton
+            // 
+            this.CalculateButton.Location = new System.Drawing.Point(184, 305);
+            this.CalculateButton.Name = "CalculateButton";
+            this.CalculateButton.Size = new System.Drawing.Size(70, 22);
+            this.CalculateButton.TabIndex = 8;
+            this.CalculateButton.Text = "skaičiuoti";
+            this.CalculateButton.UseVisualStyleBackColor = true;
             // 
             // DistanceLabel
             // 
@@ -137,38 +169,6 @@ namespace FuelDistanceCalculator
             this.MapPanel.Name = "MapPanel";
             this.MapPanel.Size = new System.Drawing.Size(723, 665);
             this.MapPanel.TabIndex = 1;
-            // 
-            // CalculateButton
-            // 
-            this.CalculateButton.Location = new System.Drawing.Point(184, 305);
-            this.CalculateButton.Name = "CalculateButton";
-            this.CalculateButton.Size = new System.Drawing.Size(70, 22);
-            this.CalculateButton.TabIndex = 8;
-            this.CalculateButton.Text = "skaičiuoti";
-            this.CalculateButton.UseVisualStyleBackColor = true;
-            // 
-            // TripPriceLabel
-            // 
-            this.TripPriceLabel.AutoSize = true;
-            this.TripPriceLabel.Location = new System.Drawing.Point(40, 281);
-            this.TripPriceLabel.Name = "TripPriceLabel";
-            this.TripPriceLabel.Size = new System.Drawing.Size(76, 13);
-            this.TripPriceLabel.TabIndex = 9;
-            this.TripPriceLabel.Text = "Keliones kaina";
-            // 
-            // DistanceTextBox
-            // 
-            this.DistanceTextBox.Location = new System.Drawing.Point(148, 242);
-            this.DistanceTextBox.Name = "DistanceTextBox";
-            this.DistanceTextBox.Size = new System.Drawing.Size(106, 20);
-            this.DistanceTextBox.TabIndex = 10;
-            // 
-            // TripPriceTextBox
-            // 
-            this.TripPriceTextBox.Location = new System.Drawing.Point(148, 274);
-            this.TripPriceTextBox.Name = "TripPriceTextBox";
-            this.TripPriceTextBox.Size = new System.Drawing.Size(106, 20);
-            this.TripPriceTextBox.TabIndex = 11;
             // 
             // Form1
             // 
