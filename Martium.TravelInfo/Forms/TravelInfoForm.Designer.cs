@@ -30,6 +30,14 @@ namespace Martium.TravelInfo.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
+            this.ArrivalAdressLabel = new System.Windows.Forms.Label();
+            this.DepartueAddressTextBox = new System.Windows.Forms.TextBox();
+            this.DepartureAddressLabel = new System.Windows.Forms.Label();
+            this.AdditionalKmButton = new System.Windows.Forms.Button();
+            this.SaveKmPriceButton = new System.Windows.Forms.Button();
+            this.AdditionalKmLabel = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.TripPriceTextBox = new System.Windows.Forms.TextBox();
             this.DistanceTextBox = new System.Windows.Forms.TextBox();
             this.TripPriceLabel = new System.Windows.Forms.Label();
@@ -42,15 +50,7 @@ namespace Martium.TravelInfo.Forms
             this.ArrivalCityLabel = new System.Windows.Forms.Label();
             this.DepartureCityTextBox = new System.Windows.Forms.TextBox();
             this.DepartureCityLabel = new System.Windows.Forms.Label();
-            this.MapPanel = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.AdditionalKmLabel = new System.Windows.Forms.Label();
-            this.SaveKmPriceButton = new System.Windows.Forms.Button();
-            this.AdditionalKmButton = new System.Windows.Forms.Button();
-            this.DepartureAddressLabel = new System.Windows.Forms.Label();
-            this.DepartueAddressTextBox = new System.Windows.Forms.TextBox();
-            this.ArrivalAdressLabel = new System.Windows.Forms.Label();
-            this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
+            this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,72 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
+            // 
+            // ArrivalAddressTextBox
+            // 
+            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(39, 152);
+            this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
+            this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
+            this.ArrivalAddressTextBox.TabIndex = 19;
+            // 
+            // ArrivalAdressLabel
+            // 
+            this.ArrivalAdressLabel.AutoSize = true;
+            this.ArrivalAdressLabel.Location = new System.Drawing.Point(40, 136);
+            this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
+            this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
+            this.ArrivalAdressLabel.TabIndex = 18;
+            this.ArrivalAdressLabel.Text = "Atvykimo adresas";
+            // 
+            // DepartueAddressTextBox
+            // 
+            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 74);
+            this.DepartueAddressTextBox.Name = "DepartueAddressTextBox";
+            this.DepartueAddressTextBox.Size = new System.Drawing.Size(215, 20);
+            this.DepartueAddressTextBox.TabIndex = 17;
+            // 
+            // DepartureAddressLabel
+            // 
+            this.DepartureAddressLabel.AutoSize = true;
+            this.DepartureAddressLabel.Location = new System.Drawing.Point(40, 58);
+            this.DepartureAddressLabel.Name = "DepartureAddressLabel";
+            this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
+            this.DepartureAddressLabel.TabIndex = 16;
+            this.DepartureAddressLabel.Text = "Išvykimo adresas";
+            // 
+            // AdditionalKmButton
+            // 
+            this.AdditionalKmButton.Location = new System.Drawing.Point(39, 594);
+            this.AdditionalKmButton.Name = "AdditionalKmButton";
+            this.AdditionalKmButton.Size = new System.Drawing.Size(100, 22);
+            this.AdditionalKmButton.TabIndex = 15;
+            this.AdditionalKmButton.Text = "Išsaugoti Km";
+            this.AdditionalKmButton.UseVisualStyleBackColor = true;
+            // 
+            // SaveKmPriceButton
+            // 
+            this.SaveKmPriceButton.Location = new System.Drawing.Point(39, 518);
+            this.SaveKmPriceButton.Name = "SaveKmPriceButton";
+            this.SaveKmPriceButton.Size = new System.Drawing.Size(100, 22);
+            this.SaveKmPriceButton.TabIndex = 14;
+            this.SaveKmPriceButton.Text = "Išsaugoti kaina";
+            this.SaveKmPriceButton.UseVisualStyleBackColor = true;
+            // 
+            // AdditionalKmLabel
+            // 
+            this.AdditionalKmLabel.AutoSize = true;
+            this.AdditionalKmLabel.Location = new System.Drawing.Point(40, 552);
+            this.AdditionalKmLabel.Name = "AdditionalKmLabel";
+            this.AdditionalKmLabel.Size = new System.Drawing.Size(99, 13);
+            this.AdditionalKmLabel.TabIndex = 13;
+            this.AdditionalKmLabel.Text = "Papildomi kilometrai";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(39, 568);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 12;
             // 
             // TripPriceTextBox
             // 
@@ -179,90 +245,43 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCityLabel.TabIndex = 0;
             this.DepartureCityLabel.Text = "Išvykimo miestas";
             // 
-            // MapPanel
+            // Map
             // 
-            this.MapPanel.Location = new System.Drawing.Point(343, 0);
-            this.MapPanel.Name = "MapPanel";
-            this.MapPanel.Size = new System.Drawing.Size(723, 665);
-            this.MapPanel.TabIndex = 1;
+            this.Map.Bearing = 0F;
+            this.Map.CanDragMap = true;
+            this.Map.EmptyTileColor = System.Drawing.Color.Navy;
+            this.Map.GrayScaleMode = false;
+            this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.Map.LevelsKeepInMemory = 5;
+            this.Map.Location = new System.Drawing.Point(344, 0);
+            this.Map.MarkersEnabled = true;
+            this.Map.MaxZoom = 18;
+            this.Map.MinZoom = 2;
+            this.Map.MouseWheelZoomEnabled = true;
+            this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.Map.Name = "Map";
+            this.Map.NegativeMode = false;
+            this.Map.PolygonsEnabled = true;
+            this.Map.RetryLoadTile = 0;
+            this.Map.RoutesEnabled = true;
+            this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.Map.ShowTileGridLines = false;
+            this.Map.Size = new System.Drawing.Size(724, 668);
+            this.Map.TabIndex = 1;
+            this.Map.Zoom = 13D;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(39, 568);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 12;
-            // 
-            // AdditionalKmLabel
-            // 
-            this.AdditionalKmLabel.AutoSize = true;
-            this.AdditionalKmLabel.Location = new System.Drawing.Point(40, 552);
-            this.AdditionalKmLabel.Name = "AdditionalKmLabel";
-            this.AdditionalKmLabel.Size = new System.Drawing.Size(99, 13);
-            this.AdditionalKmLabel.TabIndex = 13;
-            this.AdditionalKmLabel.Text = "Papildomi kilometrai";
-            // 
-            // SaveKmPriceButton
-            // 
-            this.SaveKmPriceButton.Location = new System.Drawing.Point(39, 518);
-            this.SaveKmPriceButton.Name = "SaveKmPriceButton";
-            this.SaveKmPriceButton.Size = new System.Drawing.Size(100, 22);
-            this.SaveKmPriceButton.TabIndex = 14;
-            this.SaveKmPriceButton.Text = "Išsaugoti kaina";
-            this.SaveKmPriceButton.UseVisualStyleBackColor = true;
-            // 
-            // AdditionalKmButton
-            // 
-            this.AdditionalKmButton.Location = new System.Drawing.Point(39, 594);
-            this.AdditionalKmButton.Name = "AdditionalKmButton";
-            this.AdditionalKmButton.Size = new System.Drawing.Size(100, 22);
-            this.AdditionalKmButton.TabIndex = 15;
-            this.AdditionalKmButton.Text = "Išsaugoti Km";
-            this.AdditionalKmButton.UseVisualStyleBackColor = true;
-            // 
-            // DepartureAddressLabel
-            // 
-            this.DepartureAddressLabel.AutoSize = true;
-            this.DepartureAddressLabel.Location = new System.Drawing.Point(40, 58);
-            this.DepartureAddressLabel.Name = "DepartureAddressLabel";
-            this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
-            this.DepartureAddressLabel.TabIndex = 16;
-            this.DepartureAddressLabel.Text = "Išvykimo adresas";
-            // 
-            // DepartueAddressTextBox
-            // 
-            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 74);
-            this.DepartueAddressTextBox.Name = "DepartueAddressTextBox";
-            this.DepartueAddressTextBox.Size = new System.Drawing.Size(215, 20);
-            this.DepartueAddressTextBox.TabIndex = 17;
-            // 
-            // ArrivalAdressLabel
-            // 
-            this.ArrivalAdressLabel.AutoSize = true;
-            this.ArrivalAdressLabel.Location = new System.Drawing.Point(40, 136);
-            this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
-            this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
-            this.ArrivalAdressLabel.TabIndex = 18;
-            this.ArrivalAdressLabel.Text = "Atvykimo adresas";
-            // 
-            // ArrivalAddressTextBox
-            // 
-            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(39, 152);
-            this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
-            this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
-            this.ArrivalAddressTextBox.TabIndex = 19;
-            // 
-            // MainForm
+            // TravelInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1070, 666);
-            this.Controls.Add(this.MapPanel);
+            this.Controls.Add(this.Map);
             this.Controls.Add(this.InfoPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "MainForm";
+            this.Name = "TravelInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Kelionės skaičiuoklė";
             this.InfoPanel.ResumeLayout(false);
@@ -280,7 +299,6 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Label ArrivalCityLabel;
         private System.Windows.Forms.TextBox DepartureCityTextBox;
         private System.Windows.Forms.Label DepartureCityLabel;
-        private System.Windows.Forms.Panel MapPanel;
         private System.Windows.Forms.Label DistanceLabel;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.TextBox DistanceTextBox;
@@ -295,6 +313,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.TextBox DepartueAddressTextBox;
         private System.Windows.Forms.Label DepartureAddressLabel;
         private System.Windows.Forms.TextBox ArrivalAddressTextBox;
+        private GMap.NET.WindowsForms.GMapControl Map;
     }
 }
 
