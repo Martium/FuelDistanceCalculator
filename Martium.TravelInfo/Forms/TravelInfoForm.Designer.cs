@@ -51,6 +51,7 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCityTextBox = new System.Windows.Forms.TextBox();
             this.DepartureCityLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
+            this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -267,9 +268,20 @@ namespace Martium.TravelInfo.Forms
             this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Map.ShowTileGridLines = false;
-            this.Map.Size = new System.Drawing.Size(724, 668);
+            this.Map.Size = new System.Drawing.Size(724, 629);
             this.Map.TabIndex = 1;
             this.Map.Zoom = 13D;
+            // 
+            // MapContributorLinkLabel
+            // 
+            this.MapContributorLinkLabel.AutoSize = true;
+            this.MapContributorLinkLabel.Location = new System.Drawing.Point(594, 642);
+            this.MapContributorLinkLabel.Name = "MapContributorLinkLabel";
+            this.MapContributorLinkLabel.Size = new System.Drawing.Size(122, 13);
+            this.MapContributorLinkLabel.TabIndex = 2;
+            this.MapContributorLinkLabel.TabStop = true;
+            this.MapContributorLinkLabel.Text = "www.openstreetmap.org";
+            this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
             // 
             // TravelInfoForm
             // 
@@ -277,6 +289,7 @@ namespace Martium.TravelInfo.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1070, 666);
+            this.Controls.Add(this.MapContributorLinkLabel);
             this.Controls.Add(this.Map);
             this.Controls.Add(this.InfoPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -287,6 +300,7 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.ResumeLayout(false);
             this.InfoPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -314,6 +328,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Label DepartureAddressLabel;
         private System.Windows.Forms.TextBox ArrivalAddressTextBox;
         private GMap.NET.WindowsForms.GMapControl Map;
+        private System.Windows.Forms.LinkLabel MapContributorLinkLabel;
     }
 }
 

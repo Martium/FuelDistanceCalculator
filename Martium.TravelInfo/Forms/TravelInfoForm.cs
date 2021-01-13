@@ -23,12 +23,17 @@ namespace Martium.TravelInfo.Forms
 
         private void InitializeMap()
         {
-            Map.MapProvider = GMap.NET.MapProviders.BingMapProvider.Instance;
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
-            Map.MapProvider = OpenCycleLandscapeMapProvider.Instance;
-            Map.SetPositionByKeywords("Kaunas, Lithuania");
+            Map.MapProvider = OpenStreetMapProvider.Instance;
+            Map.SetPositionByKeywords("mapu g 4, Kaunas, Lithuania");
             Map.ShowCenter = false;
             //Map.DragButton = MouseButtons.Left; Drag map option 
+        }
+
+        private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MapContributorLinkLabel.LinkVisited = true;
+            System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
     }
 }
