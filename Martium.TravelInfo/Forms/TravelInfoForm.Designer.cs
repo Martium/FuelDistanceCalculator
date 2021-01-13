@@ -268,14 +268,14 @@ namespace Martium.TravelInfo.Forms
             this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Map.ShowTileGridLines = false;
-            this.Map.Size = new System.Drawing.Size(724, 629);
+            this.Map.Size = new System.Drawing.Size(724, 641);
             this.Map.TabIndex = 1;
             this.Map.Zoom = 13D;
             // 
             // MapContributorLinkLabel
             // 
             this.MapContributorLinkLabel.AutoSize = true;
-            this.MapContributorLinkLabel.Location = new System.Drawing.Point(594, 642);
+            this.MapContributorLinkLabel.Location = new System.Drawing.Point(661, 644);
             this.MapContributorLinkLabel.Name = "MapContributorLinkLabel";
             this.MapContributorLinkLabel.Size = new System.Drawing.Size(122, 13);
             this.MapContributorLinkLabel.TabIndex = 2;
