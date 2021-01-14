@@ -46,7 +46,7 @@ namespace Martium.TravelInfo.Forms
 
             DepartureCountryTextBox.Text = travelInfoSettingsModel.DepartureCountry;
             DepartueAddressTextBox.Text = travelInfoSettingsModel.DepartureAddress;
-            KmPriceTextBox.Text = travelInfoSettingsModel.KmPrice.ToString();
+            KmPriceTextBox.Text = travelInfoSettingsModel.AdditionalDistanceInKm.ToString();
             AdditionalKmTextBox.Text = travelInfoSettingsModel.AdditionalKm.ToString();
         }
 

@@ -66,7 +66,7 @@ namespace Martium.TravelInfo.Repositories
 				    CREATE TABLE [TravelInfo] (
 						[DepartureCountry] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureCountry}) NOT NULL,
 						[DepartureAddress] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureAddress}) NULL,
-						[KmPrice] [double] NOT NULL,
+						[AdditionalDistanceInKm] [double] NOT NULL,
 						[AdditionalKm] [double] NOT NULL 
 						)";
 
