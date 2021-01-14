@@ -11,6 +11,8 @@ namespace Martium.TravelInfo.Forms
 
         public TravelInfoForm()
         {
+            _travelInfoRepository = new TravelInfoRepository();
+
             InitializeComponent();
 
             InitializeControls();
