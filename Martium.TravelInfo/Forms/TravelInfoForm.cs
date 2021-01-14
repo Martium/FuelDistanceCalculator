@@ -35,5 +35,6 @@ namespace Martium.TravelInfo.Forms
             MapContributorLinkLabel.LinkVisited = true;
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
+      
     }
 }
