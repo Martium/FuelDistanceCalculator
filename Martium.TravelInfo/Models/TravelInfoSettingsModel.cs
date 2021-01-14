@@ -2,7 +2,7 @@
 
 namespace Martium.TravelInfo.Models
 {
-    public class TravelInfoTextBoxModel
+    public class TravelInfoSettingsModel
     {
         public string Country { get; set; }
         public string DepartureAddress { get; set; }

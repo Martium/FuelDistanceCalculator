@@ -8,7 +8,7 @@ namespace Martium.TravelInfo.Repositories
 {
     public class TravelInfoRepository
     {
-        public TravelInfoTextBoxModel GetExistingInfo()
+        public TravelInfoSettingsModel GetExistingInfo()
         {
             using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
             {
@@ -19,13 +19,13 @@ namespace Martium.TravelInfo.Repositories
                         TI.Country , TI.DepartureAddress , TI.FuelPrice , FSH.AdditionalKm 
                       FROM TravelInfo TI";
 
-                TravelInfoTextBoxModel existingInfo = dbConnection.QuerySingle<TravelInfoTextBoxModel>(getExistingInfoQuery);
+                TravelInfoSettingsModel existingInfo = dbConnection.QuerySingle<TravelInfoSettingsModel>(getExistingInfoQuery);
 
                 return existingInfo;
             }
         }
 
-        public bool UpdateExistingInfo(TravelInfoTextBoxModel updateInfo)
+        public bool UpdateExistingInfo(TravelInfoSettingsModel updateInfo)
         {
             using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
             {
