@@ -1,10 +1,13 @@
 ﻿using System.Windows.Forms;
 using GMap.NET.MapProviders;
+using Martium.TravelInfo.Repositories;
 
 namespace Martium.TravelInfo.Forms
 {
     public partial class TravelInfoForm : Form
     {
+        private readonly TravelInfoRepository _travelInfoRepository;
+
         public TravelInfoForm()
         {
             InitializeComponent();
@@ -24,7 +27,17 @@ namespace Martium.TravelInfo.Forms
         {
             TripPriceTextBox.Enabled = false;
             DistanceTextBox.Enabled = false;
+            DepartureCountryTextBox.Enabled = false;
             CalculateButton.Enabled = false;
+            SaveDepartureAddressButton.Enabled = false;
+            SaveKmPriceButton.Enabled = false;
+            SearchButton.Enabled = false;
+            SaveAdditionalKmButton.Enabled = false;
+        }
+
+        private void LoadTravelInfoSettings()
+        {
+
         }
 
         private void InitializeMap()

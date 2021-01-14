@@ -92,7 +92,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DataBaseInitializerRepository.cs" />
-    <Compile Include="Repositories\TravelInfoRepository.cs" />
+    <Compile Include="Repositories\TravelInfoSettingsRepository.cs" />
     <EmbeddedResource Include="Forms\TravelInfoForm.resx">
       <DependentUpon>TravelInfoForm.cs</DependentUpon>
     </EmbeddedResource>

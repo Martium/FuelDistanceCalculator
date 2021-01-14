@@ -34,7 +34,7 @@ namespace Martium.TravelInfo.Forms
             this.ArrivalAdressLabel = new System.Windows.Forms.Label();
             this.DepartueAddressTextBox = new System.Windows.Forms.TextBox();
             this.DepartureAddressLabel = new System.Windows.Forms.Label();
-            this.AdditionalKmButton = new System.Windows.Forms.Button();
+            this.SaveAdditionalKmButton = new System.Windows.Forms.Button();
             this.SaveKmPriceButton = new System.Windows.Forms.Button();
             this.AdditionalKmLabel = new System.Windows.Forms.Label();
             this.AdditionalKmTextBox = new System.Windows.Forms.TextBox();
@@ -61,7 +61,7 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Controls.Add(this.ArrivalAdressLabel);
             this.InfoPanel.Controls.Add(this.DepartueAddressTextBox);
             this.InfoPanel.Controls.Add(this.DepartureAddressLabel);
-            this.InfoPanel.Controls.Add(this.AdditionalKmButton);
+            this.InfoPanel.Controls.Add(this.SaveAdditionalKmButton);
             this.InfoPanel.Controls.Add(this.SaveKmPriceButton);
             this.InfoPanel.Controls.Add(this.AdditionalKmLabel);
             this.InfoPanel.Controls.Add(this.AdditionalKmTextBox);
@@ -112,14 +112,14 @@ namespace Martium.TravelInfo.Forms
             this.DepartureAddressLabel.TabIndex = 16;
             this.DepartureAddressLabel.Text = "Išvykimo adresas";
             // 
-            // AdditionalKmButton
+            // SaveAdditionalKmButton
             // 
-            this.AdditionalKmButton.Location = new System.Drawing.Point(145, 322);
-            this.AdditionalKmButton.Name = "AdditionalKmButton";
-            this.AdditionalKmButton.Size = new System.Drawing.Size(71, 22);
-            this.AdditionalKmButton.TabIndex = 15;
-            this.AdditionalKmButton.Text = "Išsaugoti";
-            this.AdditionalKmButton.UseVisualStyleBackColor = true;
+            this.SaveAdditionalKmButton.Location = new System.Drawing.Point(145, 322);
+            this.SaveAdditionalKmButton.Name = "SaveAdditionalKmButton";
+            this.SaveAdditionalKmButton.Size = new System.Drawing.Size(71, 22);
+            this.SaveAdditionalKmButton.TabIndex = 15;
+            this.SaveAdditionalKmButton.Text = "Išsaugoti";
+            this.SaveAdditionalKmButton.UseVisualStyleBackColor = true;
             // 
             // SaveKmPriceButton
             // 
@@ -308,7 +308,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Label TripPriceLabel;
         private System.Windows.Forms.Button CalculateButton;
         private System.Windows.Forms.TextBox TripPriceTextBox;
-        private System.Windows.Forms.Button AdditionalKmButton;
+        private System.Windows.Forms.Button SaveAdditionalKmButton;
         private System.Windows.Forms.Button SaveKmPriceButton;
         private System.Windows.Forms.Label AdditionalKmLabel;
         private System.Windows.Forms.TextBox AdditionalKmTextBox;
