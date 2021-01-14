@@ -16,7 +16,7 @@ namespace Martium.TravelInfo.Repositories
 
                 string getExistingInfoQuery =
                     @"SELECT  
-                        TI.Nation , TI.DepartureAddress , TI.FuelPrice , FSH.AdditionalKm 
+                        TI.Country , TI.DepartureAddress , TI.FuelPrice , FSH.AdditionalKm 
                       FROM TravelInfo TI";
 
                 TravelInfoTextBoxModel existingInfo = dbConnection.QuerySingle<TravelInfoTextBoxModel>(getExistingInfoQuery);
@@ -33,11 +33,11 @@ namespace Martium.TravelInfo.Repositories
 
                 string updateInfoCommand =
                     @"@UPDATE 'TravelInfo' 
-	                    SET Nation = @Nation, DepartureAddress = @DepartureAddress , FuelPrice = @FuelPrice , AdditionalKm  = @AdditionalKm;";
+	                    SET Country = @Country, DepartureAddress = @DepartureAddress , FuelPrice = @FuelPrice , AdditionalKm  = @AdditionalKm;";
 
                 object queryParameters = new
                 {
-                    updateInfo.Nation,
+                    updateInfo.Country,
                     updateInfo.DepartureAddress,
                     updateInfo.FuelPrice,
                     updateInfo.AdditionalKm

@@ -34,9 +34,9 @@ namespace Martium.TravelInfo.Repositories
             {
                 dbConnection.Open();
 
-                CreateTravelInfoTable(dbConnection);
+                CreateTravelInfoSettings(dbConnection);
 
-                FillDefaultTravelInfo(dbConnection);
+                FillDefaultTravelInfoSettings(dbConnection);
             }
         }
 
@@ -55,41 +55,41 @@ namespace Martium.TravelInfo.Repositories
             }
         }
 
-        private void CreateTravelInfoTable(SQLiteConnection dbConnection)
+        private void CreateTravelInfoSettings(SQLiteConnection dbConnection)
         {
-            string dropTravelInfoTableQuery = GetDropTableQuery("TravelInfo");
-            SQLiteCommand dropATravelInfoTableCommand = new SQLiteCommand(dropTravelInfoTableQuery, dbConnection);
-            dropATravelInfoTableCommand.ExecuteNonQuery();
+            string dropTravelInfoSettingsQuery = GetDropTableQuery("TravelInfo");
+            SQLiteCommand dropATravelInfoSettingsCommand = new SQLiteCommand(dropTravelInfoSettingsQuery, dbConnection);
+            dropATravelInfoSettingsCommand.ExecuteNonQuery();
 
-            string createFuneralServiceHistoryTableQuery =
+            string createTravelInfoSettingsQuery =
                 $@"                  
-				    CREATE TABLE [FuneralServiceHistory] (
-						[Nation] [nvarchar] ({FormSettings.TextBoxLenghts.Nation}) NOT NULL,
+				    CREATE TABLE [TravelInfo] (
+						[Country] [nvarchar] ({FormSettings.TextBoxLenghts.Country}) NOT NULL,
 						[DepartureAddress] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureAddress}) NULL,
 						[FuelPrice] [double] NOT NULL,
 						[AdditionalKm] [double] NULL 
 						)";
 
             SQLiteCommand createTravelInfoTableCommand =
-                new SQLiteCommand(createFuneralServiceHistoryTableQuery, dbConnection);
+                new SQLiteCommand(createTravelInfoSettingsQuery, dbConnection);
             createTravelInfoTableCommand.ExecuteNonQuery();
         }
 
-        private void FillDefaultTravelInfo(SQLiteConnection dbConnection)
+        private void FillDefaultTravelInfoSettings(SQLiteConnection dbConnection)
         {
-            string fillTravelInfoTableQuery =
+            string fillTravelInfoSettingsQuery =
                 @"BEGIN TRANSACTION;
-	                INSERT INTO 'FuneralServiceHistory' 
+	                INSERT INTO 'TravelInfo' 
 	                    VALUES ('Lithuania', 'mapu g 4, Kaunas', '0.2', '5');
                 COMMIT;";
 
-            SQLiteCommand fillTravelInfoTableCommand = new SQLiteCommand(fillTravelInfoTableQuery, dbConnection);
-            fillTravelInfoTableCommand.ExecuteNonQuery();
+            SQLiteCommand fillTravelInfoSettingsCommand = new SQLiteCommand(fillTravelInfoSettingsQuery, dbConnection);
+            fillTravelInfoSettingsCommand.ExecuteNonQuery();
         }
 
-        private string GetDropTableQuery(string tableName)
+        private string GetDropTableQuery(string settingsName)
         {
-            return $"DROP TABLE IF EXISTS [{tableName}]";
+            return $"DROP TABLE IF EXISTS [{settingsName}]";
         }
     }
 }

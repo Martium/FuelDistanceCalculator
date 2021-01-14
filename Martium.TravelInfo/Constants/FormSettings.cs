@@ -10,7 +10,7 @@ namespace Martium.TravelInfo.Constants
     {
         public static class TextBoxLenghts
         {
-            public static int Nation => 20;
+            public static int Country => 20;
             public static int DepartureAddress => 40;
         }
     }
