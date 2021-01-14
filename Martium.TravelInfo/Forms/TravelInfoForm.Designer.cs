@@ -275,12 +275,12 @@ namespace Martium.TravelInfo.Forms
             // MapContributorLinkLabel
             // 
             this.MapContributorLinkLabel.AutoSize = true;
-            this.MapContributorLinkLabel.Location = new System.Drawing.Point(661, 644);
+            this.MapContributorLinkLabel.Location = new System.Drawing.Point(641, 644);
             this.MapContributorLinkLabel.Name = "MapContributorLinkLabel";
-            this.MapContributorLinkLabel.Size = new System.Drawing.Size(122, 13);
+            this.MapContributorLinkLabel.Size = new System.Drawing.Size(152, 13);
             this.MapContributorLinkLabel.TabIndex = 2;
             this.MapContributorLinkLabel.TabStop = true;
-            this.MapContributorLinkLabel.Text = "www.openstreetmap.org";
+            this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
             // 
             // TravelInfoForm
