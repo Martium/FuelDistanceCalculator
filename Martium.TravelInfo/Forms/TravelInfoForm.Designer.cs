@@ -46,8 +46,6 @@ namespace Martium.TravelInfo.Forms
             this.SearchButton = new System.Windows.Forms.Button();
             this.FuelPriceTextBox = new System.Windows.Forms.TextBox();
             this.FuelPriceLabel = new System.Windows.Forms.Label();
-            this.ArrivalCityTextBox = new System.Windows.Forms.TextBox();
-            this.ArrivalCityLabel = new System.Windows.Forms.Label();
             this.NationTextBox = new System.Windows.Forms.TextBox();
             this.NationLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
@@ -73,8 +71,6 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Controls.Add(this.SearchButton);
             this.InfoPanel.Controls.Add(this.FuelPriceTextBox);
             this.InfoPanel.Controls.Add(this.FuelPriceLabel);
-            this.InfoPanel.Controls.Add(this.ArrivalCityTextBox);
-            this.InfoPanel.Controls.Add(this.ArrivalCityLabel);
             this.InfoPanel.Controls.Add(this.NationTextBox);
             this.InfoPanel.Controls.Add(this.NationLabel);
             this.InfoPanel.Location = new System.Drawing.Point(-3, 0);
@@ -84,7 +80,7 @@ namespace Martium.TravelInfo.Forms
             // 
             // ArrivalAddressTextBox
             // 
-            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(39, 152);
+            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(39, 150);
             this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
             this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.ArrivalAddressTextBox.TabIndex = 19;
@@ -92,7 +88,7 @@ namespace Martium.TravelInfo.Forms
             // ArrivalAdressLabel
             // 
             this.ArrivalAdressLabel.AutoSize = true;
-            this.ArrivalAdressLabel.Location = new System.Drawing.Point(40, 136);
+            this.ArrivalAdressLabel.Location = new System.Drawing.Point(40, 134);
             this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
             this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
             this.ArrivalAdressLabel.TabIndex = 18;
@@ -100,7 +96,7 @@ namespace Martium.TravelInfo.Forms
             // 
             // DepartueAddressTextBox
             // 
-            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 74);
+            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 111);
             this.DepartueAddressTextBox.Name = "DepartueAddressTextBox";
             this.DepartueAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.DepartueAddressTextBox.TabIndex = 17;
@@ -108,7 +104,7 @@ namespace Martium.TravelInfo.Forms
             // DepartureAddressLabel
             // 
             this.DepartureAddressLabel.AutoSize = true;
-            this.DepartureAddressLabel.Location = new System.Drawing.Point(40, 58);
+            this.DepartureAddressLabel.Location = new System.Drawing.Point(40, 95);
             this.DepartureAddressLabel.Name = "DepartureAddressLabel";
             this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
             this.DepartureAddressLabel.TabIndex = 16;
@@ -116,26 +112,26 @@ namespace Martium.TravelInfo.Forms
             // 
             // AdditionalKmButton
             // 
-            this.AdditionalKmButton.Location = new System.Drawing.Point(154, 566);
+            this.AdditionalKmButton.Location = new System.Drawing.Point(145, 322);
             this.AdditionalKmButton.Name = "AdditionalKmButton";
-            this.AdditionalKmButton.Size = new System.Drawing.Size(100, 22);
+            this.AdditionalKmButton.Size = new System.Drawing.Size(71, 22);
             this.AdditionalKmButton.TabIndex = 15;
-            this.AdditionalKmButton.Text = "Išsaugoti Km";
+            this.AdditionalKmButton.Text = "Išsaugoti";
             this.AdditionalKmButton.UseVisualStyleBackColor = true;
             // 
             // SaveKmPriceButton
             // 
-            this.SaveKmPriceButton.Location = new System.Drawing.Point(154, 527);
+            this.SaveKmPriceButton.Location = new System.Drawing.Point(145, 283);
             this.SaveKmPriceButton.Name = "SaveKmPriceButton";
-            this.SaveKmPriceButton.Size = new System.Drawing.Size(100, 22);
+            this.SaveKmPriceButton.Size = new System.Drawing.Size(71, 22);
             this.SaveKmPriceButton.TabIndex = 14;
-            this.SaveKmPriceButton.Text = "Išsaugoti kaina";
+            this.SaveKmPriceButton.Text = "Išsaugoti";
             this.SaveKmPriceButton.UseVisualStyleBackColor = true;
             // 
             // AdditionalKmLabel
             // 
             this.AdditionalKmLabel.AutoSize = true;
-            this.AdditionalKmLabel.Location = new System.Drawing.Point(40, 552);
+            this.AdditionalKmLabel.Location = new System.Drawing.Point(40, 308);
             this.AdditionalKmLabel.Name = "AdditionalKmLabel";
             this.AdditionalKmLabel.Size = new System.Drawing.Size(99, 13);
             this.AdditionalKmLabel.TabIndex = 13;
@@ -143,21 +139,21 @@ namespace Martium.TravelInfo.Forms
             // 
             // AdditionalKmTextBox
             // 
-            this.AdditionalKmTextBox.Location = new System.Drawing.Point(39, 568);
+            this.AdditionalKmTextBox.Location = new System.Drawing.Point(39, 324);
             this.AdditionalKmTextBox.Name = "AdditionalKmTextBox";
             this.AdditionalKmTextBox.Size = new System.Drawing.Size(100, 20);
             this.AdditionalKmTextBox.TabIndex = 12;
             // 
             // TripPriceTextBox
             // 
-            this.TripPriceTextBox.Location = new System.Drawing.Point(148, 328);
+            this.TripPriceTextBox.Location = new System.Drawing.Point(119, 507);
             this.TripPriceTextBox.Name = "TripPriceTextBox";
             this.TripPriceTextBox.Size = new System.Drawing.Size(106, 20);
             this.TripPriceTextBox.TabIndex = 11;
             // 
             // DistanceTextBox
             // 
-            this.DistanceTextBox.Location = new System.Drawing.Point(148, 263);
+            this.DistanceTextBox.Location = new System.Drawing.Point(119, 474);
             this.DistanceTextBox.Name = "DistanceTextBox";
             this.DistanceTextBox.Size = new System.Drawing.Size(106, 20);
             this.DistanceTextBox.TabIndex = 10;
@@ -165,33 +161,33 @@ namespace Martium.TravelInfo.Forms
             // TripPriceLabel
             // 
             this.TripPriceLabel.AutoSize = true;
-            this.TripPriceLabel.Location = new System.Drawing.Point(40, 331);
+            this.TripPriceLabel.Location = new System.Drawing.Point(40, 510);
             this.TripPriceLabel.Name = "TripPriceLabel";
-            this.TripPriceLabel.Size = new System.Drawing.Size(76, 13);
+            this.TripPriceLabel.Size = new System.Drawing.Size(37, 13);
             this.TripPriceLabel.TabIndex = 9;
-            this.TripPriceLabel.Text = "Keliones kaina";
+            this.TripPriceLabel.Text = "Kaina:";
             // 
             // CalculateButton
             // 
-            this.CalculateButton.Location = new System.Drawing.Point(148, 354);
+            this.CalculateButton.Location = new System.Drawing.Point(39, 424);
             this.CalculateButton.Name = "CalculateButton";
-            this.CalculateButton.Size = new System.Drawing.Size(70, 22);
+            this.CalculateButton.Size = new System.Drawing.Size(94, 40);
             this.CalculateButton.TabIndex = 8;
-            this.CalculateButton.Text = "skaičiuoti";
+            this.CalculateButton.Text = "Skaičiuoti kelionės kainą";
             this.CalculateButton.UseVisualStyleBackColor = true;
             // 
             // DistanceLabel
             // 
             this.DistanceLabel.AutoSize = true;
-            this.DistanceLabel.Location = new System.Drawing.Point(40, 266);
+            this.DistanceLabel.Location = new System.Drawing.Point(40, 477);
             this.DistanceLabel.Name = "DistanceLabel";
-            this.DistanceLabel.Size = new System.Drawing.Size(72, 13);
+            this.DistanceLabel.Size = new System.Drawing.Size(73, 13);
             this.DistanceLabel.TabIndex = 7;
-            this.DistanceLabel.Text = "Atstumas \'Km\'";
+            this.DistanceLabel.Text = "Atstumas, km:";
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(148, 178);
+            this.SearchButton.Location = new System.Drawing.Point(39, 176);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(70, 22);
             this.SearchButton.TabIndex = 6;
@@ -200,7 +196,7 @@ namespace Martium.TravelInfo.Forms
             // 
             // FuelPriceTextBox
             // 
-            this.FuelPriceTextBox.Location = new System.Drawing.Point(39, 529);
+            this.FuelPriceTextBox.Location = new System.Drawing.Point(39, 285);
             this.FuelPriceTextBox.Name = "FuelPriceTextBox";
             this.FuelPriceTextBox.Size = new System.Drawing.Size(100, 20);
             this.FuelPriceTextBox.TabIndex = 5;
@@ -208,31 +204,15 @@ namespace Martium.TravelInfo.Forms
             // FuelPriceLabel
             // 
             this.FuelPriceLabel.AutoSize = true;
-            this.FuelPriceLabel.Location = new System.Drawing.Point(40, 513);
+            this.FuelPriceLabel.Location = new System.Drawing.Point(40, 269);
             this.FuelPriceLabel.Name = "FuelPriceLabel";
             this.FuelPriceLabel.Size = new System.Drawing.Size(79, 13);
             this.FuelPriceLabel.TabIndex = 4;
             this.FuelPriceLabel.Text = "Kilometro kaina";
             // 
-            // ArrivalCityTextBox
-            // 
-            this.ArrivalCityTextBox.Location = new System.Drawing.Point(39, 113);
-            this.ArrivalCityTextBox.Name = "ArrivalCityTextBox";
-            this.ArrivalCityTextBox.Size = new System.Drawing.Size(215, 20);
-            this.ArrivalCityTextBox.TabIndex = 3;
-            // 
-            // ArrivalCityLabel
-            // 
-            this.ArrivalCityLabel.AutoSize = true;
-            this.ArrivalCityLabel.Location = new System.Drawing.Point(40, 97);
-            this.ArrivalCityLabel.Name = "ArrivalCityLabel";
-            this.ArrivalCityLabel.Size = new System.Drawing.Size(88, 13);
-            this.ArrivalCityLabel.TabIndex = 2;
-            this.ArrivalCityLabel.Text = "Atvykimo miestas";
-            // 
             // NationTextBox
             // 
-            this.NationTextBox.Location = new System.Drawing.Point(39, 490);
+            this.NationTextBox.Location = new System.Drawing.Point(39, 37);
             this.NationTextBox.Name = "NationTextBox";
             this.NationTextBox.Size = new System.Drawing.Size(100, 20);
             this.NationTextBox.TabIndex = 1;
@@ -240,7 +220,7 @@ namespace Martium.TravelInfo.Forms
             // NationLabel
             // 
             this.NationLabel.AutoSize = true;
-            this.NationLabel.Location = new System.Drawing.Point(40, 474);
+            this.NationLabel.Location = new System.Drawing.Point(40, 21);
             this.NationLabel.Name = "NationLabel";
             this.NationLabel.Size = new System.Drawing.Size(29, 13);
             this.NationLabel.TabIndex = 0;
@@ -309,8 +289,6 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Panel InfoPanel;
         private System.Windows.Forms.TextBox FuelPriceTextBox;
         private System.Windows.Forms.Label FuelPriceLabel;
-        private System.Windows.Forms.TextBox ArrivalCityTextBox;
-        private System.Windows.Forms.Label ArrivalCityLabel;
         private System.Windows.Forms.TextBox NationTextBox;
         private System.Windows.Forms.Label NationLabel;
         private System.Windows.Forms.Label DistanceLabel;
