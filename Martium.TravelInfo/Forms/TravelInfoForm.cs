@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using GMap.NET.MapProviders;
+using Martium.TravelInfo.Models;
 using Martium.TravelInfo.Repositories;
 
 namespace Martium.TravelInfo.Forms
@@ -13,6 +14,8 @@ namespace Martium.TravelInfo.Forms
             InitializeComponent();
 
             InitializeControls();
+
+            LoadTravelInfoSettings();
 
             InitializeMap();
         }
@@ -37,7 +40,12 @@ namespace Martium.TravelInfo.Forms
 
         private void LoadTravelInfoSettings()
         {
+            TravelInfoSettingsModel travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
 
+            DepartureCountryTextBox.Text = travelInfoSettingsModel.DepartureCountry;
+            DepartueAddressTextBox.Text = travelInfoSettingsModel.DepartureAddress;
+            KmPriceTextBox.Text = travelInfoSettingsModel.KmPrice.ToString();
+            AdditionalKmTextBox.Text = travelInfoSettingsModel.AdditionalKm.ToString();
         }
 
         private void InitializeMap()

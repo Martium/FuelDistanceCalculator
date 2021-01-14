@@ -16,8 +16,9 @@ namespace Martium.TravelInfo.Repositories
 
                 string getExistingInfoQuery =
                     @"SELECT  
-                        TI.DepartureCountry , TI.DepartureAddress , TI.KmPrice , FSH.AdditionalKm 
+                        TI.DepartureCountry , TI.DepartureAddress , TI.KmPrice , TI.AdditionalKm 
                       FROM TravelInfo TI";
+                     
 
                 TravelInfoSettingsModel existingInfo = dbConnection.QuerySingle<TravelInfoSettingsModel>(getExistingInfoQuery);
 
