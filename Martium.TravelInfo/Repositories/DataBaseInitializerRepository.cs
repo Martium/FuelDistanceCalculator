@@ -7,7 +7,7 @@ using Martium.TravelInfo.Constants;
 
 namespace Martium.TravelInfo.Repositories
 {
-    class DataBaseInitializerRepository
+    public class DataBaseInitializerRepository
     {
         public void InitializeDatabaseIfNotExist()
         {
@@ -37,7 +37,7 @@ namespace Martium.TravelInfo.Repositories
 
                 CreateTravelInfoTable(dbConnection);
 
-
+                FillDefaultTravelInfo(dbConnection);
             }
         }
 
@@ -76,13 +76,13 @@ namespace Martium.TravelInfo.Repositories
             createTravelInfoTableCommand.ExecuteNonQuery();
         }
 
-        private void DefaultTravelInfo(SQLiteConnection dbConnection)
+        private void FillDefaultTravelInfo(SQLiteConnection dbConnection)
         {
             string fillTravelInfoTableQuery =
                 @"BEGIN TRANSACTION;
 	                INSERT INTO 'FuneralServiceHistory' 
-	                    VALUES ('Lithuania', 'mapu g 4, Kaunas', '0.2', '5')
-                COMMIT; ";
+	                    VALUES ('Lithuania', 'mapu g 4, Kaunas', '0.2', '5');
+                COMMIT;";
 
             SQLiteCommand fillTravelInfoTableCommand = new SQLiteCommand(fillTravelInfoTableQuery, dbConnection);
             fillTravelInfoTableCommand.ExecuteNonQuery();

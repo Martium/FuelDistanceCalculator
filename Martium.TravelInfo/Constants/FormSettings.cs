@@ -8,9 +8,10 @@ namespace Martium.TravelInfo.Constants
 {
     public static class FormSettings
     {
-        public static int Nation => 20;
-        public static int DepartureAddress => 40;
-        public static int FuelPrice => 10;
-        public static int AdditionalKm => 10;
+        public static class TextBoxLenghts
+        {
+            public static int Nation => 20;
+            public static int DepartureAddress => 40;
+        }
     }
 }
