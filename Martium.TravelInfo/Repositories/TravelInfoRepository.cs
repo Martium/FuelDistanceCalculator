@@ -24,5 +24,29 @@ namespace Martium.TravelInfo.Repositories
                 return existingInfo;
             }
         }
+
+        public bool UpdateExistingInfo(TravelInfoTextBoxModel updateInfo)
+        {
+            using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
+            {
+                dbConnection.Open();
+
+                string updateInfoCommand =
+                    @"@UPDATE 'TravelInfo' 
+	                    SET Nation = @Nation, DepartureAddress = @DepartureAddress , FuelPrice = @FuelPrice , AdditionalKm  = @AdditionalKm;";
+
+                object queryParameters = new
+                {
+                    updateInfo.Nation,
+                    updateInfo.DepartureAddress,
+                    updateInfo.FuelPrice,
+                    updateInfo.AdditionalKm
+                };
+
+                int affectedRows = dbConnection.Execute(updateInfoCommand, queryParameters);
+
+                return affectedRows == 1;
+            }
+        }
     }
 }
