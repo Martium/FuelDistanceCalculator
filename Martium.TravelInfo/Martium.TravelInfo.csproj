@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfiguration.cs" />
     <Compile Include="Constants\FormSettings.cs" />
     <Compile Include="Forms\TravelInfoForm.cs">
       <SubType>Form</SubType>
