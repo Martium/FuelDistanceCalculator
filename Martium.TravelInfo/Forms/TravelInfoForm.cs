@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Globalization;
+using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using Martium.TravelInfo.Models;
 using Martium.TravelInfo.Repositories;
@@ -16,10 +17,14 @@ namespace Martium.TravelInfo.Forms
             InitializeComponent();
 
             InitializeControls();
+            InitializeMap();
+        }
 
+        private void TravelInfoForm_Load(object sender, System.EventArgs e)
+        {
             LoadTravelInfoSettings();
 
-            InitializeMap();
+            SetMapPositionByAddress("Mapų g 4, Kaunas, Lietuva");
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -30,14 +35,24 @@ namespace Martium.TravelInfo.Forms
 
         private void InitializeControls()
         {
-            TripPriceTextBox.Enabled = false;
-            DistanceTextBox.Enabled = false;
+            ActiveControl = DepartureCountryLabel;
+
+            CalculatedTripPriceTextBox.Enabled = false;
+            CalculatedDistanceTextBox.Enabled = false;
             DepartureCountryTextBox.Enabled = false;
             CalculateButton.Enabled = false;
             SaveDepartureAddressButton.Enabled = false;
-            SaveKmPriceButton.Enabled = false;
-            SearchButton.Enabled = false;
-            SaveAdditionalKmButton.Enabled = false;
+            SavePricePerKmButton.Enabled = false;
+            SearchAddressButton.Enabled = false;
+            SaveAdditionalDistanceInKmButton.Enabled = false;
+        }
+
+        private void InitializeMap()
+        {
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            Map.MapProvider = OpenStreetMapProvider.Instance;
+            Map.ShowCenter = false;
+            //Map.DragButton = MouseButtons.Left; Drag map option 
         }
 
         private void LoadTravelInfoSettings()
@@ -46,19 +61,13 @@ namespace Martium.TravelInfo.Forms
 
             DepartureCountryTextBox.Text = travelInfoSettingsModel.DepartureCountry;
             DepartueAddressTextBox.Text = travelInfoSettingsModel.DepartureAddress;
-            KmPriceTextBox.Text = travelInfoSettingsModel.AdditionalDistanceInKm.ToString();
-            AdditionalKmTextBox.Text = travelInfoSettingsModel.AdditionalKm.ToString();
+            PricePerKm.Text = travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
+            AdditionalDistanceInKm.Text = travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void InitializeMap()
+        private void SetMapPositionByAddress(string address)
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
-            Map.MapProvider = OpenStreetMapProvider.Instance;
-            Map.SetPositionByKeywords("Mapų g 4, Kaunas, Lietuva");
-            Map.ShowCenter = false;
-            //Map.DragButton = MouseButtons.Left; Drag map option 
+            Map.SetPositionByKeywords(address);
         }
-
-        
     }
 }

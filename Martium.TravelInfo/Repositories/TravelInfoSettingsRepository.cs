@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using Dapper;
 using Martium.TravelInfo.Models;
 
@@ -15,9 +13,10 @@ namespace Martium.TravelInfo.Repositories
                 dbConnection.Open();
 
                 string getExistingInfoQuery =
-                    @"SELECT  
-                        TI.DepartureCountry , TI.DepartureAddress , TI.KmPrice , TI.AdditionalDistanceInKm 
-                      FROM TravelInfo TI";
+                    $@"SELECT  
+                        DepartureCountry, PricePerKm, 
+                        AdditionalDistanceInKm, DepartureAddress 
+                      FROM {AppConfiguration.TableName}";
                      
 
                 TravelInfoSettingsModel existingInfo = dbConnection.QuerySingle<TravelInfoSettingsModel>(getExistingInfoQuery);
@@ -33,15 +32,18 @@ namespace Martium.TravelInfo.Repositories
                 dbConnection.Open();
 
                 string updateInfoCommand =
-                    @"@UPDATE 'TravelInfo' 
-	                    SET DepartureCountry = @DepartureCountry, DepartureAddress = @DepartureAddress , KmPrice = @KmPrice , AdditionalDistanceInKm  = @AdditionalDistanceInKm;";
+                    $@"@UPDATE {AppConfiguration.TableName} 
+	                   SET 
+                           DepartureCountry = @DepartureCountry, PricePerKm = @PricePerKm,
+                           AdditionalDistanceInKm = @AdditionalDistanceInKm, DepartureAddress = @DepartureAddress
+                    ;";
 
                 object queryParameters = new
                 {
                     updateInfo.DepartureCountry,
-                    updateInfo.DepartureAddress, 
-                    updateInfo.KmPrice,
-                    updateInfo.AdditionalDistanceInKm
+                    updateInfo.PricePerKm,
+                    updateInfo.AdditionalDistanceInKm,
+                    updateInfo.DepartureAddress
                 };
 
                 int affectedRows = dbConnection.Execute(updateInfoCommand, queryParameters);

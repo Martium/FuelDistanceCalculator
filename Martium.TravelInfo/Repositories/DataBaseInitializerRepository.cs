@@ -57,17 +57,17 @@ namespace Martium.TravelInfo.Repositories
 
         private void CreateTravelInfoSettings(SQLiteConnection dbConnection)
         {
-            string dropTravelInfoSettingsQuery = GetDropTableQuery("TravelInfo");
+            string dropTravelInfoSettingsQuery = GetDropTableQuery(AppConfiguration.TableName);
             SQLiteCommand dropATravelInfoSettingsCommand = new SQLiteCommand(dropTravelInfoSettingsQuery, dbConnection);
             dropATravelInfoSettingsCommand.ExecuteNonQuery();
 
             string createTravelInfoSettingsQuery =
                 $@"                  
-				    CREATE TABLE [TravelInfo] (
+				    CREATE TABLE [{AppConfiguration.TableName}] (
 						[DepartureCountry] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureCountry}) NOT NULL,
-						[DepartureAddress] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureAddress}) NULL,
-						[AdditionalDistanceInKm] [double] NOT NULL,
-						[AdditionalKm] [double] NOT NULL 
+						[PricePerKm] [double] NOT NULL,
+                        [AdditionalDistanceInKm] [double] NOT NULL,
+                        [DepartureAddress] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureAddress}) NULL
 						)";
 
             SQLiteCommand createTravelInfoTableCommand =
@@ -78,9 +78,9 @@ namespace Martium.TravelInfo.Repositories
         private void FillDefaultTravelInfoSettings(SQLiteConnection dbConnection)
         {
             string fillTravelInfoSettingsQuery =
-                @"BEGIN TRANSACTION;
-	                INSERT INTO 'TravelInfo' 
-	                    VALUES ('LTU', 'mapu g 4, Kaunas', '0.2', '0');
+                $@"BEGIN TRANSACTION;
+	                INSERT INTO [{AppConfiguration.TableName}] 
+	                    VALUES ('LTU', '0.2', '0', 'Mapų g. 4, Kaunas');
                 COMMIT;";
 
             SQLiteCommand fillTravelInfoSettingsCommand = new SQLiteCommand(fillTravelInfoSettingsQuery, dbConnection);
