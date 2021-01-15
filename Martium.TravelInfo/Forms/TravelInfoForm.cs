@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
@@ -67,15 +68,16 @@ namespace Martium.TravelInfo.Forms
             DepartureCountryTextBox.Text = _travelInfoSettingsModel.DepartureCountry;
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
-            AdditionalDistanceInKm.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+            AdditionalDistanceInKmTextBox.Text =
+                _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
         }
 
         private void DepartureCountryTextBox_TextChanged(object sender, System.EventArgs e)
         {
-            /*if (DepartureCountryTextBox.Text == "LTU")
+            if (DepartureCountryTextBox.Text == "LTU")
             {
-                DepartureCountryTextBox.Text = "Lietuva";
-            }*/
+                DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
+            }
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
@@ -99,8 +101,10 @@ namespace Martium.TravelInfo.Forms
         private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
         {
             //EnableSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKm); 
-            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKm.Text);
+            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKmTextBox.Text);
         }
+
+
 
         private void SetMapPositionByAddress(string address)
         {
@@ -113,11 +117,13 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void EnableSaveButton(Button buttonName,TextBox textBox) // idea but not working as it should
+        private void EnableSaveButton(Button buttonName, TextBox textBox) // idea but not working as it should
         {
-            if (!string.IsNullOrWhiteSpace(textBox.Text) && CheckIsDouble(AdditionalDistanceInKm.Text) && CheckIsDouble(PricePerKm.Text))
+            if (!string.IsNullOrWhiteSpace(textBox.Text) && CheckIsDouble(AdditionalDistanceInKmTextBox.Text) &&
+                CheckIsDouble(PricePerKm.Text))
             {
                 buttonName.Enabled = true;
+
             }
             else
             {
@@ -151,7 +157,7 @@ namespace Martium.TravelInfo.Forms
             {
                 DepartureCountry = DepartureCountryTextBox.Text,
                 DepartureAddress = DepartureAddressTextBox.Text,
-                AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKm.Text),
+                AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text),
                 PricePerKm = double.Parse(PricePerKm.Text)
             };
 
@@ -169,13 +175,18 @@ namespace Martium.TravelInfo.Forms
             {
                 ShowErrorDialog(errorMessage);
             }
+        }
 
-
-
-
-
-
-
+        private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(AdditionalDistanceInKmTextBox.Text) && !CheckIsDouble(AdditionalDistanceInKmTextBox.Text))
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                e.Cancel = false;
+            }
         }
     }
 }

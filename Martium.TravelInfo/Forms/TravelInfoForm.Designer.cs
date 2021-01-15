@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel;
+
 namespace Martium.TravelInfo.Forms
 {
     partial class TravelInfoForm
@@ -38,7 +40,7 @@ namespace Martium.TravelInfo.Forms
             this.SaveAdditionalDistanceInKmButton = new System.Windows.Forms.Button();
             this.SavePricePerKmButton = new System.Windows.Forms.Button();
             this.AdditionalKmLabel = new System.Windows.Forms.Label();
-            this.AdditionalDistanceInKm = new System.Windows.Forms.TextBox();
+            this.AdditionalDistanceInKmTextBox = new System.Windows.Forms.TextBox();
             this.CalculatedTripPriceTextBox = new System.Windows.Forms.TextBox();
             this.CalculatedDistanceTextBox = new System.Windows.Forms.TextBox();
             this.CalculatedTripPriceLabel = new System.Windows.Forms.Label();
@@ -64,7 +66,7 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Controls.Add(this.SaveAdditionalDistanceInKmButton);
             this.InfoPanel.Controls.Add(this.SavePricePerKmButton);
             this.InfoPanel.Controls.Add(this.AdditionalKmLabel);
-            this.InfoPanel.Controls.Add(this.AdditionalDistanceInKm);
+            this.InfoPanel.Controls.Add(this.AdditionalDistanceInKmTextBox);
             this.InfoPanel.Controls.Add(this.CalculatedTripPriceTextBox);
             this.InfoPanel.Controls.Add(this.CalculatedDistanceTextBox);
             this.InfoPanel.Controls.Add(this.CalculatedTripPriceLabel);
@@ -151,13 +153,14 @@ namespace Martium.TravelInfo.Forms
             this.AdditionalKmLabel.TabIndex = 13;
             this.AdditionalKmLabel.Text = "Papildomi kilometrai";
             // 
-            // AdditionalDistanceInKm
+            // AdditionalDistanceInKmTextBox
             // 
-            this.AdditionalDistanceInKm.Location = new System.Drawing.Point(39, 324);
-            this.AdditionalDistanceInKm.Name = "AdditionalDistanceInKm";
-            this.AdditionalDistanceInKm.Size = new System.Drawing.Size(100, 20);
-            this.AdditionalDistanceInKm.TabIndex = 12;
-            this.AdditionalDistanceInKm.TextChanged += new System.EventHandler(this.AdditionalDistanceInKm_TextChanged);
+            this.AdditionalDistanceInKmTextBox.Location = new System.Drawing.Point(39, 324);
+            this.AdditionalDistanceInKmTextBox.Name = "AdditionalDistanceInKmTextBox";
+            this.AdditionalDistanceInKmTextBox.Size = new System.Drawing.Size(100, 20);
+            this.AdditionalDistanceInKmTextBox.TabIndex = 12;
+            this.AdditionalDistanceInKmTextBox.TextChanged += new System.EventHandler(this.AdditionalDistanceInKm_TextChanged);
+            this.AdditionalDistanceInKmTextBox.Validating += new CancelEventHandler(this.AdditionalDistanceInKmTextBox_Validating);
             // 
             // CalculatedTripPriceTextBox
             // 
@@ -318,7 +321,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Button SaveAdditionalDistanceInKmButton;
         private System.Windows.Forms.Button SavePricePerKmButton;
         private System.Windows.Forms.Label AdditionalKmLabel;
-        private System.Windows.Forms.TextBox AdditionalDistanceInKm;
+        private System.Windows.Forms.TextBox AdditionalDistanceInKmTextBox;
         private System.Windows.Forms.Label ArrivalAdressLabel;
         private System.Windows.Forms.TextBox DepartureAddressTextBox;
         private System.Windows.Forms.Label DepartureAddressLabel;
