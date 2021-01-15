@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using Martium.TravelInfo.Models;
@@ -43,7 +44,7 @@ namespace Martium.TravelInfo.Forms
             CalculateButton.Enabled = false;
             //SaveDepartureAddressButton.Enabled = false;
             SavePricePerKmButton.Enabled = false;
-            SearchRouteButton.Enabled = false;
+            //SearchRouteButton.Enabled = false;
             SaveAdditionalDistanceInKmButton.Enabled = false;
         }
 
@@ -76,7 +77,7 @@ namespace Martium.TravelInfo.Forms
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
         {
             SaveDepartureAddressButton.Enabled = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text);
-            
+            EnableSearchRouteButton();
         }
 
         private void SetMapPositionByAddress(string address)
@@ -90,6 +91,27 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        
+        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            EnableSearchRouteButton();
+        }
+
+        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
+        {
+            SavePricePerKmButton.Enabled = CheckIsDouble(PricePerKm.Text);
+        }
+
+        private bool CheckIsDouble(string text)
+        {
+            double success;
+            bool IsParsable = double.TryParse(text, out success);
+
+            return IsParsable;
+        }
+
+        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
+        {
+            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKm.Text);
+        }
     }
 }

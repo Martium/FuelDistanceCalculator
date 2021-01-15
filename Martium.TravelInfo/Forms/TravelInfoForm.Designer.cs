@@ -95,6 +95,7 @@ namespace Martium.TravelInfo.Forms
             this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
             this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.ArrivalAddressTextBox.TabIndex = 19;
+            this.ArrivalAddressTextBox.TextChanged += new System.EventHandler(this.ArrivalAddressTextBox_TextChanged);
             // 
             // ArrivalAdressLabel
             // 
@@ -155,6 +156,7 @@ namespace Martium.TravelInfo.Forms
             this.AdditionalDistanceInKm.Name = "AdditionalDistanceInKm";
             this.AdditionalDistanceInKm.Size = new System.Drawing.Size(100, 20);
             this.AdditionalDistanceInKm.TabIndex = 12;
+            this.AdditionalDistanceInKm.TextChanged += new System.EventHandler(this.AdditionalDistanceInKm_TextChanged);
             // 
             // CalculatedTripPriceTextBox
             // 
@@ -212,6 +214,7 @@ namespace Martium.TravelInfo.Forms
             this.PricePerKm.Name = "PricePerKm";
             this.PricePerKm.Size = new System.Drawing.Size(100, 20);
             this.PricePerKm.TabIndex = 5;
+            this.PricePerKm.TextChanged += new System.EventHandler(this.PricePerKm_TextChanged);
             // 
             // FuelPriceLabel
             // 
