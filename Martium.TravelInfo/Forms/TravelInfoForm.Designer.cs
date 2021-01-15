@@ -88,6 +88,7 @@ namespace Martium.TravelInfo.Forms
             this.SaveDepartureAddressButton.TabIndex = 20;
             this.SaveDepartureAddressButton.Text = "Išsaugoti";
             this.SaveDepartureAddressButton.UseVisualStyleBackColor = true;
+            this.SaveDepartureAddressButton.Click += new System.EventHandler(this.SaveDepartureAddressButton_Click);
             // 
             // ArrivalAddressTextBox
             // 

@@ -72,10 +72,10 @@ namespace Martium.TravelInfo.Forms
 
         private void DepartureCountryTextBox_TextChanged(object sender, System.EventArgs e)
         {
-            if (DepartureCountryTextBox.Text == "LTU")
+            /*if (DepartureCountryTextBox.Text == "LTU")
             {
                 DepartureCountryTextBox.Text = "Lietuva";
-            }
+            }*/
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
@@ -83,7 +83,6 @@ namespace Martium.TravelInfo.Forms
             SaveDepartureAddressButton.Enabled = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text);
             //EnableSaveButton(SaveDepartureAddressButton, DepartureAddressTextBox);
             EnableSearchRouteButton();
-            Refresh();
         }
 
         private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
@@ -132,6 +131,51 @@ namespace Martium.TravelInfo.Forms
             bool IsParsable = double.TryParse(text, out success);
 
             return IsParsable;
+        }
+
+        private static void ShowInformationDialog(string message)
+        {
+            MessageBox.Show(message, "Info pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private static void ShowErrorDialog(string message)
+        {
+            MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+
+
+        private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel = new TravelInfoSettingsModel()
+            {
+                DepartureCountry = DepartureCountryTextBox.Text,
+                DepartureAddress = DepartureAddressTextBox.Text,
+                AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKm.Text),
+                PricePerKm = double.Parse(PricePerKm.Text)
+            };
+
+            bool success;
+            string successMessage = "Išsaugota sekmingai";
+            string errorMessage = "Neišsaugota bandykite dar kartą";
+
+            success = _travelInfoRepository.UpdateExistingInfo(_travelInfoSettingsModel);
+
+            if (success)
+            {
+                ShowInformationDialog(successMessage);
+            }
+            else
+            {
+                ShowErrorDialog(errorMessage);
+            }
+
+
+
+
+
+
+
         }
     }
 }

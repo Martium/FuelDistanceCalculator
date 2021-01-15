@@ -36,7 +36,7 @@ namespace Martium.TravelInfo.Repositories
 	                   SET 
                            DepartureCountry = @DepartureCountry, PricePerKm = @PricePerKm,
                            AdditionalDistanceInKm = @AdditionalDistanceInKm, DepartureAddress = @DepartureAddress
-                    ;";
+                     ";
 
                 object queryParameters = new
                 {
