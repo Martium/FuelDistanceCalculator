@@ -80,6 +80,21 @@ namespace Martium.TravelInfo.Forms
             EnableSearchRouteButton();
         }
 
+        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            EnableSearchRouteButton();
+        }
+
+        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
+        {
+            SavePricePerKmButton.Enabled = CheckIsDouble(PricePerKm.Text);
+        }
+
+        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
+        {
+            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKm.Text);
+        }
+
         private void SetMapPositionByAddress(string address)
         {
             Map.SetPositionByKeywords(address);
@@ -91,27 +106,12 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            EnableSearchRouteButton();
-        }
-
-        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
-        {
-            SavePricePerKmButton.Enabled = CheckIsDouble(PricePerKm.Text);
-        }
-
         private bool CheckIsDouble(string text)
         {
             double success;
             bool IsParsable = double.TryParse(text, out success);
 
             return IsParsable;
-        }
-
-        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
-        {
-            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKm.Text);
         }
     }
 }
