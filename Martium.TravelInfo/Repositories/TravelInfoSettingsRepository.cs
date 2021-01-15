@@ -32,7 +32,7 @@ namespace Martium.TravelInfo.Repositories
                 dbConnection.Open();
 
                 string updateInfoCommand =
-                    $@"@UPDATE {AppConfiguration.TableName} 
+                    $@"UPDATE {AppConfiguration.TableName}
 	                   SET 
                            DepartureCountry = @DepartureCountry, PricePerKm = @PricePerKm,
                            AdditionalDistanceInKm = @AdditionalDistanceInKm, DepartureAddress = @DepartureAddress
