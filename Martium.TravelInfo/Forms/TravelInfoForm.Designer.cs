@@ -33,7 +33,7 @@ namespace Martium.TravelInfo.Forms
             this.SaveDepartureAddressButton = new System.Windows.Forms.Button();
             this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
             this.ArrivalAdressLabel = new System.Windows.Forms.Label();
-            this.DepartueAddressTextBox = new System.Windows.Forms.TextBox();
+            this.DepartureAddressTextBox = new System.Windows.Forms.TextBox();
             this.DepartureAddressLabel = new System.Windows.Forms.Label();
             this.SaveAdditionalDistanceInKmButton = new System.Windows.Forms.Button();
             this.SavePricePerKmButton = new System.Windows.Forms.Button();
@@ -44,7 +44,7 @@ namespace Martium.TravelInfo.Forms
             this.CalculatedTripPriceLabel = new System.Windows.Forms.Label();
             this.CalculateButton = new System.Windows.Forms.Button();
             this.CalculatedDistanceLabel = new System.Windows.Forms.Label();
-            this.SearchAddressButton = new System.Windows.Forms.Button();
+            this.SearchRouteButton = new System.Windows.Forms.Button();
             this.PricePerKm = new System.Windows.Forms.TextBox();
             this.FuelPriceLabel = new System.Windows.Forms.Label();
             this.DepartureCountryTextBox = new System.Windows.Forms.TextBox();
@@ -59,7 +59,7 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Controls.Add(this.SaveDepartureAddressButton);
             this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
             this.InfoPanel.Controls.Add(this.ArrivalAdressLabel);
-            this.InfoPanel.Controls.Add(this.DepartueAddressTextBox);
+            this.InfoPanel.Controls.Add(this.DepartureAddressTextBox);
             this.InfoPanel.Controls.Add(this.DepartureAddressLabel);
             this.InfoPanel.Controls.Add(this.SaveAdditionalDistanceInKmButton);
             this.InfoPanel.Controls.Add(this.SavePricePerKmButton);
@@ -70,7 +70,7 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Controls.Add(this.CalculatedTripPriceLabel);
             this.InfoPanel.Controls.Add(this.CalculateButton);
             this.InfoPanel.Controls.Add(this.CalculatedDistanceLabel);
-            this.InfoPanel.Controls.Add(this.SearchAddressButton);
+            this.InfoPanel.Controls.Add(this.SearchRouteButton);
             this.InfoPanel.Controls.Add(this.PricePerKm);
             this.InfoPanel.Controls.Add(this.FuelPriceLabel);
             this.InfoPanel.Controls.Add(this.DepartureCountryTextBox);
@@ -105,12 +105,13 @@ namespace Martium.TravelInfo.Forms
             this.ArrivalAdressLabel.TabIndex = 18;
             this.ArrivalAdressLabel.Text = "Atvykimo adresas";
             // 
-            // DepartueAddressTextBox
+            // DepartureAddressTextBox
             // 
-            this.DepartueAddressTextBox.Location = new System.Drawing.Point(39, 111);
-            this.DepartueAddressTextBox.Name = "DepartueAddressTextBox";
-            this.DepartueAddressTextBox.Size = new System.Drawing.Size(215, 20);
-            this.DepartueAddressTextBox.TabIndex = 17;
+            this.DepartureAddressTextBox.Location = new System.Drawing.Point(39, 111);
+            this.DepartureAddressTextBox.Name = "DepartureAddressTextBox";
+            this.DepartureAddressTextBox.Size = new System.Drawing.Size(215, 20);
+            this.DepartureAddressTextBox.TabIndex = 17;
+            this.DepartureAddressTextBox.TextChanged += new System.EventHandler(this.DepartureAddressTextBox_TextChanged);
             // 
             // DepartureAddressLabel
             // 
@@ -196,14 +197,14 @@ namespace Martium.TravelInfo.Forms
             this.CalculatedDistanceLabel.TabIndex = 7;
             this.CalculatedDistanceLabel.Text = "Atstumas, km:";
             // 
-            // SearchAddressButton
+            // SearchRouteButton
             // 
-            this.SearchAddressButton.Location = new System.Drawing.Point(39, 176);
-            this.SearchAddressButton.Name = "SearchAddressButton";
-            this.SearchAddressButton.Size = new System.Drawing.Size(70, 22);
-            this.SearchAddressButton.TabIndex = 6;
-            this.SearchAddressButton.Text = "Ieškoti";
-            this.SearchAddressButton.UseVisualStyleBackColor = true;
+            this.SearchRouteButton.Location = new System.Drawing.Point(39, 176);
+            this.SearchRouteButton.Name = "SearchRouteButton";
+            this.SearchRouteButton.Size = new System.Drawing.Size(70, 22);
+            this.SearchRouteButton.TabIndex = 6;
+            this.SearchRouteButton.Text = "Ieškoti";
+            this.SearchRouteButton.UseVisualStyleBackColor = true;
             // 
             // PricePerKm
             // 
@@ -227,6 +228,7 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCountryTextBox.Name = "DepartureCountryTextBox";
             this.DepartureCountryTextBox.Size = new System.Drawing.Size(100, 20);
             this.DepartureCountryTextBox.TabIndex = 1;
+            this.DepartureCountryTextBox.TextChanged += new System.EventHandler(this.DepartureCountryTextBox_TextChanged);
             // 
             // DepartureCountryLabel
             // 
@@ -304,7 +306,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.TextBox DepartureCountryTextBox;
         private System.Windows.Forms.Label DepartureCountryLabel;
         private System.Windows.Forms.Label CalculatedDistanceLabel;
-        private System.Windows.Forms.Button SearchAddressButton;
+        private System.Windows.Forms.Button SearchRouteButton;
         private System.Windows.Forms.TextBox CalculatedDistanceTextBox;
         private System.Windows.Forms.Label CalculatedTripPriceLabel;
         private System.Windows.Forms.Button CalculateButton;
@@ -314,7 +316,7 @@ namespace Martium.TravelInfo.Forms
         private System.Windows.Forms.Label AdditionalKmLabel;
         private System.Windows.Forms.TextBox AdditionalDistanceInKm;
         private System.Windows.Forms.Label ArrivalAdressLabel;
-        private System.Windows.Forms.TextBox DepartueAddressTextBox;
+        private System.Windows.Forms.TextBox DepartureAddressTextBox;
         private System.Windows.Forms.Label DepartureAddressLabel;
         private System.Windows.Forms.TextBox ArrivalAddressTextBox;
         private GMap.NET.WindowsForms.GMapControl Map;

@@ -41,9 +41,9 @@ namespace Martium.TravelInfo.Forms
             CalculatedDistanceTextBox.Enabled = false;
             DepartureCountryTextBox.Enabled = false;
             CalculateButton.Enabled = false;
-            SaveDepartureAddressButton.Enabled = false;
+            //SaveDepartureAddressButton.Enabled = false;
             SavePricePerKmButton.Enabled = false;
-            SearchAddressButton.Enabled = false;
+            SearchRouteButton.Enabled = false;
             SaveAdditionalDistanceInKmButton.Enabled = false;
         }
 
@@ -60,14 +60,36 @@ namespace Martium.TravelInfo.Forms
             TravelInfoSettingsModel travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
 
             DepartureCountryTextBox.Text = travelInfoSettingsModel.DepartureCountry;
-            DepartueAddressTextBox.Text = travelInfoSettingsModel.DepartureAddress;
+            DepartureAddressTextBox.Text = travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKm.Text = travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void DepartureCountryTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            if (DepartureCountryTextBox.Text == "LTU")
+            {
+                DepartureCountryTextBox.Text = "Lietuva";
+            }
+        }
+
+        private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            SaveDepartureAddressButton.Enabled = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text);
+            
         }
 
         private void SetMapPositionByAddress(string address)
         {
             Map.SetPositionByKeywords(address);
         }
+
+        private void EnableSearchRouteButton()
+        {
+            SearchRouteButton.Enabled = (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
+                                         !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
+        }
+
+        
     }
 }
