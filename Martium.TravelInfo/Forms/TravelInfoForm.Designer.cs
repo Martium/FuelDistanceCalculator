@@ -219,6 +219,7 @@ namespace Martium.TravelInfo.Forms
             this.PricePerKm.Size = new System.Drawing.Size(100, 20);
             this.PricePerKm.TabIndex = 5;
             this.PricePerKm.TextChanged += new System.EventHandler(this.PricePerKm_TextChanged);
+            this.PricePerKm.Validating += new CancelEventHandler(this.PricePerKm_Validating);
             // 
             // FuelPriceLabel
             // 

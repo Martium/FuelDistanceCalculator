@@ -179,7 +179,21 @@ namespace Martium.TravelInfo.Forms
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(AdditionalDistanceInKmTextBox.Text) && !CheckIsDouble(AdditionalDistanceInKmTextBox.Text))
+           CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox);
+        }
+
+        private void PricePerKm_Validating(object sender, CancelEventArgs e)
+        {
+            CheckTextBoxValidation(e, PricePerKm);
+        }
+
+        private void CheckTextBoxValidation(CancelEventArgs e, TextBox textBox)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                e.Cancel = true;
+            }
+            else if (!CheckIsDouble(textBox.Text))
             {
                 e.Cancel = true;
             }
