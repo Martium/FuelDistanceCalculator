@@ -31,9 +31,11 @@ namespace Martium.TravelInfo.Forms
         {
             LoadTravelInfoSettings();
 
-            ChangeDepartureTextBoxText();
+            ChangeDepartureCountryTextBoxText();
 
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
+
+            //CheckIfInfoExists();
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -72,6 +74,7 @@ namespace Martium.TravelInfo.Forms
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
         {
+            //CheckIfInfoExists();
             EnableSaveButton(DepartureAddressTextBox);
             EnableSearchRouteButton();
         }
@@ -100,6 +103,7 @@ namespace Martium.TravelInfo.Forms
             CalculatedTripPriceTextBox.Enabled = false;
             CalculatedDistanceTextBox.Enabled = false;
             DepartureCountryTextBox.Enabled = false;
+
             CalculateButton.Enabled = false;
         }
 
@@ -229,7 +233,7 @@ namespace Martium.TravelInfo.Forms
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
         }
 
-        private void ChangeDepartureTextBoxText()
+        private void ChangeDepartureCountryTextBoxText()
         {
             if (DepartureCountryTextBox.Text == "LTU")
             {
