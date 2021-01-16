@@ -84,15 +84,13 @@ namespace Martium.TravelInfo.Forms
 
         private void PricePerKm_TextChanged(object sender, System.EventArgs e)
         {
-            EnableSaveButton(PricePerKm);
+            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm);
         }
 
         private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
         {
-            EnableSaveButton(AdditionalDistanceInKmTextBox);
+            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox);
         }
-
-
 
         private void SetMapPositionByAddress(string address)
         {
@@ -107,14 +105,13 @@ namespace Martium.TravelInfo.Forms
 
         private void EnableSaveButton(TextBox textBox) 
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text) || !CheckIsDouble(AdditionalDistanceInKmTextBox.Text) ||
-                !CheckIsDouble(PricePerKm.Text))
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-              ControlAllSaveButtons(false);
+                SaveDepartureAddressButton.Enabled = false;
             }
             else
             {
-                ControlAllSaveButtons(true);
+                SaveDepartureAddressButton.Enabled = true;
             }
         }
 
@@ -136,25 +133,14 @@ namespace Martium.TravelInfo.Forms
             MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-
-
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
-
-
+            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
             UpdateNewInfo();
         }
 
         private void UpdateNewInfo()
         {
-            _travelInfoSettingsModel = new TravelInfoSettingsModel()
-            {
-                DepartureCountry = "LTU",
-                DepartureAddress = DepartureAddressTextBox.Text,
-                AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text),
-                PricePerKm = double.Parse(PricePerKm.Text)
-            };
-
             bool success;
             string successMessage = "Išsaugota sekmingai";
             string errorMessage = "Neišsaugota bandykite dar kartą";
@@ -173,31 +159,31 @@ namespace Martium.TravelInfo.Forms
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
         {
-           CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox);
+           CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton);
         }
 
         private void PricePerKm_Validating(object sender, CancelEventArgs e)
         {
-            CheckTextBoxValidation(e, PricePerKm);
+            CheckTextBoxValidation(e, PricePerKm, SavePricePerKmButton);
         }
 
-        private void CheckTextBoxValidation(CancelEventArgs e, TextBox textBox)
+        private void CheckTextBoxValidation(CancelEventArgs e, TextBox textBox, Button button)
         {
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                ControlAllSaveButtons(false);
+                button.Enabled = false;
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis negali būti tuščias", textBox, errorLabel);
+                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius", textBox, errorLabel);
             }
             else if (!CheckIsDouble(textBox.Text))
             {
-                ControlAllSaveButtons(false);
+                button.Enabled = false;
                 e.Cancel = true;
                 OpenErrorLabel("Raudonas langelis turi būti skaičius", textBox, errorLabel);
             }
             else
             {
-                ControlAllSaveButtons(true);
+                button.Enabled = true;
                 e.Cancel = false;
                 HideLabelAndTextBoxError(errorLabel, textBox);
             }
@@ -216,20 +202,15 @@ namespace Martium.TravelInfo.Forms
             textBox.BackColor = Color.White;
         }
 
-        private void ControlAllSaveButtons(bool control)
-        {
-            SaveDepartureAddressButton.Enabled = control;
-            SaveAdditionalDistanceInKmButton.Enabled = control;
-            SavePricePerKmButton.Enabled = control;
-        }
-
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
         {
+            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
             UpdateNewInfo();
         }
 
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
+            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
             UpdateNewInfo();
         }
 
@@ -243,6 +224,22 @@ namespace Martium.TravelInfo.Forms
             if (DepartureCountryTextBox.Text == "LTU")
             {
                 DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
+            }
+        }
+
+        private void EnableDoubleSaveButton(Button button, TextBox textBox)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                button.Enabled = false;
+            }
+            else if (!CheckIsDouble(textBox.Text))
+            {
+                button.Enabled = false;
+            }
+            else
+            {
+                button.Enabled = true;
             }
         }
     }
