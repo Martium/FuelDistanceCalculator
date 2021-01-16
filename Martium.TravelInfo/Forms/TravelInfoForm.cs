@@ -50,13 +50,13 @@ namespace Martium.TravelInfo.Forms
 
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
-            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
+            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
             UpdateNewInfo();
         }
 
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
         {
-            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
+            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
             UpdateNewInfo();
         }
 
@@ -147,10 +147,18 @@ namespace Martium.TravelInfo.Forms
 
         private bool CheckIsDouble(string text)
         {
-            double success;
-            bool IsParsable = double.TryParse(text, out success);
+            bool success = true;
 
-            return IsParsable;
+            try
+            {
+                var parsedDouble = double.Parse(text, CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return success;
         }
 
         private static void ShowInformationDialog(string message)
@@ -187,13 +195,13 @@ namespace Martium.TravelInfo.Forms
             {
                 button.Enabled = false;
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius", textBox, errorLabel);
+                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius pvz. '0,2'", textBox, errorLabel);
             }
             else if (!CheckIsDouble(textBox.Text))
             {
                 button.Enabled = false;
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis turi būti skaičius", textBox, errorLabel);
+                OpenErrorLabel("Raudonas langelis turi būti skaičius pvz. '0,2'", textBox, errorLabel);
             }
             else
             {

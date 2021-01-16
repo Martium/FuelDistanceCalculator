@@ -32,6 +32,7 @@ namespace Martium.TravelInfo.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.errorLabel = new System.Windows.Forms.Label();
             this.SaveDepartureAddressButton = new System.Windows.Forms.Button();
             this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
             this.ArrivalAdressLabel = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.errorLabel = new System.Windows.Forms.Label();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,6 +83,17 @@ namespace Martium.TravelInfo.Forms
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(40, 359);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(28, 13);
+            this.errorLabel.TabIndex = 21;
+            this.errorLabel.Text = "error";
+            this.errorLabel.Visible = false;
             // 
             // SaveDepartureAddressButton
             // 
@@ -286,17 +297,6 @@ namespace Martium.TravelInfo.Forms
             this.MapContributorLinkLabel.TabStop = true;
             this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
-            // 
-            // errorLabel
-            // 
-            this.errorLabel.AutoSize = true;
-            this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(40, 233);
-            this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(28, 13);
-            this.errorLabel.TabIndex = 21;
-            this.errorLabel.Text = "error";
-            this.errorLabel.Visible = false;
             // 
             // TravelInfoForm
             // 
