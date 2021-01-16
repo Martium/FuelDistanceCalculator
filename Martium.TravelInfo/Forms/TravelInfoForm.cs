@@ -42,14 +42,23 @@ namespace Martium.TravelInfo.Forms
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
 
+        private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
+            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
+            UpdateNewInfo();
+        }
+
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
+            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
             _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
             UpdateNewInfo();
         }
 
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
         {
+            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
             _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
             UpdateNewInfo();
         }
@@ -155,12 +164,6 @@ namespace Martium.TravelInfo.Forms
         private static void ShowErrorDialog(string message)
         {
             MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
-            UpdateNewInfo();
         }
 
         private void UpdateNewInfo()
