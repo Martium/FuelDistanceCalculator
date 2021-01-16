@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
+using Martium.TravelInfo.Constants;
 using Martium.TravelInfo.Models;
 using Martium.TravelInfo.Repositories;
 
@@ -23,6 +24,7 @@ namespace Martium.TravelInfo.Forms
             InitializeComponent();
 
             InitializeControls();
+            SetTextBoxMaxLengths();
             InitializeMap();
         }
 
@@ -30,8 +32,7 @@ namespace Martium.TravelInfo.Forms
         {
             LoadTravelInfoSettings();
 
-            SetMapPositionByAddress("Mapų g 4, Kaunas, Lietuva");
-
+            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -48,10 +49,6 @@ namespace Martium.TravelInfo.Forms
             CalculatedDistanceTextBox.Enabled = false;
             DepartureCountryTextBox.Enabled = false;
             CalculateButton.Enabled = false;
-            //SaveDepartureAddressButton.Enabled = false;
-            //SavePricePerKmButton.Enabled = false;
-            //SearchRouteButton.Enabled = false;
-            //SaveAdditionalDistanceInKmButton.Enabled = false;
         }
 
         private void InitializeMap()
@@ -239,6 +236,11 @@ namespace Martium.TravelInfo.Forms
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
             UpdateNewInfo();
+        }
+
+        private void SetTextBoxMaxLengths()
+        {
+            DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
         }
     }
 }
