@@ -117,8 +117,8 @@ namespace Martium.TravelInfo.Forms
 
         private void EnableSaveButton(TextBox textBox) // idea but not working as it should
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text) && CheckIsDouble(AdditionalDistanceInKmTextBox.Text) &&
-                CheckIsDouble(PricePerKm.Text))
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !CheckIsDouble(AdditionalDistanceInKmTextBox.Text) ||
+                !CheckIsDouble(PricePerKm.Text))
             {
               ControlAllSaveButtons(false);
             }
