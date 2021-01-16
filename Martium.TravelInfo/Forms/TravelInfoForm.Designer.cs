@@ -240,7 +240,6 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCountryTextBox.Name = "DepartureCountryTextBox";
             this.DepartureCountryTextBox.Size = new System.Drawing.Size(100, 20);
             this.DepartureCountryTextBox.TabIndex = 1;
-            this.DepartureCountryTextBox.TextChanged += new System.EventHandler(this.DepartureCountryTextBox_TextChanged);
             // 
             // DepartureCountryLabel
             // 

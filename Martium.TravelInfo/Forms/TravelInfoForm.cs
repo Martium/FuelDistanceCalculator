@@ -19,7 +19,6 @@ namespace Martium.TravelInfo.Forms
         public TravelInfoForm()
         {
             _travelInfoRepository = new TravelInfoRepository();
-            _travelInfoSettingsModel = new TravelInfoSettingsModel();
 
             InitializeComponent();
 
@@ -31,6 +30,8 @@ namespace Martium.TravelInfo.Forms
         private void TravelInfoForm_Load(object sender, System.EventArgs e)
         {
             LoadTravelInfoSettings();
+
+            ChangeDepartureTextBoxText();
 
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
         }
@@ -68,14 +69,6 @@ namespace Martium.TravelInfo.Forms
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text =
                 _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
-        }
-
-        private void DepartureCountryTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            if (DepartureCountryTextBox.Text == "LTU")
-            {
-                DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
-            }
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
@@ -147,6 +140,8 @@ namespace Martium.TravelInfo.Forms
 
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
+
+
             UpdateNewInfo();
         }
 
@@ -241,6 +236,14 @@ namespace Martium.TravelInfo.Forms
         private void SetTextBoxMaxLengths()
         {
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
+        }
+
+        private void ChangeDepartureTextBoxText()
+        {
+            if (DepartureCountryTextBox.Text == "LTU")
+            {
+                DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
+            }
         }
     }
 }
