@@ -42,6 +42,51 @@ namespace Martium.TravelInfo.Forms
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
 
+        private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
+            UpdateNewInfo();
+        }
+
+        private void SavePricePerKmButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
+            UpdateNewInfo();
+        }
+
+        private void PricePerKm_Validating(object sender, CancelEventArgs e)
+        {
+            CheckTextBoxValidation(e, PricePerKm, SavePricePerKmButton);
+        }
+
+        private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton);
+        }
+
+        private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            EnableSaveButton(DepartureAddressTextBox);
+            EnableSearchRouteButton();
+        }
+
+        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            EnableSearchRouteButton();
+        }
+
+        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
+        {
+            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm);
+        }
+
+        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
+        {
+            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox);
+        }
+
+        #region MyMethods
+
         private void InitializeControls()
         {
             ActiveControl = DepartureCountryLabel;
@@ -71,27 +116,6 @@ namespace Martium.TravelInfo.Forms
                 _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            EnableSaveButton(DepartureAddressTextBox);
-            EnableSearchRouteButton();
-        }
-
-        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            EnableSearchRouteButton();
-        }
-
-        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
-        {
-            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm);
-        }
-
-        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
-        {
-            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox);
-        }
-
         private void SetMapPositionByAddress(string address)
         {
             Map.SetPositionByKeywords(address);
@@ -103,7 +127,7 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void EnableSaveButton(TextBox textBox) 
+        private void EnableSaveButton(TextBox textBox)
         {
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
@@ -157,16 +181,6 @@ namespace Martium.TravelInfo.Forms
             }
         }
 
-        private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
-        {
-           CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton);
-        }
-
-        private void PricePerKm_Validating(object sender, CancelEventArgs e)
-        {
-            CheckTextBoxValidation(e, PricePerKm, SavePricePerKmButton);
-        }
-
         private void CheckTextBoxValidation(CancelEventArgs e, TextBox textBox, Button button)
         {
             if (string.IsNullOrWhiteSpace(textBox.Text))
@@ -202,18 +216,6 @@ namespace Martium.TravelInfo.Forms
             textBox.BackColor = Color.White;
         }
 
-        private void SavePricePerKmButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
-            UpdateNewInfo();
-        }
-
-        private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
-            UpdateNewInfo();
-        }
-
         private void SetTextBoxMaxLengths()
         {
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
@@ -242,5 +244,6 @@ namespace Martium.TravelInfo.Forms
                 button.Enabled = true;
             }
         }
+        #endregion
     }
 }
