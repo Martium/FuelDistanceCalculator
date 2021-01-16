@@ -136,6 +136,7 @@ namespace Martium.TravelInfo.Forms
             this.SaveAdditionalDistanceInKmButton.TabIndex = 15;
             this.SaveAdditionalDistanceInKmButton.Text = "Išsaugoti";
             this.SaveAdditionalDistanceInKmButton.UseVisualStyleBackColor = true;
+            this.SaveAdditionalDistanceInKmButton.Click += new System.EventHandler(this.SaveAdditionalDistanceInKmButton_Click);
             // 
             // SavePricePerKmButton
             // 
@@ -145,6 +146,7 @@ namespace Martium.TravelInfo.Forms
             this.SavePricePerKmButton.TabIndex = 14;
             this.SavePricePerKmButton.Text = "Išsaugoti";
             this.SavePricePerKmButton.UseVisualStyleBackColor = true;
+            this.SavePricePerKmButton.Click += new System.EventHandler(this.SavePricePerKmButton_Click);
             // 
             // AdditionalKmLabel
             // 

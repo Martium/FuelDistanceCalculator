@@ -115,7 +115,7 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void EnableSaveButton(TextBox textBox) // idea but not working as it should
+        private void EnableSaveButton(TextBox textBox) 
         {
             if (string.IsNullOrWhiteSpace(textBox.Text) || !CheckIsDouble(AdditionalDistanceInKmTextBox.Text) ||
                 !CheckIsDouble(PricePerKm.Text))
@@ -150,9 +150,14 @@ namespace Martium.TravelInfo.Forms
 
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
+            UpdateNewInfo();
+        }
+
+        private void UpdateNewInfo()
+        {
             _travelInfoSettingsModel = new TravelInfoSettingsModel()
             {
-                DepartureCountry = DepartureCountryTextBox.Text,
+                DepartureCountry = "LTU",
                 DepartureAddress = DepartureAddressTextBox.Text,
                 AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text),
                 PricePerKm = double.Parse(PricePerKm.Text)
@@ -224,6 +229,16 @@ namespace Martium.TravelInfo.Forms
             SaveDepartureAddressButton.Enabled = control;
             SaveAdditionalDistanceInKmButton.Enabled = control;
             SavePricePerKmButton.Enabled = control;
+        }
+
+        private void SavePricePerKmButton_Click(object sender, EventArgs e)
+        {
+            UpdateNewInfo();
+        }
+
+        private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
+        {
+            UpdateNewInfo();
         }
     }
 }
