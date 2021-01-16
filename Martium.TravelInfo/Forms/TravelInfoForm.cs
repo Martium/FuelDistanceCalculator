@@ -44,21 +44,18 @@ namespace Martium.TravelInfo.Forms
 
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
-            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
             _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
             UpdateNewInfo();
         }
 
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
-            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
             _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text);
             UpdateNewInfo();
         }
 
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
         {
-            _travelInfoSettingsModel.DepartureCountry = "LTU"; // for now later we will fix
             _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text);
             UpdateNewInfo();
         }
