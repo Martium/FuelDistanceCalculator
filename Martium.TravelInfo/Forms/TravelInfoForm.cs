@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
@@ -192,15 +193,31 @@ namespace Martium.TravelInfo.Forms
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 e.Cancel = true;
+                OpenErrorLabel("Raudonas langelis negali būti tuščias", textBox, errorLabel);
             }
             else if (!CheckIsDouble(textBox.Text))
             {
                 e.Cancel = true;
+                OpenErrorLabel("Raudonas langelis turi būti skaičius", textBox, errorLabel);
             }
             else
             {
                 e.Cancel = false;
+                HideLabelAndTextBoxError(errorLabel, textBox);
             }
+        }
+
+        private void OpenErrorLabel(string errorText, TextBox textBox, Label label)
+        {
+            textBox.BackColor = Color.Red;
+            label.Text = errorText;
+            label.Visible = true;
+        }
+
+        private void HideLabelAndTextBoxError(Label label, TextBox textBox)
+        {
+            label.Visible = false;
+            textBox.BackColor = Color.White;
         }
     }
 }

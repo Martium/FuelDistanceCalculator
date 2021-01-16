@@ -53,11 +53,13 @@ namespace Martium.TravelInfo.Forms
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.errorLabel = new System.Windows.Forms.Label();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.errorLabel);
             this.InfoPanel.Controls.Add(this.SaveDepartureAddressButton);
             this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
             this.InfoPanel.Controls.Add(this.ArrivalAdressLabel);
@@ -160,7 +162,7 @@ namespace Martium.TravelInfo.Forms
             this.AdditionalDistanceInKmTextBox.Size = new System.Drawing.Size(100, 20);
             this.AdditionalDistanceInKmTextBox.TabIndex = 12;
             this.AdditionalDistanceInKmTextBox.TextChanged += new System.EventHandler(this.AdditionalDistanceInKm_TextChanged);
-            this.AdditionalDistanceInKmTextBox.Validating += new CancelEventHandler(this.AdditionalDistanceInKmTextBox_Validating);
+            this.AdditionalDistanceInKmTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.AdditionalDistanceInKmTextBox_Validating);
             // 
             // CalculatedTripPriceTextBox
             // 
@@ -219,7 +221,7 @@ namespace Martium.TravelInfo.Forms
             this.PricePerKm.Size = new System.Drawing.Size(100, 20);
             this.PricePerKm.TabIndex = 5;
             this.PricePerKm.TextChanged += new System.EventHandler(this.PricePerKm_TextChanged);
-            this.PricePerKm.Validating += new CancelEventHandler(this.PricePerKm_Validating);
+            this.PricePerKm.Validating += new System.ComponentModel.CancelEventHandler(this.PricePerKm_Validating);
             // 
             // FuelPriceLabel
             // 
@@ -284,6 +286,17 @@ namespace Martium.TravelInfo.Forms
             this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
             // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(40, 233);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(28, 13);
+            this.errorLabel.TabIndex = 21;
+            this.errorLabel.Text = "error";
+            this.errorLabel.Visible = false;
+            // 
             // TravelInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -330,6 +343,7 @@ namespace Martium.TravelInfo.Forms
         private GMap.NET.WindowsForms.GMapControl Map;
         private System.Windows.Forms.LinkLabel MapContributorLinkLabel;
         private System.Windows.Forms.Button SaveDepartureAddressButton;
+        private System.Windows.Forms.Label errorLabel;
     }
 }
 
