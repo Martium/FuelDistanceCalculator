@@ -83,8 +83,7 @@ namespace Martium.TravelInfo.Forms
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
         {
-            SaveDepartureAddressButton.Enabled = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text);
-            //EnableSaveButton(SaveDepartureAddressButton, DepartureAddressTextBox);
+            EnableSaveButton(DepartureAddressTextBox);
             EnableSearchRouteButton();
         }
 
@@ -95,14 +94,12 @@ namespace Martium.TravelInfo.Forms
 
         private void PricePerKm_TextChanged(object sender, System.EventArgs e)
         {
-            //EnableSaveButton(SavePricePerKmButton, PricePerKm);
-            SavePricePerKmButton.Enabled = CheckIsDouble(PricePerKm.Text);
+            EnableSaveButton(PricePerKm);
         }
 
         private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
         {
-            //EnableSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKm); 
-            SaveAdditionalDistanceInKmButton.Enabled = CheckIsDouble(AdditionalDistanceInKmTextBox.Text);
+            EnableSaveButton(AdditionalDistanceInKmTextBox);
         }
 
 
@@ -118,17 +115,16 @@ namespace Martium.TravelInfo.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void EnableSaveButton(Button buttonName, TextBox textBox) // idea but not working as it should
+        private void EnableSaveButton(TextBox textBox) // idea but not working as it should
         {
-            if (!string.IsNullOrWhiteSpace(textBox.Text) && CheckIsDouble(AdditionalDistanceInKmTextBox.Text) &&
+            if (string.IsNullOrWhiteSpace(textBox.Text) && CheckIsDouble(AdditionalDistanceInKmTextBox.Text) &&
                 CheckIsDouble(PricePerKm.Text))
             {
-                buttonName.Enabled = true;
-
+              ControlAllSaveButtons(false);
             }
             else
             {
-                buttonName.Enabled = false;
+                ControlAllSaveButtons(true);
             }
         }
 
@@ -192,16 +188,19 @@ namespace Martium.TravelInfo.Forms
         {
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
+                ControlAllSaveButtons(false);
                 e.Cancel = true;
                 OpenErrorLabel("Raudonas langelis negali būti tuščias", textBox, errorLabel);
             }
             else if (!CheckIsDouble(textBox.Text))
             {
+                ControlAllSaveButtons(false);
                 e.Cancel = true;
                 OpenErrorLabel("Raudonas langelis turi būti skaičius", textBox, errorLabel);
             }
             else
             {
+                ControlAllSaveButtons(true);
                 e.Cancel = false;
                 HideLabelAndTextBoxError(errorLabel, textBox);
             }
@@ -218,6 +217,13 @@ namespace Martium.TravelInfo.Forms
         {
             label.Visible = false;
             textBox.BackColor = Color.White;
+        }
+
+        private void ControlAllSaveButtons(bool control)
+        {
+            SaveDepartureAddressButton.Enabled = control;
+            SaveAdditionalDistanceInKmButton.Enabled = control;
+            SavePricePerKmButton.Enabled = control;
         }
     }
 }
