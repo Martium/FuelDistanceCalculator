@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Security;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using Martium.TravelInfo.Constants;
