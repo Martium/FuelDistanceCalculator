@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using Martium.TravelInfo.Forms;
-using Martium.TravelInfo.Repositories;
+using Martium.TravelInfo.App.Forms;
+using Martium.TravelInfo.App.Repositories;
 
-namespace Martium.TravelInfo
+namespace Martium.TravelInfo.App
 {
     static class Program
     {

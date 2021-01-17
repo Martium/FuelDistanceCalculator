@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
-using Martium.TravelInfo.Constants;
-using Martium.TravelInfo.Models;
-using Martium.TravelInfo.Repositories;
+using Martium.TravelInfo.App.Constants;
+using Martium.TravelInfo.App.Models;
+using Martium.TravelInfo.App.Repositories;
 
-namespace Martium.TravelInfo.Forms
+namespace Martium.TravelInfo.App.Forms
 {
     public partial class TravelInfoForm : Form
     {
