@@ -34,8 +34,6 @@ namespace Martium.TravelInfo.Forms
             ChangeDepartureCountryTextBoxText();
 
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
-
-            //CheckIfInfoExists();
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -64,18 +62,27 @@ namespace Martium.TravelInfo.Forms
 
         private void PricePerKm_Validating(object sender, CancelEventArgs e)
         {
+            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+
             CheckTextBoxValidation(e, PricePerKm, SavePricePerKmButton);
+
+            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm, _travelInfoSettingsModel.PricePerKm);
         }
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
         {
+            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+
             CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton);
+
+            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox, _travelInfoSettingsModel.AdditionalDistanceInKm);
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
         {
-            //CheckIfInfoExists();
-            EnableSaveButton(DepartureAddressTextBox);
+            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+
+            EnableButtonIfNeeded(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
             EnableSearchRouteButton();
         }
 
@@ -86,12 +93,20 @@ namespace Martium.TravelInfo.Forms
 
         private void PricePerKm_TextChanged(object sender, System.EventArgs e)
         {
-            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm);
+            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+
+            EnableButtonIfNeeded(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
+            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm, _travelInfoSettingsModel.PricePerKm);
         }
 
         private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
         {
-            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox);
+            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+
+            EnableButtonIfNeeded(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton,
+                _travelInfoSettingsModel.AdditionalDistanceInKm);
+
+            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox, _travelInfoSettingsModel.AdditionalDistanceInKm);
         }
 
         #region MyMethods
@@ -199,13 +214,13 @@ namespace Martium.TravelInfo.Forms
             {
                 button.Enabled = false;
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius pvz. '0,2'", textBox, errorLabel);
+                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius pvz. '0.2'", textBox, errorLabel);
             }
             else if (!CheckIsDouble(textBox.Text))
             {
                 button.Enabled = false;
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis turi būti skaičius pvz. '0,2'", textBox, errorLabel);
+                OpenErrorLabel("Raudonas langelis turi būti skaičius pvz. '0.2'", textBox, errorLabel);
             }
             else
             {
@@ -241,20 +256,33 @@ namespace Martium.TravelInfo.Forms
             }
         }
 
-        private void EnableDoubleSaveButton(Button button, TextBox textBox)
+        private void EnableDoubleSaveButton(Button button, TextBox textBox, object databaseValue)
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                button.Enabled = false;
-            }
-            else if (!CheckIsDouble(textBox.Text))
-            {
-                button.Enabled = false;
-            }
-            else
+            if (CheckIsDouble(textBox.Text) && textBox.Text != databaseValue.ToString())
             {
                 button.Enabled = true;
             }
+            else
+            {
+                button.Enabled = false;
+            }
+        }
+
+        private void EnableButtonIfNeeded(TextBox textBox, Button button, object databaseValue)
+        {
+            if (!string.IsNullOrWhiteSpace(textBox.Text) && textBox.Text != databaseValue.ToString())
+            {
+                button.Enabled = true;
+            }
+            else
+            {
+                button.Enabled = false;
+            }
+        }
+
+        private void DisableButton(Button button)
+        {
+            button.Enabled = false;
         }
 
         #endregion
