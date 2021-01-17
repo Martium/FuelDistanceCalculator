@@ -224,7 +224,7 @@ namespace Martium.TravelInfo.Forms
 
         private void ToggleButtonStateForStringTextBox(TextBox textBox, Button button, string settingField)
         {
-            if (!string.IsNullOrWhiteSpace(textBox.Text) && textBox.Text != settingField)
+            if (textBox.Text != settingField)
             {
                 button.Enabled = true;
             }
