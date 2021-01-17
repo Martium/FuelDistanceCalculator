@@ -65,8 +65,8 @@ namespace Martium.TravelInfo.Repositories
                 $@"                  
 				    CREATE TABLE [{AppConfiguration.TableName}] (
 						[DepartureCountry] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureCountry}) NOT NULL,
-						[PricePerKm] [double] NOT NULL,
-                        [AdditionalDistanceInKm] [double] NOT NULL,
+						[PricePerKm] DECIMAL(10, 2) NOT NULL,
+                        [AdditionalDistanceInKm] DECIMAL(10, 2) NOT NULL,
                         [DepartureAddress] [nvarchar] ({FormSettings.TextBoxLenghts.DepartureAddress}) NULL
 						)";
 
@@ -80,7 +80,7 @@ namespace Martium.TravelInfo.Repositories
             string fillTravelInfoSettingsQuery =
                 $@"BEGIN TRANSACTION;
 	                INSERT INTO [{AppConfiguration.TableName}] 
-	                    VALUES ('LTU', '0.2', '0', 'Mapų g. 4, Kaunas');
+	                    VALUES ('LTU', 0.2, 0, 'A. Mapu g. 4, Kaunas');
                 COMMIT;";
 
             SQLiteCommand fillTravelInfoSettingsCommand = new SQLiteCommand(fillTravelInfoSettingsQuery, dbConnection);

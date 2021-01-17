@@ -6,7 +6,7 @@ namespace Martium.TravelInfo.Repositories
 {
     public class TravelInfoRepository
     {
-        public TravelInfoSettingsModel GetExistingInfo()
+        public TravelInfoSettingsModel GetSettings()
         {
             using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
             {
@@ -25,7 +25,7 @@ namespace Martium.TravelInfo.Repositories
             }
         }
 
-        public bool UpdateExistingInfo(TravelInfoSettingsModel updateInfo)
+        public bool UpdateSettings(TravelInfoSettingsModel updateInfo)
         {
             using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
             {

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Security;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using Martium.TravelInfo.Constants;
@@ -27,13 +28,66 @@ namespace Martium.TravelInfo.Forms
             InitializeMap();
         }
 
-        private void TravelInfoForm_Load(object sender, System.EventArgs e)
+        private void TravelInfoForm_Load(object sender, EventArgs e)
         {
             LoadTravelInfoSettings();
 
-            ChangeDepartureCountryTextBoxText();
+            ShowDepartureCountryInUserFriendlyFormat();
 
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
+        }
+
+        private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
+            EnableSearchRouteButtonIfPossible();
+        }
+
+        private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
+            UpdateNewInfo();
+            ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
+        }
+
+        private void ArrivalAddressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            EnableSearchRouteButtonIfPossible();
+        }
+
+        private void PricePerKm_TextChanged(object sender, EventArgs e)
+        {
+            ToggleButtonStateForDecimalTextBox(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
+        }
+
+        private void PricePerKm_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateTextBoxOfDoubleType(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm, allowZero: false);
+        }
+
+        private void SavePricePerKmButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.PricePerKm = decimal.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
+            UpdateNewInfo();
+            ToggleButtonStateForDecimalTextBox(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
+        }
+
+        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
+        {
+            ToggleButtonStateForDecimalTextBox(
+                AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
+        }
+
+        private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateTextBoxOfDoubleType(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
+        }
+
+        private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
+        {
+            _travelInfoSettingsModel.AdditionalDistanceInKm = decimal.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
+            UpdateNewInfo();
+            ToggleButtonStateForDecimalTextBox(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -42,74 +96,7 @@ namespace Martium.TravelInfo.Forms
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
 
-        private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
-            UpdateNewInfo();
-        }
-
-        private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
-            UpdateNewInfo();
-        }
-
-        private void SavePricePerKmButton_Click(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
-            UpdateNewInfo();
-        }
-
-        private void PricePerKm_Validating(object sender, CancelEventArgs e)
-        {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
-
-            CheckTextBoxValidation(e, PricePerKm, SavePricePerKmButton);
-
-            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm, _travelInfoSettingsModel.PricePerKm);
-        }
-
-        private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
-        {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
-
-            CheckTextBoxValidation(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton);
-
-            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox, _travelInfoSettingsModel.AdditionalDistanceInKm);
-        }
-
-        private void DepartureAddressTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
-
-            EnableButtonIfNeeded(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
-            EnableSearchRouteButton();
-        }
-
-        private void ArrivalAddressTextBox_TextChanged(object sender, System.EventArgs e)
-        {
-            EnableSearchRouteButton();
-        }
-
-        private void PricePerKm_TextChanged(object sender, System.EventArgs e)
-        {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
-
-            EnableButtonIfNeeded(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
-            EnableDoubleSaveButton(SavePricePerKmButton, PricePerKm, _travelInfoSettingsModel.PricePerKm);
-        }
-
-        private void AdditionalDistanceInKm_TextChanged(object sender, EventArgs e)
-        {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
-
-            EnableButtonIfNeeded(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton,
-                _travelInfoSettingsModel.AdditionalDistanceInKm);
-
-            EnableDoubleSaveButton(SaveAdditionalDistanceInKmButton, AdditionalDistanceInKmTextBox, _travelInfoSettingsModel.AdditionalDistanceInKm);
-        }
-
-        #region MyMethods
+        #region custom methods
 
         private void InitializeControls()
         {
@@ -118,6 +105,10 @@ namespace Martium.TravelInfo.Forms
             CalculatedTripPriceTextBox.Enabled = false;
             CalculatedDistanceTextBox.Enabled = false;
             DepartureCountryTextBox.Enabled = false;
+
+            SaveDepartureAddressButton.Enabled = false;
+            SavePricePerKmButton.Enabled = false;
+            SaveAdditionalDistanceInKmButton.Enabled = false;
 
             CalculateButton.Enabled = false;
         }
@@ -132,13 +123,12 @@ namespace Martium.TravelInfo.Forms
 
         private void LoadTravelInfoSettings()
         {
-            _travelInfoSettingsModel = _travelInfoRepository.GetExistingInfo();
+            _travelInfoSettingsModel = _travelInfoRepository.GetSettings();
 
             DepartureCountryTextBox.Text = _travelInfoSettingsModel.DepartureCountry;
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
-            AdditionalDistanceInKmTextBox.Text =
-                _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+            AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
         }
 
         private void SetMapPositionByAddress(string address)
@@ -146,57 +136,18 @@ namespace Martium.TravelInfo.Forms
             Map.SetPositionByKeywords(address);
         }
 
-        private void EnableSearchRouteButton()
+        private void EnableSearchRouteButtonIfPossible()
         {
             SearchRouteButton.Enabled = (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void EnableSaveButton(TextBox textBox)
-        {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                SaveDepartureAddressButton.Enabled = false;
-            }
-            else
-            {
-                SaveDepartureAddressButton.Enabled = true;
-            }
-        }
-
-        private bool CheckIsDouble(string text)
-        {
-            bool success = true;
-
-            try
-            {
-                var parsedDouble = double.Parse(text, CultureInfo.InvariantCulture);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-
-            return success;
-        }
-
-        private static void ShowInformationDialog(string message)
-        {
-            MessageBox.Show(message, "Info pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private static void ShowErrorDialog(string message)
-        {
-            MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         private void UpdateNewInfo()
         {
-            bool success;
-            string successMessage = "Išsaugota sekmingai";
-            string errorMessage = "Neišsaugota bandykite dar kartą";
+            string successMessage = "Išsaugota sėkmingai.";
+            string errorMessage = "Nepavyko išsaugoti, bandykite dar kartą!";
 
-            success = _travelInfoRepository.UpdateExistingInfo(_travelInfoSettingsModel);
+            bool success = _travelInfoRepository.UpdateSettings(_travelInfoSettingsModel);
 
             if (success)
             {
@@ -208,36 +159,47 @@ namespace Martium.TravelInfo.Forms
             }
         }
 
-        private void CheckTextBoxValidation(CancelEventArgs e, TextBox textBox, Button button)
+        private void ShowInformationDialog(string message)
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
+            MessageBox.Show(message, "Info pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ShowErrorDialog(string message)
+        {
+            MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ValidateTextBoxOfDoubleType(CancelEventArgs e, TextBox textBox, Button button, decimal settingValue, bool allowZero = true)
+        {
+            bool isDecimal = CheckIsDecimal(textBox.Text);
+
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !isDecimal || textBox.Text.Contains(",") || (!allowZero && textBox.Text == "0"))
             {
-                button.Enabled = false;
+                string minimalValueSign = allowZero ? ">=" : ">";
+
                 e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis negali būti tuščias ir turi būt skaičius pvz. '0.2'", textBox, errorLabel);
-            }
-            else if (!CheckIsDouble(textBox.Text))
-            {
-                button.Enabled = false;
-                e.Cancel = true;
-                OpenErrorLabel("Raudonas langelis turi būti skaičius pvz. '0.2'", textBox, errorLabel);
+                DisplayDecimalTextBoxError(
+                    $"* Langelyje privalo būti skaičius {minimalValueSign} 0 (< 1 skiriklis: '.'), pvz.: 0.2", 
+                    textBox, 
+                    DecimalTextBoxErrorLabel);
+                DisableButton(button);
             }
             else
             {
-                button.Enabled = true;
                 e.Cancel = false;
-                HideLabelAndTextBoxError(errorLabel, textBox);
+                HideDecimalTextBoxError(DecimalTextBoxErrorLabel, textBox);
+                ToggleButtonStateForDecimalTextBox(textBox, button, settingValue);
             }
         }
 
-        private void OpenErrorLabel(string errorText, TextBox textBox, Label label)
+        private void DisplayDecimalTextBoxError(string errorText, TextBox textBox, Label label)
         {
             textBox.BackColor = Color.Red;
             label.Text = errorText;
             label.Visible = true;
         }
 
-        private void HideLabelAndTextBoxError(Label label, TextBox textBox)
+        private void HideDecimalTextBoxError(Label label, TextBox textBox)
         {
             label.Visible = false;
             textBox.BackColor = Color.White;
@@ -248,7 +210,7 @@ namespace Martium.TravelInfo.Forms
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
         }
 
-        private void ChangeDepartureCountryTextBoxText()
+        private void ShowDepartureCountryInUserFriendlyFormat()
         {
             if (DepartureCountryTextBox.Text == "LTU")
             {
@@ -256,9 +218,9 @@ namespace Martium.TravelInfo.Forms
             }
         }
 
-        private void EnableDoubleSaveButton(Button button, TextBox textBox, object databaseValue)
+        private void ToggleButtonStateForStringTextBox(TextBox textBox, Button button, string settingField)
         {
-            if (CheckIsDouble(textBox.Text) && textBox.Text != databaseValue.ToString())
+            if (!string.IsNullOrWhiteSpace(textBox.Text) && textBox.Text != settingField)
             {
                 button.Enabled = true;
             }
@@ -266,13 +228,23 @@ namespace Martium.TravelInfo.Forms
             {
                 button.Enabled = false;
             }
+
         }
 
-        private void EnableButtonIfNeeded(TextBox textBox, Button button, object databaseValue)
+        private void ToggleButtonStateForDecimalTextBox(TextBox textBox, Button button, decimal settingField)
         {
-            if (!string.IsNullOrWhiteSpace(textBox.Text) && textBox.Text != databaseValue.ToString())
+            if (CheckIsDecimal(textBox.Text))
             {
-                button.Enabled = true;
+                var textBoxAsDecimal = decimal.Parse(textBox.Text, CultureInfo.InvariantCulture);
+
+                if (!string.IsNullOrWhiteSpace(textBox.Text) && textBoxAsDecimal != settingField)
+                {
+                    button.Enabled = true;
+                }
+                else
+                {
+                    button.Enabled = false;
+                }
             }
             else
             {
@@ -283,6 +255,22 @@ namespace Martium.TravelInfo.Forms
         private void DisableButton(Button button)
         {
             button.Enabled = false;
+        }
+
+        private bool CheckIsDecimal(string text)    
+        {
+            bool success = true;
+
+            try
+            {
+                decimal.Parse(text, CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return success;
         }
 
         #endregion
