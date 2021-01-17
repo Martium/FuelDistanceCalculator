@@ -61,7 +61,7 @@ namespace Martium.TravelInfo.Forms
 
         private void PricePerKm_Validating(object sender, CancelEventArgs e)
         {
-            ValidateTextBoxOfDoubleType(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm, allowZero: false);
+            ValidateTextBoxOfDoubleType(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
         }
 
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
@@ -79,7 +79,8 @@ namespace Martium.TravelInfo.Forms
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
         {
-            ValidateTextBoxOfDoubleType(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
+            ValidateTextBoxOfDoubleType(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton,
+                _travelInfoSettingsModel.AdditionalDistanceInKm, preventNegativeOrZero: false);
         }
 
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
@@ -168,17 +169,21 @@ namespace Martium.TravelInfo.Forms
             MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void ValidateTextBoxOfDoubleType(CancelEventArgs e, TextBox textBox, Button button, decimal settingValue, bool allowZero = true)
+        private void ValidateTextBoxOfDoubleType(CancelEventArgs e, TextBox textBox, Button button, decimal settingValue, bool preventNegativeOrZero = true)
         {
             bool isDecimal = CheckIsDecimal(textBox.Text);
 
-            if (string.IsNullOrWhiteSpace(textBox.Text) || !isDecimal || textBox.Text.Contains(",") || (!allowZero && textBox.Text == "0"))
+            if (
+                string.IsNullOrWhiteSpace(textBox.Text) 
+                || !isDecimal 
+                || textBox.Text.Contains(",") 
+                || (preventNegativeOrZero && (textBox.Text == "0" || textBox.Text.StartsWith("-"))))
             {
-                string minimalValueSign = allowZero ? ">=" : ">";
+                string biggerThanZeroMessagePart = preventNegativeOrZero ? "> 0" : string.Empty;
 
                 e.Cancel = true;
                 DisplayDecimalTextBoxError(
-                    $"* Langelyje privalo būti skaičius {minimalValueSign} 0 (< 1 skiriklis: '.'), pvz.: 0.2", 
+                    $"* Langelyje privalo būti skaičius {biggerThanZeroMessagePart} (< 1 skiriklis: '.'), pvz.: 0.2", 
                     textBox, 
                     DecimalTextBoxErrorLabel);
                 DisableButton(button);
