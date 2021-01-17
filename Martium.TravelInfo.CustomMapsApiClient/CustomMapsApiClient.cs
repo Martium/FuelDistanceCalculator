@@ -17,7 +17,7 @@ namespace Martium.TravelInfo.CustomMapsApiClient
 
         public CustomMapsApiClient()
         {
-            _bingMapsApiKey = "Ny7pJAEQhVWfxZYqRlVP~yFZ9k0nv3HnF4SjZOc7ubQ~As5o9EzYCXJxBaXFC5eIDJyMAjd0HnuqtFfgSbkj1z45ghgMhIGKHD4qRZ5CunU7";  // TODO: get API key from database settings when we will have it in database
+            _bingMapsApiKey = "";  // TODO: get API key from database settings when we will have it in database
         }
 
         public bool ValidateBingMapsApiKey(string apiKey)
