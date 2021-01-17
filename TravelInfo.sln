@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Martium.TravelInfo.App", "Martium.TravelInfo.App\Martium.TravelInfo.App.csproj", "{167FE144-A6C4-4613-A26F-4112E448642C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Martium.TravelInfo.CustomMapsApiClient", "Martium.TravelInfo.CustomMapsApiClient\Martium.TravelInfo.CustomMapsApiClient.csproj", "{19808DA2-F578-4309-A3AC-6E05E6457B7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{167FE144-A6C4-4613-A26F-4112E448642C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{167FE144-A6C4-4613-A26F-4112E448642C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{167FE144-A6C4-4613-A26F-4112E448642C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19808DA2-F578-4309-A3AC-6E05E6457B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19808DA2-F578-4309-A3AC-6E05E6457B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19808DA2-F578-4309-A3AC-6E05E6457B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19808DA2-F578-4309-A3AC-6E05E6457B7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
