@@ -102,14 +102,16 @@ namespace Martium.TravelInfo.CustomMapsApiClient
 
             var apiResponse = restClient.Execute<BingMapsApiRouteResponse>(request);
 
-            if (apiResponse.Data == null)
+            if (apiResponse.IsSuccessful && 
+                (apiResponse.Data == null 
+                || apiResponse.Data != null && !apiResponse.Data.ResourceSets.Any() && !apiResponse.Data.ResourceSets.First().Resources.Any()))
             {
                 response = new BingMapsApiRouteResponse
                 {
                     StatusCode = 500,
                     ErrorDetails = new List<string>
                     {
-                        "Response data was not returned from API!"
+                        "Response data was not returned from API or returned data is invalid!"
                     }
                 };
             }
