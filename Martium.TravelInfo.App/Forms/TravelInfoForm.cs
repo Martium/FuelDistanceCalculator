@@ -127,7 +127,6 @@ namespace Martium.TravelInfo.App.Forms
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
             LoadDepartureCountryComboBox(_travelInfoSettingsModel);
-            CountryComboBox.Text = "LTU"; // if we choose to save departure country option then change this 
         }
 
         private void SetMapPositionByAddress(string address)
