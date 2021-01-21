@@ -30,6 +30,7 @@ namespace Martium.TravelInfo.App.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.CountryIsoComboBox = new System.Windows.Forms.ComboBox();
             this.DecimalTextBoxErrorLabel = new System.Windows.Forms.Label();
             this.SaveDepartureAddressButton = new System.Windows.Forms.Button();
             this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
@@ -57,6 +58,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.CountryIsoComboBox);
             this.InfoPanel.Controls.Add(this.DecimalTextBoxErrorLabel);
             this.InfoPanel.Controls.Add(this.SaveDepartureAddressButton);
             this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
@@ -81,6 +83,15 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
+            // 
+            // CountryIsoComboBox
+            // 
+            this.CountryIsoComboBox.FormattingEnabled = true;
+            this.CountryIsoComboBox.Location = new System.Drawing.Point(121, 37);
+            this.CountryIsoComboBox.Name = "CountryIsoComboBox";
+            this.CountryIsoComboBox.Size = new System.Drawing.Size(49, 21);
+            this.CountryIsoComboBox.TabIndex = 22;
+            this.CountryIsoComboBox.SelectedIndexChanged += new System.EventHandler(this.CountryIsoComboBox_SelectedIndexChanged);
             // 
             // DecimalTextBoxErrorLabel
             // 
@@ -343,6 +354,7 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.LinkLabel MapContributorLinkLabel;
         private System.Windows.Forms.Button SaveDepartureAddressButton;
         private System.Windows.Forms.Label DecimalTextBoxErrorLabel;
+        private System.Windows.Forms.ComboBox CountryIsoComboBox;
     }
 }
 
