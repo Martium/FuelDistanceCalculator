@@ -269,7 +269,9 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadDepartureCountryComboBox(TravelInfoSettingsModel travelInfoSettingsModel)
         {
-            this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            //this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            CountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            CountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
             {
@@ -283,5 +285,6 @@ namespace Martium.TravelInfo.App.Forms
         }
 
         #endregion
+       
     }
 }
