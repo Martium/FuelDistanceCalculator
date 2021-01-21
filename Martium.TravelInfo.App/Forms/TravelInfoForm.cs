@@ -30,11 +30,9 @@ namespace Martium.TravelInfo.App.Forms
 
         private void TravelInfoForm_Load(object sender, EventArgs e)
         {
-            LoadDepartureCountryComboBox();
-
             LoadTravelInfoSettings();
 
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
+            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {CountryComboBox.Text}");
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -130,6 +128,7 @@ namespace Martium.TravelInfo.App.Forms
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+            LoadDepartureCountryComboBox(_travelInfoSettingsModel);
             CountryComboBox.Text = "LTU"; // if we choose to save departure country option then change this 
         }
 
@@ -271,13 +270,18 @@ namespace Martium.TravelInfo.App.Forms
             return success;
         }
 
-        private void LoadDepartureCountryComboBox()
+        private void LoadDepartureCountryComboBox(TravelInfoSettingsModel travelInfoSettingsModel)
         {
             this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
             {
                 CountryComboBox.Items.Add(countryIso.Value);
+
+                if (travelInfoSettingsModel.DepartureCountry == countryIso.Key)
+                {
+                    CountryComboBox.Text = countryIso.Value;
+                }
             }
         }
 
