@@ -30,6 +30,11 @@ namespace Martium.TravelInfo.App.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.ArrivalCountryTextLabel = new System.Windows.Forms.Label();
+            this.DepartureCountryTextLabel = new System.Windows.Forms.Label();
+            this.ArrivalCountryLabel = new System.Windows.Forms.Label();
+            this.ArrivalCountryComboBox = new System.Windows.Forms.ComboBox();
+            this.DepartureCountryComboBox = new System.Windows.Forms.ComboBox();
             this.DecimalTextBoxErrorLabel = new System.Windows.Forms.Label();
             this.SaveDepartureAddressButton = new System.Windows.Forms.Button();
             this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
@@ -48,7 +53,6 @@ namespace Martium.TravelInfo.App.Forms
             this.SearchRouteButton = new System.Windows.Forms.Button();
             this.PricePerKm = new System.Windows.Forms.TextBox();
             this.FuelPriceLabel = new System.Windows.Forms.Label();
-            this.DepartureCountryTextBox = new System.Windows.Forms.TextBox();
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -57,6 +61,11 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.ArrivalCountryTextLabel);
+            this.InfoPanel.Controls.Add(this.DepartureCountryTextLabel);
+            this.InfoPanel.Controls.Add(this.ArrivalCountryLabel);
+            this.InfoPanel.Controls.Add(this.ArrivalCountryComboBox);
+            this.InfoPanel.Controls.Add(this.DepartureCountryComboBox);
             this.InfoPanel.Controls.Add(this.DecimalTextBoxErrorLabel);
             this.InfoPanel.Controls.Add(this.SaveDepartureAddressButton);
             this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
@@ -75,12 +84,58 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Controls.Add(this.SearchRouteButton);
             this.InfoPanel.Controls.Add(this.PricePerKm);
             this.InfoPanel.Controls.Add(this.FuelPriceLabel);
-            this.InfoPanel.Controls.Add(this.DepartureCountryTextBox);
             this.InfoPanel.Controls.Add(this.DepartureCountryLabel);
             this.InfoPanel.Location = new System.Drawing.Point(-3, 0);
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
+            // 
+            // ArrivalCountryTextLabel
+            // 
+            this.ArrivalCountryTextLabel.AutoSize = true;
+            this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(86, 129);
+            this.ArrivalCountryTextLabel.Name = "ArrivalCountryTextLabel";
+            this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(128, 13);
+            this.ArrivalCountryTextLabel.TabIndex = 26;
+            this.ArrivalCountryTextLabel.Text = "Arrival country name label";
+            // 
+            // DepartureCountryTextLabel
+            // 
+            this.DepartureCountryTextLabel.AutoSize = true;
+            this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.DepartureCountryTextLabel.Location = new System.Drawing.Point(86, 38);
+            this.DepartureCountryTextLabel.Name = "DepartureCountryTextLabel";
+            this.DepartureCountryTextLabel.Size = new System.Drawing.Size(146, 13);
+            this.DepartureCountryTextLabel.TabIndex = 25;
+            this.DepartureCountryTextLabel.Text = "Departure country name label";
+            // 
+            // ArrivalCountryLabel
+            // 
+            this.ArrivalCountryLabel.AutoSize = true;
+            this.ArrivalCountryLabel.Location = new System.Drawing.Point(17, 110);
+            this.ArrivalCountryLabel.Name = "ArrivalCountryLabel";
+            this.ArrivalCountryLabel.Size = new System.Drawing.Size(73, 13);
+            this.ArrivalCountryLabel.TabIndex = 24;
+            this.ArrivalCountryLabel.Text = "Atvykimo šalis";
+            // 
+            // ArrivalCountryComboBox
+            // 
+            this.ArrivalCountryComboBox.FormattingEnabled = true;
+            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(20, 126);
+            this.ArrivalCountryComboBox.Name = "ArrivalCountryComboBox";
+            this.ArrivalCountryComboBox.Size = new System.Drawing.Size(60, 21);
+            this.ArrivalCountryComboBox.TabIndex = 23;
+            this.ArrivalCountryComboBox.SelectedIndexChanged += new System.EventHandler(this.ArrivalCountryComboBox_SelectedIndexChanged);
+            // 
+            // DepartureCountryComboBox
+            // 
+            this.DepartureCountryComboBox.FormattingEnabled = true;
+            this.DepartureCountryComboBox.Location = new System.Drawing.Point(20, 35);
+            this.DepartureCountryComboBox.Name = "DepartureCountryComboBox";
+            this.DepartureCountryComboBox.Size = new System.Drawing.Size(60, 21);
+            this.DepartureCountryComboBox.TabIndex = 22;
+            this.DepartureCountryComboBox.SelectedIndexChanged += new System.EventHandler(this.DepartureCountryComboBox_SelectedIndexChanged);
             // 
             // DecimalTextBoxErrorLabel
             // 
@@ -95,7 +150,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SaveDepartureAddressButton
             // 
-            this.SaveDepartureAddressButton.Location = new System.Drawing.Point(239, 110);
+            this.SaveDepartureAddressButton.Location = new System.Drawing.Point(239, 74);
             this.SaveDepartureAddressButton.Name = "SaveDepartureAddressButton";
             this.SaveDepartureAddressButton.Size = new System.Drawing.Size(71, 22);
             this.SaveDepartureAddressButton.TabIndex = 20;
@@ -105,7 +160,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // ArrivalAddressTextBox
             // 
-            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(18, 150);
+            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(20, 166);
             this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
             this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.ArrivalAddressTextBox.TabIndex = 19;
@@ -114,7 +169,7 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalAdressLabel
             // 
             this.ArrivalAdressLabel.AutoSize = true;
-            this.ArrivalAdressLabel.Location = new System.Drawing.Point(15, 134);
+            this.ArrivalAdressLabel.Location = new System.Drawing.Point(17, 150);
             this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
             this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
             this.ArrivalAdressLabel.TabIndex = 18;
@@ -122,7 +177,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // DepartureAddressTextBox
             // 
-            this.DepartureAddressTextBox.Location = new System.Drawing.Point(18, 111);
+            this.DepartureAddressTextBox.Location = new System.Drawing.Point(20, 75);
             this.DepartureAddressTextBox.Name = "DepartureAddressTextBox";
             this.DepartureAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.DepartureAddressTextBox.TabIndex = 17;
@@ -131,7 +186,7 @@ namespace Martium.TravelInfo.App.Forms
             // DepartureAddressLabel
             // 
             this.DepartureAddressLabel.AutoSize = true;
-            this.DepartureAddressLabel.Location = new System.Drawing.Point(15, 95);
+            this.DepartureAddressLabel.Location = new System.Drawing.Point(17, 59);
             this.DepartureAddressLabel.Name = "DepartureAddressLabel";
             this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
             this.DepartureAddressLabel.TabIndex = 16;
@@ -218,7 +273,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SearchRouteButton
             // 
-            this.SearchRouteButton.Location = new System.Drawing.Point(18, 176);
+            this.SearchRouteButton.Location = new System.Drawing.Point(20, 192);
             this.SearchRouteButton.Name = "SearchRouteButton";
             this.SearchRouteButton.Size = new System.Drawing.Size(70, 22);
             this.SearchRouteButton.TabIndex = 6;
@@ -243,17 +298,10 @@ namespace Martium.TravelInfo.App.Forms
             this.FuelPriceLabel.TabIndex = 4;
             this.FuelPriceLabel.Text = "Kilometro kaina";
             // 
-            // DepartureCountryTextBox
-            // 
-            this.DepartureCountryTextBox.Location = new System.Drawing.Point(15, 37);
-            this.DepartureCountryTextBox.Name = "DepartureCountryTextBox";
-            this.DepartureCountryTextBox.Size = new System.Drawing.Size(100, 20);
-            this.DepartureCountryTextBox.TabIndex = 1;
-            // 
             // DepartureCountryLabel
             // 
             this.DepartureCountryLabel.AutoSize = true;
-            this.DepartureCountryLabel.Location = new System.Drawing.Point(15, 21);
+            this.DepartureCountryLabel.Location = new System.Drawing.Point(15, 19);
             this.DepartureCountryLabel.Name = "DepartureCountryLabel";
             this.DepartureCountryLabel.Size = new System.Drawing.Size(71, 13);
             this.DepartureCountryLabel.TabIndex = 0;
@@ -323,7 +371,6 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.Panel InfoPanel;
         private System.Windows.Forms.TextBox PricePerKm;
         private System.Windows.Forms.Label FuelPriceLabel;
-        private System.Windows.Forms.TextBox DepartureCountryTextBox;
         private System.Windows.Forms.Label DepartureCountryLabel;
         private System.Windows.Forms.Label CalculatedDistanceLabel;
         private System.Windows.Forms.Button SearchRouteButton;
@@ -343,6 +390,11 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.LinkLabel MapContributorLinkLabel;
         private System.Windows.Forms.Button SaveDepartureAddressButton;
         private System.Windows.Forms.Label DecimalTextBoxErrorLabel;
+        private System.Windows.Forms.ComboBox DepartureCountryComboBox;
+        private System.Windows.Forms.Label ArrivalCountryLabel;
+        private System.Windows.Forms.ComboBox ArrivalCountryComboBox;
+        private System.Windows.Forms.Label ArrivalCountryTextLabel;
+        private System.Windows.Forms.Label DepartureCountryTextLabel;
     }
 }
 

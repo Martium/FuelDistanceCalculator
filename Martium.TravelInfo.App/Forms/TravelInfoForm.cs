@@ -2,8 +2,10 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
+using ISO3166;
 using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Models;
 using Martium.TravelInfo.App.Repositories;
@@ -14,7 +16,7 @@ namespace Martium.TravelInfo.App.Forms
     {
         private readonly TravelInfoRepository _travelInfoRepository;
         private TravelInfoSettingsModel _travelInfoSettingsModel;
-
+        private readonly Country[] _countries = Country.List;
 
         public TravelInfoForm()
         {
@@ -31,9 +33,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
-            ShowDepartureCountryInUserFriendlyFormat();
-
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
+            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+        }
+        private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetCountryNameLabelText(DepartureCountryTextLabel, DepartureCountryComboBox);
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -47,6 +51,11 @@ namespace Martium.TravelInfo.App.Forms
             _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
             UpdateNewInfo();
             ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
+        }
+
+        private void ArrivalCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetCountryNameLabelText(ArrivalCountryTextLabel, ArrivalCountryComboBox);
         }
 
         private void ArrivalAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -104,13 +113,20 @@ namespace Martium.TravelInfo.App.Forms
 
             CalculatedTripPriceTextBox.Enabled = false;
             CalculatedDistanceTextBox.Enabled = false;
-            DepartureCountryTextBox.Enabled = false;
 
             SaveDepartureAddressButton.Enabled = false;
             SavePricePerKmButton.Enabled = false;
             SaveAdditionalDistanceInKmButton.Enabled = false;
 
             CalculateButton.Enabled = false;
+
+            DepartureCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            DepartureCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            DepartureCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            ArrivalCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            ArrivalCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            ArrivalCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void InitializeMap()
@@ -125,10 +141,13 @@ namespace Martium.TravelInfo.App.Forms
         {
             _travelInfoSettingsModel = _travelInfoRepository.GetSettings();
 
-            DepartureCountryTextBox.Text = _travelInfoSettingsModel.DepartureCountry;
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+           
+            LoadCountryComboBox(DepartureCountryComboBox);
+            LoadCountryComboBox(ArrivalCountryComboBox);
+
         }
 
         private void SetMapPositionByAddress(string address)
@@ -214,14 +233,6 @@ namespace Martium.TravelInfo.App.Forms
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
         }
 
-        private void ShowDepartureCountryInUserFriendlyFormat()
-        {
-            if (DepartureCountryTextBox.Text == "LTU")
-            {
-                DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
-            }
-        }
-
         private void ToggleButtonStateForStringTextBox(TextBox textBox, Button button, string settingField)
         {
             if (textBox.Text != settingField)
@@ -232,7 +243,6 @@ namespace Martium.TravelInfo.App.Forms
             {
                 button.Enabled = false;
             }
-
         }
 
         private void ToggleButtonStateForDecimalTextBox(TextBox textBox, Button button, decimal settingField)
@@ -275,6 +285,23 @@ namespace Martium.TravelInfo.App.Forms
             }
 
             return success;
+        }
+
+        private void LoadCountryComboBox(ComboBox comboBox)
+        {
+            foreach (var isoCountrys in _countries)
+            {
+                comboBox.Items.Add(isoCountrys.ThreeLetterCode);
+            }
+
+            comboBox.Text = _travelInfoSettingsModel.DepartureCountry;
+        }
+
+        private void SetCountryNameLabelText(Label label, ComboBox comboBox)
+        {
+            Country selectedCountry = _countries.Single(c => c.ThreeLetterCode == comboBox.Text);
+
+            label.Text = selectedCountry.Name;
         }
 
         #endregion
