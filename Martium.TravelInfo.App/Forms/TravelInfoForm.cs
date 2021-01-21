@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using ISO3166;
 using Martium.TravelInfo.App.Constants;
-using Martium.TravelInfo.App.Country_ISO;
 using Martium.TravelInfo.App.Models;
 using Martium.TravelInfo.App.Repositories;
 
@@ -17,6 +16,7 @@ namespace Martium.TravelInfo.App.Forms
     {
         private readonly TravelInfoRepository _travelInfoRepository;
         private TravelInfoSettingsModel _travelInfoSettingsModel;
+        private Country[] _countries = Country.List;
 
         public TravelInfoForm()
         {
@@ -33,7 +33,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryComboBox.Text}");
+            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -59,6 +59,11 @@ namespace Martium.TravelInfo.App.Forms
             ToggleButtonStateForDecimalTextBox(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
         }
 
+        private void ArrivalCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ConvertIsoToCountryName(ArrivalCountryTextLabel, ArrivalCountryComboBox);
+        }
+
         private void PricePerKm_Validating(object sender, CancelEventArgs e)
         {
             ValidateTextBoxOfDoubleType(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
@@ -75,6 +80,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             ToggleButtonStateForDecimalTextBox(
                 AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
+        }
+
+        private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ConvertIsoToCountryName(DepartureCountryTextLabel, DepartureCountryComboBox);
         }
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
@@ -276,9 +286,8 @@ namespace Martium.TravelInfo.App.Forms
             comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            Country[] countries = ISO3166.Country.List;
 
-            foreach (var isoCountrys in countries)
+            foreach (var isoCountrys in _countries)
             {
                 comboBox.Items.Add(isoCountrys.ThreeLetterCode);
             }
@@ -286,7 +295,14 @@ namespace Martium.TravelInfo.App.Forms
             comboBox.Text = travelInfoSettingsModel.DepartureCountry;
         }
 
+        private void ConvertIsoToCountryName(Label label, ComboBox comboBox)
+        {
+            Country selectedCountry = _countries.Single(c => c.ThreeLetterCode == comboBox.Text);
+
+            label.Text = selectedCountry.Name;
+        }
+
         #endregion
-       
+        
     }
 }
