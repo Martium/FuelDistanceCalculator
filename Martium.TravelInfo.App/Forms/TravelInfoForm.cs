@@ -269,7 +269,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadDepartureCountryComboBox(TravelInfoSettingsModel travelInfoSettingsModel)
         {
-            //this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            //this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList; // only to choose option
             CountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             CountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
