@@ -34,8 +34,6 @@ namespace Martium.TravelInfo.App.Forms
 
             LoadTravelInfoSettings();
 
-            ShowDepartureCountryInUserFriendlyFormat();
-
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextBox.Text}");
         }
 
@@ -108,7 +106,6 @@ namespace Martium.TravelInfo.App.Forms
                     DepartureCountryTextBox.Text = countryIso.Value;
                 }
             }
-
         }
 
         #region custom methods
@@ -228,14 +225,6 @@ namespace Martium.TravelInfo.App.Forms
         private void SetTextBoxMaxLengths()
         {
             DepartureAddressTextBox.MaxLength = FormSettings.TextBoxLenghts.DepartureAddress;
-        }
-
-        private void ShowDepartureCountryInUserFriendlyFormat()
-        {
-            if (DepartureCountryTextBox.Text == "LTU")
-            {
-                DepartureCountryTextBox.Text = "Lietuva"; // if you save data are this will not make error in database?
-            }
         }
 
         private void ToggleButtonStateForStringTextBox(TextBox textBox, Button button, string settingField)
