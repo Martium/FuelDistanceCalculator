@@ -103,7 +103,6 @@ namespace Martium.TravelInfo.App.Forms
 
             CalculatedTripPriceTextBox.Enabled = false;
             CalculatedDistanceTextBox.Enabled = false;
-            DepartureCountryTextBox.Enabled = false;
 
             SaveDepartureAddressButton.Enabled = false;
             SavePricePerKmButton.Enabled = false;
@@ -124,7 +123,6 @@ namespace Martium.TravelInfo.App.Forms
         {
             _travelInfoSettingsModel = _travelInfoRepository.GetSettings();
 
-            DepartureCountryTextBox.Text = _travelInfoSettingsModel.DepartureCountry;
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);

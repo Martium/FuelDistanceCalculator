@@ -49,7 +49,6 @@ namespace Martium.TravelInfo.App.Forms
             this.SearchRouteButton = new System.Windows.Forms.Button();
             this.PricePerKm = new System.Windows.Forms.TextBox();
             this.FuelPriceLabel = new System.Windows.Forms.Label();
-            this.DepartureCountryTextBox = new System.Windows.Forms.TextBox();
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -77,7 +76,6 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Controls.Add(this.SearchRouteButton);
             this.InfoPanel.Controls.Add(this.PricePerKm);
             this.InfoPanel.Controls.Add(this.FuelPriceLabel);
-            this.InfoPanel.Controls.Add(this.DepartureCountryTextBox);
             this.InfoPanel.Controls.Add(this.DepartureCountryLabel);
             this.InfoPanel.Location = new System.Drawing.Point(-3, 0);
             this.InfoPanel.Name = "InfoPanel";
@@ -253,13 +251,6 @@ namespace Martium.TravelInfo.App.Forms
             this.FuelPriceLabel.TabIndex = 4;
             this.FuelPriceLabel.Text = "Kilometro kaina";
             // 
-            // DepartureCountryTextBox
-            // 
-            this.DepartureCountryTextBox.Location = new System.Drawing.Point(18, 72);
-            this.DepartureCountryTextBox.Name = "DepartureCountryTextBox";
-            this.DepartureCountryTextBox.Size = new System.Drawing.Size(100, 20);
-            this.DepartureCountryTextBox.TabIndex = 1;
-            // 
             // DepartureCountryLabel
             // 
             this.DepartureCountryLabel.AutoSize = true;
@@ -333,7 +324,6 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.Panel InfoPanel;
         private System.Windows.Forms.TextBox PricePerKm;
         private System.Windows.Forms.Label FuelPriceLabel;
-        private System.Windows.Forms.TextBox DepartureCountryTextBox;
         private System.Windows.Forms.Label DepartureCountryLabel;
         private System.Windows.Forms.Label CalculatedDistanceLabel;
         private System.Windows.Forms.Button SearchRouteButton;
