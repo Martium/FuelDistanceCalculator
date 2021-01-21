@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
 using Martium.TravelInfo.App.Constants;
+using Martium.TravelInfo.App.Country_ISO;
 using Martium.TravelInfo.App.Models;
 using Martium.TravelInfo.App.Repositories;
 
@@ -14,7 +16,6 @@ namespace Martium.TravelInfo.App.Forms
     {
         private readonly TravelInfoRepository _travelInfoRepository;
         private TravelInfoSettingsModel _travelInfoSettingsModel;
-
 
         public TravelInfoForm()
         {
@@ -29,6 +30,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void TravelInfoForm_Load(object sender, EventArgs e)
         {
+            LoadCountryIsoCollections();
+
             LoadTravelInfoSettings();
 
             ShowDepartureCountryInUserFriendlyFormat();
@@ -96,6 +99,18 @@ namespace Martium.TravelInfo.App.Forms
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
 
+        private void CountryIsoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, string> countryIso in IsoDictionary.CountryDictionary)
+            {
+                if (CountryIsoComboBox.Text == countryIso.Key)
+                {
+                    DepartureCountryTextBox.Text = countryIso.Value;
+                }
+            }
+
+        }
+
         #region custom methods
 
         private void InitializeControls()
@@ -129,6 +144,7 @@ namespace Martium.TravelInfo.App.Forms
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
+            CountryIsoComboBox.Text = "LTU"; // if we choose to save departure country option then change this 
         }
 
         private void SetMapPositionByAddress(string address)
@@ -275,6 +291,14 @@ namespace Martium.TravelInfo.App.Forms
             }
 
             return success;
+        }
+
+        private void LoadCountryIsoCollections()
+        {
+            foreach (KeyValuePair<string, string> countryIso in IsoDictionary.CountryDictionary)
+            {
+                CountryIsoComboBox.Items.Add(countryIso.Key);
+            }
         }
 
         #endregion
