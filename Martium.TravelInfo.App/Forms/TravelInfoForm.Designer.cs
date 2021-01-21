@@ -93,7 +93,7 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalCountryLabel
             // 
             this.ArrivalCountryLabel.AutoSize = true;
-            this.ArrivalCountryLabel.Location = new System.Drawing.Point(15, 55);
+            this.ArrivalCountryLabel.Location = new System.Drawing.Point(17, 70);
             this.ArrivalCountryLabel.Name = "ArrivalCountryLabel";
             this.ArrivalCountryLabel.Size = new System.Drawing.Size(73, 13);
             this.ArrivalCountryLabel.TabIndex = 24;
@@ -102,7 +102,7 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalCountryComboBox
             // 
             this.ArrivalCountryComboBox.FormattingEnabled = true;
-            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(18, 71);
+            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(18, 86);
             this.ArrivalCountryComboBox.Name = "ArrivalCountryComboBox";
             this.ArrivalCountryComboBox.Size = new System.Drawing.Size(130, 21);
             this.ArrivalCountryComboBox.TabIndex = 23;
@@ -130,7 +130,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SaveDepartureAddressButton
             // 
-            this.SaveDepartureAddressButton.Location = new System.Drawing.Point(239, 110);
+            this.SaveDepartureAddressButton.Location = new System.Drawing.Point(239, 157);
             this.SaveDepartureAddressButton.Name = "SaveDepartureAddressButton";
             this.SaveDepartureAddressButton.Size = new System.Drawing.Size(71, 22);
             this.SaveDepartureAddressButton.TabIndex = 20;
@@ -140,7 +140,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // ArrivalAddressTextBox
             // 
-            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(18, 150);
+            this.ArrivalAddressTextBox.Location = new System.Drawing.Point(18, 196);
             this.ArrivalAddressTextBox.Name = "ArrivalAddressTextBox";
             this.ArrivalAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.ArrivalAddressTextBox.TabIndex = 19;
@@ -149,7 +149,7 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalAdressLabel
             // 
             this.ArrivalAdressLabel.AutoSize = true;
-            this.ArrivalAdressLabel.Location = new System.Drawing.Point(15, 134);
+            this.ArrivalAdressLabel.Location = new System.Drawing.Point(15, 180);
             this.ArrivalAdressLabel.Name = "ArrivalAdressLabel";
             this.ArrivalAdressLabel.Size = new System.Drawing.Size(90, 13);
             this.ArrivalAdressLabel.TabIndex = 18;
@@ -157,7 +157,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // DepartureAddressTextBox
             // 
-            this.DepartureAddressTextBox.Location = new System.Drawing.Point(18, 111);
+            this.DepartureAddressTextBox.Location = new System.Drawing.Point(18, 157);
             this.DepartureAddressTextBox.Name = "DepartureAddressTextBox";
             this.DepartureAddressTextBox.Size = new System.Drawing.Size(215, 20);
             this.DepartureAddressTextBox.TabIndex = 17;
@@ -166,7 +166,7 @@ namespace Martium.TravelInfo.App.Forms
             // DepartureAddressLabel
             // 
             this.DepartureAddressLabel.AutoSize = true;
-            this.DepartureAddressLabel.Location = new System.Drawing.Point(15, 95);
+            this.DepartureAddressLabel.Location = new System.Drawing.Point(15, 141);
             this.DepartureAddressLabel.Name = "DepartureAddressLabel";
             this.DepartureAddressLabel.Size = new System.Drawing.Size(88, 13);
             this.DepartureAddressLabel.TabIndex = 16;
@@ -253,7 +253,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SearchRouteButton
             // 
-            this.SearchRouteButton.Location = new System.Drawing.Point(18, 176);
+            this.SearchRouteButton.Location = new System.Drawing.Point(18, 222);
             this.SearchRouteButton.Name = "SearchRouteButton";
             this.SearchRouteButton.Size = new System.Drawing.Size(70, 22);
             this.SearchRouteButton.TabIndex = 6;
@@ -327,20 +327,20 @@ namespace Martium.TravelInfo.App.Forms
             // DepartureCountryTextLabel
             // 
             this.DepartureCountryTextLabel.AutoSize = true;
-            this.DepartureCountryTextLabel.Location = new System.Drawing.Point(154, 28);
+            this.DepartureCountryTextLabel.Location = new System.Drawing.Point(17, 49);
             this.DepartureCountryTextLabel.Name = "DepartureCountryTextLabel";
-            this.DepartureCountryTextLabel.Size = new System.Drawing.Size(88, 13);
+            this.DepartureCountryTextLabel.Size = new System.Drawing.Size(93, 13);
             this.DepartureCountryTextLabel.TabIndex = 25;
-            this.DepartureCountryTextLabel.Text = "Išvykimo adresas";
+            this.DepartureCountryTextLabel.Text = "Departure Country";
             // 
             // ArrivalCountryTextLabel
             // 
             this.ArrivalCountryTextLabel.AutoSize = true;
-            this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(154, 74);
+            this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(17, 110);
             this.ArrivalCountryTextLabel.Name = "ArrivalCountryTextLabel";
-            this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(88, 13);
+            this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(75, 13);
             this.ArrivalCountryTextLabel.TabIndex = 26;
-            this.ArrivalCountryTextLabel.Text = "Išvykimo adresas";
+            this.ArrivalCountryTextLabel.Text = "Arrival Country";
             // 
             // TravelInfoForm
             // 
