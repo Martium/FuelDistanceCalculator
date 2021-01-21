@@ -128,8 +128,8 @@ namespace Martium.TravelInfo.App.Forms
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
            
-            LoadCountryComboBox(DepartureCountryComboBox);
-            LoadCountryComboBox(ArrivalCountryComboBox);
+            LoadCountryComboBox(DepartureCountryComboBox, _travelInfoSettingsModel);
+            LoadCountryComboBox(ArrivalCountryComboBox, _travelInfoSettingsModel);
 
         }
 
@@ -271,7 +271,7 @@ namespace Martium.TravelInfo.App.Forms
             return success;
         }
 
-        private void LoadCountryComboBox(ComboBox comboBox)
+        private void LoadCountryComboBox(ComboBox comboBox, TravelInfoSettingsModel travelInfoSettingsModel)
         {
             comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
@@ -281,8 +281,9 @@ namespace Martium.TravelInfo.App.Forms
             foreach (var isoCountrys in countries)
             {
                 comboBox.Items.Add(isoCountrys.ThreeLetterCode);
-                comboBox.Text = isoCountrys.ThreeLetterCode;
             }
+
+            comboBox.Text = travelInfoSettingsModel.DepartureCountry;
         }
 
         #endregion
