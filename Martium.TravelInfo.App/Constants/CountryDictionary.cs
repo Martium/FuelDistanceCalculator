@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Martium.TravelInfo.App.Country_ISO
 {
-    public class IsoDictionary
+    public class CountryDictionary
     {
-        public static Dictionary<string, string> CountryDictionary = new Dictionary<string, string>()
+        public static Dictionary<string, string> CountrysDictionary = new Dictionary<string, string>()
         {
             {"LTU", "Lietuva"},
-            {"UK", "Anglija"}
+            {"GBR", "Anglija"}
         };
     }
 }

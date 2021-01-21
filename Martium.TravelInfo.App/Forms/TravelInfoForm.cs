@@ -30,7 +30,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void TravelInfoForm_Load(object sender, EventArgs e)
         {
-            LoadCountryIsoCollections();
+            LoadDepartureCountryComboBox();
 
             LoadTravelInfoSettings();
 
@@ -99,9 +99,9 @@ namespace Martium.TravelInfo.App.Forms
 
         private void CountryIsoComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, string> countryIso in IsoDictionary.CountryDictionary)
+            foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
             {
-                if (CountryIsoComboBox.Text == countryIso.Key)
+                if (CountryComboBox.Text == countryIso.Key)
                 {
                     DepartureCountryTextBox.Text = countryIso.Value;
                 }
@@ -141,7 +141,7 @@ namespace Martium.TravelInfo.App.Forms
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
-            CountryIsoComboBox.Text = "LTU"; // if we choose to save departure country option then change this 
+            CountryComboBox.Text = "LTU"; // if we choose to save departure country option then change this 
         }
 
         private void SetMapPositionByAddress(string address)
@@ -282,11 +282,13 @@ namespace Martium.TravelInfo.App.Forms
             return success;
         }
 
-        private void LoadCountryIsoCollections()
+        private void LoadDepartureCountryComboBox()
         {
-            foreach (KeyValuePair<string, string> countryIso in IsoDictionary.CountryDictionary)
+            this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
             {
-                CountryIsoComboBox.Items.Add(countryIso.Key);
+                CountryComboBox.Items.Add(countryIso.Value);
             }
         }
 
