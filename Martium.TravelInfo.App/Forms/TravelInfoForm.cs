@@ -97,17 +97,6 @@ namespace Martium.TravelInfo.App.Forms
             System.Diagnostics.Process.Start("http://www.openstreetmap.org");
         }
 
-        private void CountryIsoComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
-            {
-                if (CountryComboBox.Text == countryIso.Key)
-                {
-                    DepartureCountryTextBox.Text = countryIso.Value;
-                }
-            }
-        }
-
         #region custom methods
 
         private void InitializeControls()

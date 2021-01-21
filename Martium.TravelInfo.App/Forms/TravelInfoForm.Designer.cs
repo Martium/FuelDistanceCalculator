@@ -91,7 +91,6 @@ namespace Martium.TravelInfo.App.Forms
             this.CountryComboBox.Name = "CountryComboBox";
             this.CountryComboBox.Size = new System.Drawing.Size(130, 21);
             this.CountryComboBox.TabIndex = 22;
-            this.CountryComboBox.SelectedIndexChanged += new System.EventHandler(this.CountryIsoComboBox_SelectedIndexChanged);
             // 
             // DecimalTextBoxErrorLabel
             // 
