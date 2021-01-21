@@ -30,7 +30,9 @@ namespace Martium.TravelInfo.App.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
-            this.CountryComboBox = new System.Windows.Forms.ComboBox();
+            this.ArrivalCountryLabel = new System.Windows.Forms.Label();
+            this.ArrivalCountryComboBox = new System.Windows.Forms.ComboBox();
+            this.DepartureCountryComboBox = new System.Windows.Forms.ComboBox();
             this.DecimalTextBoxErrorLabel = new System.Windows.Forms.Label();
             this.SaveDepartureAddressButton = new System.Windows.Forms.Button();
             this.ArrivalAddressTextBox = new System.Windows.Forms.TextBox();
@@ -52,8 +54,6 @@ namespace Martium.TravelInfo.App.Forms
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.ArrivalCountryComboBox = new System.Windows.Forms.ComboBox();
-            this.ArrivalCountryLabel = new System.Windows.Forms.Label();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +61,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             this.InfoPanel.Controls.Add(this.ArrivalCountryLabel);
             this.InfoPanel.Controls.Add(this.ArrivalCountryComboBox);
-            this.InfoPanel.Controls.Add(this.CountryComboBox);
+            this.InfoPanel.Controls.Add(this.DepartureCountryComboBox);
             this.InfoPanel.Controls.Add(this.DecimalTextBoxErrorLabel);
             this.InfoPanel.Controls.Add(this.SaveDepartureAddressButton);
             this.InfoPanel.Controls.Add(this.ArrivalAddressTextBox);
@@ -86,13 +86,30 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
             // 
-            // CountryComboBox
+            // ArrivalCountryLabel
             // 
-            this.CountryComboBox.FormattingEnabled = true;
-            this.CountryComboBox.Location = new System.Drawing.Point(18, 25);
-            this.CountryComboBox.Name = "CountryComboBox";
-            this.CountryComboBox.Size = new System.Drawing.Size(130, 21);
-            this.CountryComboBox.TabIndex = 22;
+            this.ArrivalCountryLabel.AutoSize = true;
+            this.ArrivalCountryLabel.Location = new System.Drawing.Point(15, 55);
+            this.ArrivalCountryLabel.Name = "ArrivalCountryLabel";
+            this.ArrivalCountryLabel.Size = new System.Drawing.Size(73, 13);
+            this.ArrivalCountryLabel.TabIndex = 24;
+            this.ArrivalCountryLabel.Text = "Atvykimo šalis";
+            // 
+            // ArrivalCountryComboBox
+            // 
+            this.ArrivalCountryComboBox.FormattingEnabled = true;
+            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(18, 71);
+            this.ArrivalCountryComboBox.Name = "ArrivalCountryComboBox";
+            this.ArrivalCountryComboBox.Size = new System.Drawing.Size(130, 21);
+            this.ArrivalCountryComboBox.TabIndex = 23;
+            // 
+            // DepartureCountryComboBox
+            // 
+            this.DepartureCountryComboBox.FormattingEnabled = true;
+            this.DepartureCountryComboBox.Location = new System.Drawing.Point(18, 25);
+            this.DepartureCountryComboBox.Name = "DepartureCountryComboBox";
+            this.DepartureCountryComboBox.Size = new System.Drawing.Size(130, 21);
+            this.DepartureCountryComboBox.TabIndex = 22;
             // 
             // DecimalTextBoxErrorLabel
             // 
@@ -301,23 +318,6 @@ namespace Martium.TravelInfo.App.Forms
             this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
             // 
-            // ArrivalCountryComboBox
-            // 
-            this.ArrivalCountryComboBox.FormattingEnabled = true;
-            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(18, 71);
-            this.ArrivalCountryComboBox.Name = "ArrivalCountryComboBox";
-            this.ArrivalCountryComboBox.Size = new System.Drawing.Size(130, 21);
-            this.ArrivalCountryComboBox.TabIndex = 23;
-            // 
-            // ArrivalCountryLabel
-            // 
-            this.ArrivalCountryLabel.AutoSize = true;
-            this.ArrivalCountryLabel.Location = new System.Drawing.Point(15, 55);
-            this.ArrivalCountryLabel.Name = "ArrivalCountryLabel";
-            this.ArrivalCountryLabel.Size = new System.Drawing.Size(73, 13);
-            this.ArrivalCountryLabel.TabIndex = 24;
-            this.ArrivalCountryLabel.Text = "Atvykimo šalis";
-            // 
             // TravelInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -364,7 +364,7 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.LinkLabel MapContributorLinkLabel;
         private System.Windows.Forms.Button SaveDepartureAddressButton;
         private System.Windows.Forms.Label DecimalTextBoxErrorLabel;
-        private System.Windows.Forms.ComboBox CountryComboBox;
+        private System.Windows.Forms.ComboBox DepartureCountryComboBox;
         private System.Windows.Forms.Label ArrivalCountryLabel;
         private System.Windows.Forms.ComboBox ArrivalCountryComboBox;
     }

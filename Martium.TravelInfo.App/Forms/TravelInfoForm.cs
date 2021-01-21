@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using GMap.NET.MapProviders;
+using ISO3166;
 using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Country_ISO;
 using Martium.TravelInfo.App.Models;
@@ -32,7 +33,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {CountryComboBox.Text}");
+            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryComboBox.Text}");
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -126,7 +127,10 @@ namespace Martium.TravelInfo.App.Forms
             DepartureAddressTextBox.Text = _travelInfoSettingsModel.DepartureAddress;
             PricePerKm.Text = _travelInfoSettingsModel.PricePerKm.ToString(CultureInfo.InvariantCulture);
             AdditionalDistanceInKmTextBox.Text = _travelInfoSettingsModel.AdditionalDistanceInKm.ToString(CultureInfo.InvariantCulture);
-            LoadDepartureCountryComboBox(_travelInfoSettingsModel);
+           
+            LoadCountryComboBox(DepartureCountryComboBox);
+            LoadCountryComboBox(ArrivalCountryComboBox);
+
         }
 
         private void SetMapPositionByAddress(string address)
@@ -267,20 +271,17 @@ namespace Martium.TravelInfo.App.Forms
             return success;
         }
 
-        private void LoadDepartureCountryComboBox(TravelInfoSettingsModel travelInfoSettingsModel)
+        private void LoadCountryComboBox(ComboBox comboBox)
         {
-            //this.CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList; // only to choose option
-            CountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            CountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            foreach (KeyValuePair<string, string> countryIso in CountryDictionary.CountrysDictionary)
+            Country[] countries = ISO3166.Country.List;
+
+            foreach (var isoCountrys in countries)
             {
-                CountryComboBox.Items.Add(countryIso.Value);
-
-                if (travelInfoSettingsModel.DepartureCountry == countryIso.Key)
-                {
-                    CountryComboBox.Text = countryIso.Value;
-                }
+                comboBox.Items.Add(isoCountrys.ThreeLetterCode);
+                comboBox.Text = isoCountrys.ThreeLetterCode;
             }
         }
 
