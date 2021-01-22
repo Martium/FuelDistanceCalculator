@@ -36,9 +36,10 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
+            LoadMarker();
+
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
 
-            LoadMarker();
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -341,7 +342,6 @@ namespace Martium.TravelInfo.App.Forms
             }
             else
             {
-                SetMapPositionByAddress(DepartureCountryTextLabel.Text);
                 Map.Zoom = 7;
             }
             
