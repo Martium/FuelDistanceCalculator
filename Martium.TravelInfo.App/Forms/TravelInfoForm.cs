@@ -325,7 +325,7 @@ namespace Martium.TravelInfo.App.Forms
             GeoCoderStatusCode status;
             var positionLatLng = GMapProviders.OpenStreetMap.GetPoint($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}", out status);
             
-            if (status == GeoCoderStatusCode.OK && positionLatLng != null)
+            if (status == GeoCoderStatusCode.OK && positionLatLng != null && !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text))
             {
                 var pointLat = positionLatLng.Value.Lat;
                 var pointLng = positionLatLng.Value.Lng;
@@ -338,7 +338,11 @@ namespace Martium.TravelInfo.App.Forms
                 Map.Overlays.Add(markers);
 
                 Map.Zoom = 13;
-
+            }
+            else
+            {
+                SetMapPositionByAddress(DepartureCountryTextLabel.Text);
+                Map.Zoom = 7;
             }
             
         }
