@@ -390,6 +390,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
+            Map.Overlays.Clear();
+
             PointLatLng departureLatLng = ConvertAddressToLatLng(DepartureAddressTextBox, DepartureCountryTextLabel);
             PointLatLng arrivalLatLng = ConvertAddressToLatLng(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
