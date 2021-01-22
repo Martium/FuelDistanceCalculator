@@ -30,6 +30,8 @@ namespace Martium.TravelInfo.App.Forms
         private void InitializeComponent()
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.CalculatedDurationTextBox = new System.Windows.Forms.TextBox();
+            this.CalculatedDurationLabel = new System.Windows.Forms.Label();
             this.ArrivalCountryTextLabel = new System.Windows.Forms.Label();
             this.DepartureCountryTextLabel = new System.Windows.Forms.Label();
             this.ArrivalCountryLabel = new System.Windows.Forms.Label();
@@ -56,8 +58,6 @@ namespace Martium.TravelInfo.App.Forms
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.CalculatedDurationLabel = new System.Windows.Forms.Label();
-            this.CalculatedDurationTextBox = new System.Windows.Forms.TextBox();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,10 +94,27 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Size = new System.Drawing.Size(347, 669);
             this.InfoPanel.TabIndex = 0;
             // 
+            // CalculatedDurationTextBox
+            // 
+            this.CalculatedDurationTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedDurationTextBox.Location = new System.Drawing.Point(100, 253);
+            this.CalculatedDurationTextBox.Name = "CalculatedDurationTextBox";
+            this.CalculatedDurationTextBox.Size = new System.Drawing.Size(106, 20);
+            this.CalculatedDurationTextBox.TabIndex = 28;
+            // 
+            // CalculatedDurationLabel
+            // 
+            this.CalculatedDurationLabel.AutoSize = true;
+            this.CalculatedDurationLabel.Location = new System.Drawing.Point(23, 256);
+            this.CalculatedDurationLabel.Name = "CalculatedDurationLabel";
+            this.CalculatedDurationLabel.Size = new System.Drawing.Size(46, 13);
+            this.CalculatedDurationLabel.TabIndex = 27;
+            this.CalculatedDurationLabel.Text = "Trukmė:";
+            // 
             // ArrivalCountryTextLabel
             // 
             this.ArrivalCountryTextLabel.AutoSize = true;
-            this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(68, 129);
             this.ArrivalCountryTextLabel.Name = "ArrivalCountryTextLabel";
             this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(128, 13);
@@ -107,7 +124,7 @@ namespace Martium.TravelInfo.App.Forms
             // DepartureCountryTextLabel
             // 
             this.DepartureCountryTextLabel.AutoSize = true;
-            this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.DepartureCountryTextLabel.Location = new System.Drawing.Point(70, 38);
             this.DepartureCountryTextLabel.Name = "DepartureCountryTextLabel";
             this.DepartureCountryTextLabel.Size = new System.Drawing.Size(146, 13);
@@ -349,23 +366,6 @@ namespace Martium.TravelInfo.App.Forms
             this.MapContributorLinkLabel.TabStop = true;
             this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
-            // 
-            // CalculatedDurationLabel
-            // 
-            this.CalculatedDurationLabel.AutoSize = true;
-            this.CalculatedDurationLabel.Location = new System.Drawing.Point(23, 256);
-            this.CalculatedDurationLabel.Name = "CalculatedDurationLabel";
-            this.CalculatedDurationLabel.Size = new System.Drawing.Size(46, 13);
-            this.CalculatedDurationLabel.TabIndex = 27;
-            this.CalculatedDurationLabel.Text = "Trukmė:";
-            // 
-            // CalculatedDurationTextBox
-            // 
-            this.CalculatedDurationTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.CalculatedDurationTextBox.Location = new System.Drawing.Point(100, 253);
-            this.CalculatedDurationTextBox.Name = "CalculatedDurationTextBox";
-            this.CalculatedDurationTextBox.Size = new System.Drawing.Size(106, 20);
-            this.CalculatedDurationTextBox.TabIndex = 28;
             // 
             // TravelInfoForm
             // 
