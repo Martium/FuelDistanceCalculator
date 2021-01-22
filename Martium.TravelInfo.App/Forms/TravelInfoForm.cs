@@ -446,8 +446,6 @@ namespace Martium.TravelInfo.App.Forms
                 SetDepartureCountryMapPosition();
                 ShowErrorDialog("Atvykimo adresas nerastas");
             }
-
-            
         }
     }
 }
