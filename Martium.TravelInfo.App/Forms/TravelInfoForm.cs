@@ -157,7 +157,7 @@ namespace Martium.TravelInfo.App.Forms
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
             Map.MapProvider = OpenStreetMapProvider.Instance;
             Map.ShowCenter = false;
-            //Map.DragButton = MouseButtons.Left; Drag map option 
+            Map.DragButton = MouseButtons.Left;
         }
 
         private void LoadTravelInfoSettings()
@@ -354,11 +354,43 @@ namespace Martium.TravelInfo.App.Forms
             }
         }
 
-        private string GetFullAddress(TextBox departureAddressTextBox, Label departureCountryTextLabel)
+        private string GetFullAddress(TextBox textBox, Label label)
         {
-            return $"{departureAddressTextBox.Text}, {departureCountryTextLabel.Text}";
+            return $"{textBox.Text}, {label.Text}";
+        }
+
+        private void CheckAddress(TextBox textBox, Label label)
+        {
+            string fullAddress = GetFullAddress(textBox, label);
+
+            PointLatLng? coordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
+
+            if (status == GeoCoderStatusCode.OK && coordinates.HasValue)
+            {
+                PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
+                GMapMarker mapMarker = new GMarkerGoogle(point, GMarkerGoogleType.red);
+
+                GMapOverlay markers = new GMapOverlay("markers");
+                markers.Markers.Add(mapMarker);
+                Map.Overlays.Add(markers);
+
+                Map.Zoom = 14;
+                SetMapPositionByAddress(fullAddress);
+            }
+            else
+            {
+                Map.Zoom = 7;
+                SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
+                ShowErrorDialog("Adresas nerastas");
+            }
         }
 
         #endregion
+
+        private void SearchRouteButton_Click(object sender, EventArgs e)
+        {
+            CheckAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            CheckAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+        }
     }
 }

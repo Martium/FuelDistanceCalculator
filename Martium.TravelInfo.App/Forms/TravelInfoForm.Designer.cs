@@ -114,7 +114,7 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalCountryTextLabel
             // 
             this.ArrivalCountryTextLabel.AutoSize = true;
-            this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(68, 129);
             this.ArrivalCountryTextLabel.Name = "ArrivalCountryTextLabel";
             this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(128, 13);
@@ -124,7 +124,7 @@ namespace Martium.TravelInfo.App.Forms
             // DepartureCountryTextLabel
             // 
             this.DepartureCountryTextLabel.AutoSize = true;
-            this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.DepartureCountryTextLabel.Location = new System.Drawing.Point(70, 38);
             this.DepartureCountryTextLabel.Name = "DepartureCountryTextLabel";
             this.DepartureCountryTextLabel.Size = new System.Drawing.Size(146, 13);
@@ -302,6 +302,7 @@ namespace Martium.TravelInfo.App.Forms
             this.SearchRouteButton.TabIndex = 6;
             this.SearchRouteButton.Text = "Ieškoti";
             this.SearchRouteButton.UseVisualStyleBackColor = true;
+            this.SearchRouteButton.Click += new System.EventHandler(this.SearchRouteButton_Click);
             // 
             // PricePerKm
             // 
