@@ -4,7 +4,10 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 using ISO3166;
 using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Models;
@@ -34,6 +37,8 @@ namespace Martium.TravelInfo.App.Forms
             LoadTravelInfoSettings();
 
             SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+
+            LoadMarker();
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -313,6 +318,29 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = _countries.Single(c => c.TwoLetterCode == comboBox.Text);
 
             return selectedCountry;
+        }
+
+        private void LoadMarker()
+        {
+            GeoCoderStatusCode status;
+            var positionLatLng = GMapProviders.OpenStreetMap.GetPoint($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}", out status);
+            
+            if (status == GeoCoderStatusCode.OK && positionLatLng != null)
+            {
+                var pointLat = positionLatLng.Value.Lat;
+                var pointLng = positionLatLng.Value.Lng;
+
+                PointLatLng point = new PointLatLng(pointLat, pointLng);
+                GMapMarker mapMarker = new GMarkerGoogle(point, GMarkerGoogleType.red);
+
+                GMapOverlay markers = new GMapOverlay("markers");
+                markers.Markers.Add(mapMarker);
+                Map.Overlays.Add(markers);
+
+                Map.Zoom = 13;
+
+            }
+            
         }
 
         #endregion
