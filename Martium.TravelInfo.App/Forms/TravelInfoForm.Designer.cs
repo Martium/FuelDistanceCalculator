@@ -56,11 +56,15 @@ namespace Martium.TravelInfo.App.Forms
             this.DepartureCountryLabel = new System.Windows.Forms.Label();
             this.Map = new GMap.NET.WindowsForms.GMapControl();
             this.MapContributorLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.CalculatedDurationLabel = new System.Windows.Forms.Label();
+            this.CalculatedDurationTextBox = new System.Windows.Forms.TextBox();
             this.InfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.CalculatedDurationTextBox);
+            this.InfoPanel.Controls.Add(this.CalculatedDurationLabel);
             this.InfoPanel.Controls.Add(this.ArrivalCountryTextLabel);
             this.InfoPanel.Controls.Add(this.DepartureCountryTextLabel);
             this.InfoPanel.Controls.Add(this.ArrivalCountryLabel);
@@ -141,7 +145,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             this.DecimalTextBoxErrorLabel.AutoSize = true;
             this.DecimalTextBoxErrorLabel.ForeColor = System.Drawing.Color.Red;
-            this.DecimalTextBoxErrorLabel.Location = new System.Drawing.Point(15, 347);
+            this.DecimalTextBoxErrorLabel.Location = new System.Drawing.Point(17, 399);
             this.DecimalTextBoxErrorLabel.Name = "DecimalTextBoxErrorLabel";
             this.DecimalTextBoxErrorLabel.Size = new System.Drawing.Size(49, 13);
             this.DecimalTextBoxErrorLabel.TabIndex = 21;
@@ -194,7 +198,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SaveAdditionalDistanceInKmButton
             // 
-            this.SaveAdditionalDistanceInKmButton.Location = new System.Drawing.Point(124, 323);
+            this.SaveAdditionalDistanceInKmButton.Location = new System.Drawing.Point(126, 375);
             this.SaveAdditionalDistanceInKmButton.Name = "SaveAdditionalDistanceInKmButton";
             this.SaveAdditionalDistanceInKmButton.Size = new System.Drawing.Size(71, 22);
             this.SaveAdditionalDistanceInKmButton.TabIndex = 15;
@@ -204,7 +208,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // SavePricePerKmButton
             // 
-            this.SavePricePerKmButton.Location = new System.Drawing.Point(124, 284);
+            this.SavePricePerKmButton.Location = new System.Drawing.Point(126, 336);
             this.SavePricePerKmButton.Name = "SavePricePerKmButton";
             this.SavePricePerKmButton.Size = new System.Drawing.Size(71, 22);
             this.SavePricePerKmButton.TabIndex = 14;
@@ -215,7 +219,7 @@ namespace Martium.TravelInfo.App.Forms
             // AdditionalKmLabel
             // 
             this.AdditionalKmLabel.AutoSize = true;
-            this.AdditionalKmLabel.Location = new System.Drawing.Point(15, 308);
+            this.AdditionalKmLabel.Location = new System.Drawing.Point(17, 360);
             this.AdditionalKmLabel.Name = "AdditionalKmLabel";
             this.AdditionalKmLabel.Size = new System.Drawing.Size(99, 13);
             this.AdditionalKmLabel.TabIndex = 13;
@@ -223,7 +227,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // AdditionalDistanceInKmTextBox
             // 
-            this.AdditionalDistanceInKmTextBox.Location = new System.Drawing.Point(18, 324);
+            this.AdditionalDistanceInKmTextBox.Location = new System.Drawing.Point(20, 376);
             this.AdditionalDistanceInKmTextBox.Name = "AdditionalDistanceInKmTextBox";
             this.AdditionalDistanceInKmTextBox.Size = new System.Drawing.Size(100, 20);
             this.AdditionalDistanceInKmTextBox.TabIndex = 12;
@@ -232,14 +236,16 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculatedTripPriceTextBox
             // 
-            this.CalculatedTripPriceTextBox.Location = new System.Drawing.Point(89, 507);
+            this.CalculatedTripPriceTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedTripPriceTextBox.Location = new System.Drawing.Point(64, 488);
             this.CalculatedTripPriceTextBox.Name = "CalculatedTripPriceTextBox";
             this.CalculatedTripPriceTextBox.Size = new System.Drawing.Size(106, 20);
             this.CalculatedTripPriceTextBox.TabIndex = 11;
             // 
             // CalculatedDistanceTextBox
             // 
-            this.CalculatedDistanceTextBox.Location = new System.Drawing.Point(89, 471);
+            this.CalculatedDistanceTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedDistanceTextBox.Location = new System.Drawing.Point(100, 224);
             this.CalculatedDistanceTextBox.Name = "CalculatedDistanceTextBox";
             this.CalculatedDistanceTextBox.Size = new System.Drawing.Size(106, 20);
             this.CalculatedDistanceTextBox.TabIndex = 10;
@@ -247,7 +253,7 @@ namespace Martium.TravelInfo.App.Forms
             // CalculatedTripPriceLabel
             // 
             this.CalculatedTripPriceLabel.AutoSize = true;
-            this.CalculatedTripPriceLabel.Location = new System.Drawing.Point(15, 510);
+            this.CalculatedTripPriceLabel.Location = new System.Drawing.Point(21, 491);
             this.CalculatedTripPriceLabel.Name = "CalculatedTripPriceLabel";
             this.CalculatedTripPriceLabel.Size = new System.Drawing.Size(37, 13);
             this.CalculatedTripPriceLabel.TabIndex = 9;
@@ -255,7 +261,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculateButton
             // 
-            this.CalculateButton.Location = new System.Drawing.Point(54, 413);
+            this.CalculateButton.Location = new System.Drawing.Point(55, 431);
             this.CalculateButton.Name = "CalculateButton";
             this.CalculateButton.Size = new System.Drawing.Size(94, 40);
             this.CalculateButton.TabIndex = 8;
@@ -265,7 +271,7 @@ namespace Martium.TravelInfo.App.Forms
             // CalculatedDistanceLabel
             // 
             this.CalculatedDistanceLabel.AutoSize = true;
-            this.CalculatedDistanceLabel.Location = new System.Drawing.Point(15, 474);
+            this.CalculatedDistanceLabel.Location = new System.Drawing.Point(21, 227);
             this.CalculatedDistanceLabel.Name = "CalculatedDistanceLabel";
             this.CalculatedDistanceLabel.Size = new System.Drawing.Size(73, 13);
             this.CalculatedDistanceLabel.TabIndex = 7;
@@ -282,7 +288,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // PricePerKm
             // 
-            this.PricePerKm.Location = new System.Drawing.Point(18, 285);
+            this.PricePerKm.Location = new System.Drawing.Point(20, 337);
             this.PricePerKm.Name = "PricePerKm";
             this.PricePerKm.Size = new System.Drawing.Size(100, 20);
             this.PricePerKm.TabIndex = 5;
@@ -292,7 +298,7 @@ namespace Martium.TravelInfo.App.Forms
             // FuelPriceLabel
             // 
             this.FuelPriceLabel.AutoSize = true;
-            this.FuelPriceLabel.Location = new System.Drawing.Point(15, 269);
+            this.FuelPriceLabel.Location = new System.Drawing.Point(17, 321);
             this.FuelPriceLabel.Name = "FuelPriceLabel";
             this.FuelPriceLabel.Size = new System.Drawing.Size(79, 13);
             this.FuelPriceLabel.TabIndex = 4;
@@ -343,6 +349,23 @@ namespace Martium.TravelInfo.App.Forms
             this.MapContributorLinkLabel.TabStop = true;
             this.MapContributorLinkLabel.Text = "© OpenStreetMap contributors";
             this.MapContributorLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.MapContributorLinkLabel_LinkClicked);
+            // 
+            // CalculatedDurationLabel
+            // 
+            this.CalculatedDurationLabel.AutoSize = true;
+            this.CalculatedDurationLabel.Location = new System.Drawing.Point(23, 256);
+            this.CalculatedDurationLabel.Name = "CalculatedDurationLabel";
+            this.CalculatedDurationLabel.Size = new System.Drawing.Size(46, 13);
+            this.CalculatedDurationLabel.TabIndex = 27;
+            this.CalculatedDurationLabel.Text = "Trukmė:";
+            // 
+            // CalculatedDurationTextBox
+            // 
+            this.CalculatedDurationTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedDurationTextBox.Location = new System.Drawing.Point(100, 253);
+            this.CalculatedDurationTextBox.Name = "CalculatedDurationTextBox";
+            this.CalculatedDurationTextBox.Size = new System.Drawing.Size(106, 20);
+            this.CalculatedDurationTextBox.TabIndex = 28;
             // 
             // TravelInfoForm
             // 
@@ -395,6 +418,8 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.ComboBox ArrivalCountryComboBox;
         private System.Windows.Forms.Label ArrivalCountryTextLabel;
         private System.Windows.Forms.Label DepartureCountryTextLabel;
+        private System.Windows.Forms.TextBox CalculatedDurationTextBox;
+        private System.Windows.Forms.Label CalculatedDurationLabel;
     }
 }
 

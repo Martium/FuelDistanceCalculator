@@ -124,14 +124,24 @@ namespace Martium.TravelInfo.App.Forms
         {
             ActiveControl = DepartureCountryLabel;
 
-            CalculatedTripPriceTextBox.Enabled = false;
-            CalculatedDistanceTextBox.Enabled = false;
-
             SaveDepartureAddressButton.Enabled = false;
             SavePricePerKmButton.Enabled = false;
             SaveAdditionalDistanceInKmButton.Enabled = false;
 
+            CalculatedDistanceLabel.Visible = false;
+            CalculatedDistanceTextBox.Visible = false;
+            CalculatedDistanceTextBox.Enabled = false;
+
+            CalculatedDurationLabel.Visible = false;
+            CalculatedDurationTextBox.Visible = false;
+            CalculatedDurationTextBox.Enabled = false;
+
             CalculateButton.Enabled = false;
+
+            CalculatedTripPriceLabel.Visible = false;
+            CalculatedTripPriceTextBox.Visible = false;
+            CalculatedTripPriceTextBox.Enabled = false;
+
 
             DepartureCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             DepartureCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
