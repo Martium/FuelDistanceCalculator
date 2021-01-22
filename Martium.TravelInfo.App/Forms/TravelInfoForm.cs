@@ -395,6 +395,18 @@ namespace Martium.TravelInfo.App.Forms
             PointLatLng departureLatLng = ConvertAddressToLatLng(DepartureAddressTextBox, DepartureCountryTextLabel);
             PointLatLng arrivalLatLng = ConvertAddressToLatLng(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
+            GMapMarker departureMapMarker = new GMarkerGoogle(departureLatLng, GMarkerGoogleType.red);
+
+            GMapOverlay departureMarkers = new GMapOverlay("departureMarkers");
+            departureMarkers.Markers.Add(departureMapMarker);
+            Map.Overlays.Add(departureMarkers);
+
+            GMapMarker arrivalMapMarker = new GMarkerGoogle(arrivalLatLng, GMarkerGoogleType.green);
+
+            GMapOverlay arrivalMarkers = new GMapOverlay("arrivalMarkers");
+            arrivalMarkers.Markers.Add(arrivalMapMarker);
+            Map.Overlays.Add(arrivalMarkers);
+
             var route = OpenStreetMapProvider.Instance.GetRoute(departureLatLng, arrivalLatLng, false, false, 14);
             var r = new GMapRoute(route);
             var routes = new GMapOverlay("My Route");
