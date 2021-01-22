@@ -36,9 +36,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
-            LoadMarker();
-
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+            LoadInitialMapView();
 
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -321,30 +319,34 @@ namespace Martium.TravelInfo.App.Forms
             return selectedCountry;
         }
 
-        private void LoadMarker()
+        private void LoadInitialMapView()
         {
-            GeoCoderStatusCode status;
-            var positionLatLng = GMapProviders.OpenStreetMap.GetPoint($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}", out status);
-            
-            if (status == GeoCoderStatusCode.OK && positionLatLng != null && !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text))
-            {
-                var pointLat = positionLatLng.Value.Lat;
-                var pointLng = positionLatLng.Value.Lng;
+            string fullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
-                PointLatLng point = new PointLatLng(pointLat, pointLng);
+            PointLatLng? coordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
+            
+            if (status == GeoCoderStatusCode.OK && coordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
+            {
+                PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
                 GMapMarker mapMarker = new GMarkerGoogle(point, GMarkerGoogleType.red);
 
                 GMapOverlay markers = new GMapOverlay("markers");
                 markers.Markers.Add(mapMarker);
                 Map.Overlays.Add(markers);
 
-                Map.Zoom = 13;
+                Map.Zoom = 14;
+                SetMapPositionByAddress(fullAddress);
             }
             else
             {
                 Map.Zoom = 7;
+                SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
             }
-            
+        }
+
+        private string GetFullAddress(TextBox departureAddressTextBox, Label departureCountryTextLabel)
+        {
+            return $"{departureAddressTextBox.Text}, {departureCountryTextLabel.Text}";
         }
 
         #endregion
