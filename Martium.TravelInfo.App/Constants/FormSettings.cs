@@ -4,7 +4,7 @@
     {
         public static class TextBoxLenghts
         {
-            public static int DepartureCountry => 3;
+            public static int DepartureCountry => 2;
             public static int DepartureAddress => 100;
         }
     }

@@ -94,7 +94,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             this.ArrivalCountryTextLabel.AutoSize = true;
             this.ArrivalCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(86, 129);
+            this.ArrivalCountryTextLabel.Location = new System.Drawing.Point(68, 129);
             this.ArrivalCountryTextLabel.Name = "ArrivalCountryTextLabel";
             this.ArrivalCountryTextLabel.Size = new System.Drawing.Size(128, 13);
             this.ArrivalCountryTextLabel.TabIndex = 26;
@@ -104,7 +104,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             this.DepartureCountryTextLabel.AutoSize = true;
             this.DepartureCountryTextLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.DepartureCountryTextLabel.Location = new System.Drawing.Point(86, 38);
+            this.DepartureCountryTextLabel.Location = new System.Drawing.Point(70, 38);
             this.DepartureCountryTextLabel.Name = "DepartureCountryTextLabel";
             this.DepartureCountryTextLabel.Size = new System.Drawing.Size(146, 13);
             this.DepartureCountryTextLabel.TabIndex = 25;
@@ -122,9 +122,9 @@ namespace Martium.TravelInfo.App.Forms
             // ArrivalCountryComboBox
             // 
             this.ArrivalCountryComboBox.FormattingEnabled = true;
-            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(20, 126);
+            this.ArrivalCountryComboBox.Location = new System.Drawing.Point(18, 126);
             this.ArrivalCountryComboBox.Name = "ArrivalCountryComboBox";
-            this.ArrivalCountryComboBox.Size = new System.Drawing.Size(60, 21);
+            this.ArrivalCountryComboBox.Size = new System.Drawing.Size(44, 21);
             this.ArrivalCountryComboBox.TabIndex = 23;
             this.ArrivalCountryComboBox.SelectedIndexChanged += new System.EventHandler(this.ArrivalCountryComboBox_SelectedIndexChanged);
             // 
@@ -133,7 +133,7 @@ namespace Martium.TravelInfo.App.Forms
             this.DepartureCountryComboBox.FormattingEnabled = true;
             this.DepartureCountryComboBox.Location = new System.Drawing.Point(20, 35);
             this.DepartureCountryComboBox.Name = "DepartureCountryComboBox";
-            this.DepartureCountryComboBox.Size = new System.Drawing.Size(60, 21);
+            this.DepartureCountryComboBox.Size = new System.Drawing.Size(44, 21);
             this.DepartureCountryComboBox.TabIndex = 22;
             this.DepartureCountryComboBox.SelectedIndexChanged += new System.EventHandler(this.DepartureCountryComboBox_SelectedIndexChanged);
             // 

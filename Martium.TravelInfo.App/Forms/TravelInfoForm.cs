@@ -37,7 +37,9 @@ namespace Martium.TravelInfo.App.Forms
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetCountryNameLabelText(DepartureCountryTextLabel, DepartureCountryComboBox);
+            Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
+
+            DepartureCountryTextLabel.Text = selectedCountry.Name;
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -48,14 +50,21 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
+            Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
+            _travelInfoSettingsModel.DepartureCountry = selectedCountry.TwoLetterCode;
+
             _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
+
             UpdateNewInfo();
+
             ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
         }
 
         private void ArrivalCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetCountryNameLabelText(ArrivalCountryTextLabel, ArrivalCountryComboBox);
+            Country selectedCountry = GetSelectedCountryByComboBox(ArrivalCountryComboBox);
+
+            ArrivalCountryTextLabel.Text = selectedCountry.Name;
         }
 
         private void ArrivalAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -289,19 +298,21 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadCountryComboBox(ComboBox comboBox)
         {
-            foreach (var isoCountrys in _countries)
+            IOrderedEnumerable<Country> sortedCountries = from country in _countries orderby country.TwoLetterCode select country;
+
+            foreach (Country country in sortedCountries)
             {
-                comboBox.Items.Add(isoCountrys.ThreeLetterCode);
+                comboBox.Items.Add(country.TwoLetterCode);
             }
 
             comboBox.Text = _travelInfoSettingsModel.DepartureCountry;
         }
 
-        private void SetCountryNameLabelText(Label label, ComboBox comboBox)
+        private Country GetSelectedCountryByComboBox(ComboBox comboBox)
         {
-            Country selectedCountry = _countries.Single(c => c.ThreeLetterCode == comboBox.Text);
+            Country selectedCountry = _countries.Single(c => c.TwoLetterCode == comboBox.Text);
 
-            label.Text = selectedCountry.Name;
+            return selectedCountry;
         }
 
         #endregion

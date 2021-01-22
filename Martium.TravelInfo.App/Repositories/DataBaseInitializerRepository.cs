@@ -78,7 +78,7 @@ namespace Martium.TravelInfo.App.Repositories
             string fillTravelInfoSettingsQuery =
                 $@"BEGIN TRANSACTION;
 	                INSERT INTO [{AppConfiguration.TableName}] 
-	                    VALUES ('LTU', 0.2, 0, 'A. Mapu g. 4, Kaunas');
+	                    VALUES ('LT', 0.2, 0, 'A. Mapu g. 4, Kaunas');
                 COMMIT;";
 
             SQLiteCommand fillTravelInfoSettingsCommand = new SQLiteCommand(fillTravelInfoSettingsQuery, dbConnection);
