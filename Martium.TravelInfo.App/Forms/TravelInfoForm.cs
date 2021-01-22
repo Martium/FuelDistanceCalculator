@@ -359,31 +359,54 @@ namespace Martium.TravelInfo.App.Forms
             return $"{textBox.Text}, {label.Text}";
         }
 
-        private PointLatLng ConvertAddressToLatLng(TextBox textBox, Label label)
+        private PointLatLng ConvertAddressToCoordinates(TextBox textBox, Label label)
         {
+            PointLatLng foundCoordinates;
+
             string departureCountry = $"{DepartureCountryTextLabel.Text}";
-
-            PointLatLng? countryCoordinates = GMapProviders.OpenStreetMap.GetPoint(departureCountry, out GeoCoderStatusCode countryStatus);
-            PointLatLng countryPoint = new PointLatLng(countryCoordinates.Value.Lat, countryCoordinates.Value.Lng);
-
             string fullAddress = GetFullAddress(textBox, label);
 
             PointLatLng? coordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
 
             if (status == GeoCoderStatusCode.OK && coordinates.HasValue)
             {
-                PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
-
-                return point;
+                foundCoordinates = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
             }
             else
             {
-                Map.Zoom = 7;
-                SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
-                ShowErrorDialog("Adresas nerastas");
+                PointLatLng? countryCoordinates = GMapProviders.OpenStreetMap.GetPoint(departureCountry, out GeoCoderStatusCode countryStatus);
+                PointLatLng countryPoint = new PointLatLng(countryCoordinates.Value.Lat, countryCoordinates.Value.Lng);
+
+                foundCoordinates = countryPoint;
+
+               
             }
 
-            return countryPoint;
+            return foundCoordinates;
+        }
+
+        private void CreateMapMarker(PointLatLng departureLatLng, GMarkerGoogleType type)
+        {
+            GMapMarker mapMarker = new GMarkerGoogle(departureLatLng, type);
+
+            GMapOverlay markers = new GMapOverlay("Markers");
+            markers.Markers.Add(mapMarker);
+            Map.Overlays.Add(markers);
+        }
+
+        private void GetRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates)
+        {
+            var route = OpenStreetMapProvider.Instance.GetRoute(departureCoordinates, arrivalCoordinates, false, false, 14);
+            var r = new GMapRoute(route);
+            var routes = new GMapOverlay("My Route");
+            routes.Routes.Add(r);
+            Map.Overlays.Add(routes);
+        }
+
+        private void SetDepartureCountryMapPosition()
+        {
+            Map.Zoom = 7;
+            SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
         }
 
         #endregion
@@ -392,28 +415,39 @@ namespace Martium.TravelInfo.App.Forms
         {
             Map.Overlays.Clear();
 
-            PointLatLng departureLatLng = ConvertAddressToLatLng(DepartureAddressTextBox, DepartureCountryTextLabel);
-            PointLatLng arrivalLatLng = ConvertAddressToLatLng(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+            string departureFullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string arrivalFullAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            GMapMarker departureMapMarker = new GMarkerGoogle(departureLatLng, GMarkerGoogleType.red);
+            PointLatLng? fullDepartureCoordinates = GMapProviders.OpenStreetMap.GetPoint(departureFullAddress, out GeoCoderStatusCode departureStatus);
+            PointLatLng? fullArrivalCoordinates = GMapProviders.OpenStreetMap.GetPoint(arrivalFullAddress, out GeoCoderStatusCode arrivalStatus);
 
-            GMapOverlay departureMarkers = new GMapOverlay("departureMarkers");
-            departureMarkers.Markers.Add(departureMapMarker);
-            Map.Overlays.Add(departureMarkers);
+            if ((departureStatus == GeoCoderStatusCode.OK && fullDepartureCoordinates.HasValue) && (arrivalStatus == GeoCoderStatusCode.OK && fullArrivalCoordinates.HasValue))
+            {
+                PointLatLng departureCoordinates = ConvertAddressToCoordinates(DepartureAddressTextBox, DepartureCountryTextLabel);
+                PointLatLng arrivalCoordinates = ConvertAddressToCoordinates(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+                CreateMapMarker(departureCoordinates, GMarkerGoogleType.red);
+                CreateMapMarker(arrivalCoordinates, GMarkerGoogleType.green);
 
-            GMapMarker arrivalMapMarker = new GMarkerGoogle(arrivalLatLng, GMarkerGoogleType.green);
+                GetRoute(departureCoordinates, arrivalCoordinates);
+                SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+            }
+            else if ((departureStatus != GeoCoderStatusCode.OK && !fullDepartureCoordinates.HasValue) && (arrivalStatus != GeoCoderStatusCode.OK && !fullArrivalCoordinates.HasValue))
+            {
+                SetDepartureCountryMapPosition();
+                ShowErrorDialog("Nei išvykimo adresas, nei atvykimo adresas nerastas");
+            }
+            else if (departureStatus != GeoCoderStatusCode.OK && !fullDepartureCoordinates.HasValue)
+            {
+                SetDepartureCountryMapPosition();
+                ShowErrorDialog("Išvykimo adresas nerastas");
+            }
+            else
+            {
+                SetDepartureCountryMapPosition();
+                ShowErrorDialog("Atvykimo adresas nerastas");
+            }
 
-            GMapOverlay arrivalMarkers = new GMapOverlay("arrivalMarkers");
-            arrivalMarkers.Markers.Add(arrivalMapMarker);
-            Map.Overlays.Add(arrivalMarkers);
-
-            var route = OpenStreetMapProvider.Instance.GetRoute(departureLatLng, arrivalLatLng, false, false, 14);
-            var r = new GMapRoute(route);
-            var routes = new GMapOverlay("My Route");
-            routes.Routes.Add(r);
-            Map.Overlays.Add(routes);
-
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+            
         }
     }
 }
