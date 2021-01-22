@@ -4,7 +4,10 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 using ISO3166;
 using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Models;
@@ -33,7 +36,8 @@ namespace Martium.TravelInfo.App.Forms
         {
             LoadTravelInfoSettings();
 
-            SetMapPositionByAddress($"{DepartureAddressTextBox.Text}, {DepartureCountryTextLabel.Text}");
+            LoadInitialMapView();
+
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -313,6 +317,36 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = _countries.Single(c => c.TwoLetterCode == comboBox.Text);
 
             return selectedCountry;
+        }
+
+        private void LoadInitialMapView()
+        {
+            string fullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+
+            PointLatLng? coordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
+            
+            if (status == GeoCoderStatusCode.OK && coordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
+            {
+                PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
+                GMapMarker mapMarker = new GMarkerGoogle(point, GMarkerGoogleType.red);
+
+                GMapOverlay markers = new GMapOverlay("markers");
+                markers.Markers.Add(mapMarker);
+                Map.Overlays.Add(markers);
+
+                Map.Zoom = 14;
+                SetMapPositionByAddress(fullAddress);
+            }
+            else
+            {
+                Map.Zoom = 7;
+                SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
+            }
+        }
+
+        private string GetFullAddress(TextBox departureAddressTextBox, Label departureCountryTextLabel)
+        {
+            return $"{departureAddressTextBox.Text}, {departureCountryTextLabel.Text}";
         }
 
         #endregion
