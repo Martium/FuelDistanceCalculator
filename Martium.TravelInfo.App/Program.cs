@@ -18,7 +18,6 @@ namespace Martium.TravelInfo.App
         [STAThread]
         static void Main()
         {
-            string message = null;
             AlertService alertService = new AlertService();
 
             using (Mutex mutex = new Mutex(false, "Global\\" + AppUuid))
