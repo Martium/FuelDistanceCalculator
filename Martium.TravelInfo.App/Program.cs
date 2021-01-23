@@ -59,7 +59,6 @@ namespace Martium.TravelInfo.App
             catch 
             {
                 success = false;
-
             }
 
             return success;
@@ -68,6 +67,7 @@ namespace Martium.TravelInfo.App
         private static bool CheckForInternetConnection()
         {
             bool checkInternet;
+
             try
             {
                 using (var client = new WebClient())
