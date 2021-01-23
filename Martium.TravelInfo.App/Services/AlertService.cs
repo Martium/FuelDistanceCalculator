@@ -4,7 +4,6 @@ namespace Martium.TravelInfo.App.Services
 {
     public class AlertService
     {
-
         public void ShowErrorDialog(string message)
         {
             MessageBox.Show(message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
