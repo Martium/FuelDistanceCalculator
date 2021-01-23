@@ -2,17 +2,24 @@
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
 namespace Martium.TravelInfo.App.Services
 {
     public class MapService
     {
-        public void InitializeMap(GMapControl map)
+        private readonly GMapControl _map;
+
+        public MapService(GMapControl map)
         {
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
-            map.MapProvider = OpenStreetMapProvider.Instance;
-            map.ShowCenter = false;
-            map.DragButton = MouseButtons.Left;
+            _map = map;
+        }
+        public void InitializeMap()
+        { 
+            GMaps.Instance.Mode = AccessMode.ServerOnly; 
+            _map.MapProvider = OpenStreetMapProvider.Instance;
+            _map.ShowCenter = false;
+            _map.DragButton = MouseButtons.Left;
         }
 
         public PointLatLng? GetAddressCoordinates(string fullAddress)
@@ -31,6 +38,57 @@ namespace Martium.TravelInfo.App.Services
             }
 
             return coordinates;
+        }
+
+        public void SetMapPositionByAddress(string address, double zoomLevel = 14) 
+        { 
+            _map.Zoom = zoomLevel;
+            _map.SetPositionByKeywords(address);
+        }
+
+        public void ClearAllRoutesAndMarks()
+        {
+            _map.Overlays.Clear();
+        }
+
+        public MapRoute GetRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates)
+        {
+            MapRoute route;
+
+            var getRoute = OpenStreetMapProvider.Instance.GetRoute(departureCoordinates, arrivalCoordinates, false, false, 14);
+
+            if (getRoute != null)
+            {
+                route = getRoute;
+            }
+            else
+            {
+                route = null;
+            }
+
+            return route;
+        }
+
+        public void ShowRoutes(MapRoute route)
+        {
+            var r = new GMapRoute(route);
+            var routes = new GMapOverlay("My Route");
+            routes.Routes.Add(r);
+            _map.Overlays.Add(routes);
+        }
+
+        public void CreateMapMarker(PointLatLng departureLatLng, GMarkerGoogleType type)
+        {
+            GMapMarker mapMarker = new GMarkerGoogle(departureLatLng, type);
+
+            GMapOverlay markers = new GMapOverlay("Markers");
+            markers.Markers.Add(mapMarker);
+            _map.Overlays.Add(markers);
+        }
+
+        public string GetFullAddress(TextBox textBox, Label label)
+        {
+            return $"{textBox.Text}, {label.Text}";
         }
     }
 }

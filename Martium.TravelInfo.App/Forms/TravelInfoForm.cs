@@ -27,13 +27,14 @@ namespace Martium.TravelInfo.App.Forms
         public TravelInfoForm()
         {
             _travelInfoRepository = new TravelInfoRepository();
-            _mapService = new MapService();
 
             InitializeComponent();
 
+            _mapService = new MapService(Map);
+
             InitializeControls();
             SetTextBoxMaxLengths();
-            _mapService.InitializeMap(Map);
+            _mapService.InitializeMap();
         }
 
         private void TravelInfoForm_Load(object sender, EventArgs e)
@@ -82,35 +83,38 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
-            Map.Overlays.Clear(); // move as method in MapService class
+            _mapService.ClearAllRoutesAndMarks();
 
-            string departureFullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
-            string arrivalFullAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+            string departureFullAddress =
+                _mapService.GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string arrivalFullAddress = _mapService.GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
             PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(departureFullAddress);
             PointLatLng? arrivalCoordinates = _mapService.GetAddressCoordinates(arrivalFullAddress);
 
             if (departureCoordinates.HasValue && arrivalCoordinates.HasValue)
             {
-                CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
-                CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
+                _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
+                _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
 
-                GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
-                SetMapPositionByAddress(arrivalFullAddress);
+                MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
+                _mapService.ShowRoutes(route);
+
+                _mapService.SetMapPositionByAddress(arrivalFullAddress);
             }
             else if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
             {
-                SetDepartureCountryMapPosition();
+                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
                 ShowErrorDialog("Nei išvykimo adresas, nei atvykimo adresas nerastas");
             }
             else if (!departureCoordinates.HasValue)
             {
-                SetDepartureCountryMapPosition();
+                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
                 ShowErrorDialog("Išvykimo adresas nerastas");
             }
             else
             {
-                SetDepartureCountryMapPosition();
+                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
                 ShowErrorDialog("Atvykimo adresas nerastas");
             }
         }
@@ -202,11 +206,6 @@ namespace Martium.TravelInfo.App.Forms
             LoadCountryComboBox(DepartureCountryComboBox);
             LoadCountryComboBox(ArrivalCountryComboBox);
 
-        }
-
-        private void SetMapPositionByAddress(string address, double? zoomLevel = null) // move to class and add parameter ZoomLevel
-        {
-            Map.SetPositionByKeywords(address);
         }
 
         private void EnableSearchRouteButtonIfPossible()
@@ -362,60 +361,22 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadInitialMapView()
         {
-            string fullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string fullAddress = _mapService.GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
-            PointLatLng? coordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
-            
-            if (status == GeoCoderStatusCode.OK && coordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
+            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
+
+            if (coordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
             {
                 PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
 
-                CreateMapMarker(point, GMarkerGoogleType.red);
-
-                // use method when moved
-                Map.Zoom = 14;
-                SetMapPositionByAddress(fullAddress);
+                _mapService.CreateMapMarker(point, GMarkerGoogleType.red);
+                _mapService.SetMapPositionByAddress(fullAddress);
             }
             else
             {
-                // use method when moved
-                Map.Zoom = 7;
-                SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
+                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
             }
         }
-
-        private string GetFullAddress(TextBox textBox, Label label)
-        {
-            return $"{textBox.Text}, {label.Text}";
-        }
-
-        private void CreateMapMarker(PointLatLng departureLatLng, GMarkerGoogleType type)
-        {
-            GMapMarker mapMarker = new GMarkerGoogle(departureLatLng, type);
-
-            GMapOverlay markers = new GMapOverlay("Markers");
-            markers.Markers.Add(mapMarker);
-            Map.Overlays.Add(markers);
-        }
-
-        private void GetRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates) // Move to class
-        {
-            var route = OpenStreetMapProvider.Instance.GetRoute(departureCoordinates, arrivalCoordinates, false, false, 14);
-            // move to class GetRoute() and this method returns null if route is not returned by API
-
-            // move to class (ShowRoute)
-            var r = new GMapRoute(route);
-            var routes = new GMapOverlay("My Route");
-            routes.Routes.Add(r);
-            Map.Overlays.Add(routes);
-        }
-
-        private void SetDepartureCountryMapPosition()
-        {
-            Map.Zoom = 7;
-            SetMapPositionByAddress($"{DepartureCountryTextLabel.Text}");
-        }
-
         #endregion
     }
 }
