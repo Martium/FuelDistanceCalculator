@@ -20,7 +20,7 @@ namespace Martium.TravelInfo.App
             {
                 if (!mutex.WaitOne(0, false))
                 {
-                    MessageBox.Show(@"Vienu metu galima paleisti tik vieną 'Deprofundis' aplikaciją!");
+                    MessageBox.Show(@"Vienu metu galima paleisti tik vieną 'Travelinfo' aplikaciją!");
                     return;
                 }
 
