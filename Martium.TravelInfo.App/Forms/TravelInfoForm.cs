@@ -5,8 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using GMap.NET;
-using GMap.NET.MapProviders;
-using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using ISO3166;
 using Martium.TravelInfo.App.Constants;

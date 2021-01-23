@@ -80,6 +80,8 @@ namespace Martium.TravelInfo.App.Services
             var gMapRoute = new GMapRoute(route);
             var routeOverlay = new GMapOverlay("Route Overlay");
 
+            _map.Overlays.Remove(routeOverlay);
+
             routeOverlay.Routes.Add(gMapRoute);
 
             _map.Overlays.Add(routeOverlay);
