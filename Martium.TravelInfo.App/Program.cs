@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Martium.TravelInfo.App.Forms;
 using Martium.TravelInfo.App.Repositories;
+using Martium.TravelInfo.App.Services;
 
 namespace Martium.TravelInfo.App
 {
@@ -17,11 +18,22 @@ namespace Martium.TravelInfo.App
         [STAThread]
         static void Main()
         {
+            string message = null;
+            AlertService alertService = new AlertService();
+
             using (Mutex mutex = new Mutex(false, "Global\\" + AppUuid))
             {
                 if (!mutex.WaitOne(0, false))
                 {
-                    MessageBox.Show(@"Vienu metu galima paleisti tik vieną 'Travelinfo' aplikaciją!");
+                    alertService.ShowErrorDialog(@"Vienu metu galima paleisti tik vieną 'TravelInfo' aplikaciją!");
+                    return;
+                }
+
+                bool internedConnected = CheckInternetConnection();
+
+                if (!internedConnected)
+                {
+                    alertService.ShowErrorDialog("Programos veikimui yra reikalingas Internetas");
                     return;
                 }
 
@@ -29,24 +41,14 @@ namespace Martium.TravelInfo.App
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 bool success = InitializeDatabase();
-                bool checkInternet = CheckForInternetConnection();
 
-                if (success && checkInternet)
+                if (success)
                 {
                     Application.Run(new TravelInfoForm());
                 }
-                else if (success && !checkInternet)
-                {
-                    MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (!success && checkInternet)
-                {
-                    MessageBox.Show("nepavyko įrašyti duomenų bazės", "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
                 else
                 {
-                    MessageBox.Show("nepavyko įrašyti duomenų bazės ir prisijungt prie interneto", "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    alertService.ShowErrorDialog("nepavyko įrašyti duomenų bazės");
                 }
             }
         }
@@ -67,7 +69,7 @@ namespace Martium.TravelInfo.App
             return success;
         }
 
-        private static bool CheckForInternetConnection()
+        private static bool CheckInternetConnection()
         {
             bool checkInternet;
 
