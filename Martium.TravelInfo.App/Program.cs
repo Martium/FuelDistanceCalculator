@@ -58,13 +58,14 @@ namespace Martium.TravelInfo.App
 
         private static bool CheckForInternetConnection()
         {
+            bool checkInternet;
             try
             {
                 using (var client = new WebClient())
                 {
                     using (client.OpenRead("http://google.com"))
                     {
-                        return true;
+                        checkInternet = true;
                     }
                 }
             }
@@ -72,8 +73,10 @@ namespace Martium.TravelInfo.App
             {
                 MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                checkInternet = false;
             }
+
+            return checkInternet;
         }
     }
 }
