@@ -85,12 +85,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             _mapService.ClearAllRoutesAndMarks();
 
-            string departureFullAddress =
-                _mapService.GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
-            string arrivalFullAddress = _mapService.GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+            string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(departureFullAddress);
-            PointLatLng? arrivalCoordinates = _mapService.GetAddressCoordinates(arrivalFullAddress);
+            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(fullDepartureAddress);
+            PointLatLng? arrivalCoordinates = _mapService.GetAddressCoordinates(fullArrivalAddress);
 
             if (departureCoordinates.HasValue && arrivalCoordinates.HasValue)
             {
@@ -98,24 +97,31 @@ namespace Martium.TravelInfo.App.Forms
                 _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
 
                 MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
-                _mapService.ShowRoutes(route);
-
-                _mapService.SetMapPositionByAddress(arrivalFullAddress);
+                if (route != null)
+                {
+                    _mapService.ShowRoute(route);
+                    _mapService.SetMapPositionByAddress(fullArrivalAddress);
+                }
+                else
+                {
+                    _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
+                    ShowErrorDialog("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
+                }
             }
             else if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                ShowErrorDialog("Nei išvykimo adresas, nei atvykimo adresas nerastas");
+                ShowErrorDialog("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
             }
             else if (!departureCoordinates.HasValue)
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                ShowErrorDialog("Išvykimo adresas nerastas");
+                ShowErrorDialog("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
             }
             else
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                ShowErrorDialog("Atvykimo adresas nerastas");
+                ShowErrorDialog("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
             }
         }
 
@@ -288,14 +294,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void ToggleButtonStateForStringTextBox(TextBox textBox, Button button, string settingField)
         {
-            if (textBox.Text != settingField)
-            {
-                button.Enabled = true;
-            }
-            else
-            {
-                button.Enabled = false;
-            }
+            button.Enabled = textBox.Text != settingField;
         }
 
         private void ToggleButtonStateForDecimalTextBox(TextBox textBox, Button button, decimal settingField)
@@ -342,7 +341,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadCountryComboBox(ComboBox comboBox)
         {
-            IOrderedEnumerable<Country> sortedCountries = from country in _countries orderby country.TwoLetterCode select country;
+            IOrderedEnumerable<Country> sortedCountries = 
+                from country in _countries orderby country.TwoLetterCode select country;
 
             foreach (Country country in sortedCountries)
             {
@@ -361,22 +361,26 @@ namespace Martium.TravelInfo.App.Forms
 
         private void LoadInitialMapView()
         {
-            string fullAddress = _mapService.GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
-            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
+            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(fullDepartureAddress);
 
-            if (coordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
+            if (departureCoordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
             {
-                PointLatLng point = new PointLatLng(coordinates.Value.Lat, coordinates.Value.Lng);
-
-                _mapService.CreateMapMarker(point, GMarkerGoogleType.red);
-                _mapService.SetMapPositionByAddress(fullAddress);
+                _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
+                _mapService.SetMapPositionByAddress(fullDepartureAddress);
             }
             else
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
             }
         }
+
+        private string GetFullAddress(TextBox textBox, Label label)
+        {
+            return $"{textBox.Text}, {label.Text}";
+        }
+
         #endregion
     }
 }
