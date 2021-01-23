@@ -10,18 +10,13 @@ namespace Martium.TravelInfo.App
 {
     static class Program
     {
-        private const string AppUuid = "e69b2537-3f00-4eaa-adb1-d22b0939667b";
-
         private static readonly DataBaseInitializerRepository DatabaseInitializerRepository = new DataBaseInitializerRepository();
         private static readonly MessageDialogService MessageDialogService = new MessageDialogService();
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            using (Mutex mutex = new Mutex(false, "Global\\" + AppUuid))
+            using (Mutex mutex = new Mutex(false, "Global\\" + AppConfiguration.AppUuid))
             {
                 if (!mutex.WaitOne(0, false))
                 {
