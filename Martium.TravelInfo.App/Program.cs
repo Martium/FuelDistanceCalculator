@@ -40,9 +40,13 @@ namespace Martium.TravelInfo.App
                     MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else
+                else if (!success && checkInternet)
                 {
                     MessageBox.Show("nepavyko įrašyti duomenų bazės", "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("nepavyko įrašyti duomenų bazės ir prisijungt prie interneto", "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
