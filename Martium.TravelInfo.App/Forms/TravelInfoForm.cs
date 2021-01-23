@@ -18,20 +18,18 @@ namespace Martium.TravelInfo.App.Forms
     {
         private readonly TravelInfoRepository _travelInfoRepository;
         private readonly MapService _mapService;
+        private readonly MessageDialogService _messageDialogService;
 
         private TravelInfoSettingsModel _travelInfoSettingsModel;
         private readonly Country[] _countries = Country.List;
 
-        private readonly AlertService _alertService;
-
         public TravelInfoForm()
         {
-            _travelInfoRepository = new TravelInfoRepository();
-
             InitializeComponent();
 
+            _travelInfoRepository = new TravelInfoRepository();
             _mapService = new MapService(Map);
-            _alertService = new AlertService();
+            _messageDialogService = new MessageDialogService();
 
             InitializeControls();
             SetTextBoxMaxLengths();
@@ -105,23 +103,23 @@ namespace Martium.TravelInfo.App.Forms
                 else
                 {
                     _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                    _alertService.ShowErrorDialog("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
+                    _messageDialogService.ShowErrorDialog("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
                 }
             }
             else if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _alertService.ShowErrorDialog("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
+                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
             }
             else if (!departureCoordinates.HasValue)
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _alertService.ShowErrorDialog("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
+                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
             }
             else
             {
                 _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _alertService.ShowErrorDialog("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
+                _messageDialogService.ShowErrorDialog("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
             }
         }
 
@@ -228,11 +226,11 @@ namespace Martium.TravelInfo.App.Forms
 
             if (success)
             {
-                _alertService.ShowInformationDialog(successMessage);
+                _messageDialogService.ShowInformationDialog(successMessage);
             }
             else
             {
-                _alertService.ShowErrorDialog(errorMessage);
+                _messageDialogService.ShowErrorDialog(errorMessage);
             }
         }
 
