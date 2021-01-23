@@ -34,6 +34,16 @@ namespace Martium.TravelInfo.App
                 if (success && checkInternet)
                 {
                     Application.Run(new TravelInfoForm());
+
+                }
+                else if (success && !checkInternet)
+                {
+                    MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("nepavyko įrašyti duomenų bazės", "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -46,11 +56,10 @@ namespace Martium.TravelInfo.App
             {
                 DatabaseInitializerRepository.InitializeDatabaseIfNotExist();
             }
-            catch (Exception exception)
+            catch 
             {
                 success = false;
 
-                MessageBox.Show(exception.Message, "Klaidos pranešimas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return success;
@@ -71,8 +80,6 @@ namespace Martium.TravelInfo.App
             }
             catch
             {
-                MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 checkInternet = false;
             }
 
