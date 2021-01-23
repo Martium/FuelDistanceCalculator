@@ -43,7 +43,6 @@ namespace Martium.TravelInfo.App.Forms
             LoadTravelInfoSettings();
 
             LoadInitialMapView();
-
         }
         private void DepartureCountryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -212,7 +211,6 @@ namespace Martium.TravelInfo.App.Forms
            
             LoadCountryComboBox(DepartureCountryComboBox);
             LoadCountryComboBox(ArrivalCountryComboBox);
-
         }
 
         private void EnableSearchRouteButtonIfPossible()
