@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using Martium.TravelInfo.App.Forms;
@@ -28,8 +29,9 @@ namespace Martium.TravelInfo.App
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 bool success = InitializeDatabase();
+                bool checkInternet = CheckForInternetConnection();
 
-                if (success)
+                if (success && checkInternet)
                 {
                     Application.Run(new TravelInfoForm());
                 }
@@ -52,6 +54,26 @@ namespace Martium.TravelInfo.App
             }
 
             return success;
+        }
+
+        private static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    using (client.OpenRead("http://google.com"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Programos veikimui yra reikalingas Internetas", "Klaidos pranešimas",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
     }
 }
