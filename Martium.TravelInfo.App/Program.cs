@@ -34,7 +34,6 @@ namespace Martium.TravelInfo.App
                 if (success && checkInternet)
                 {
                     Application.Run(new TravelInfoForm());
-
                 }
                 else if (success && !checkInternet)
                 {
