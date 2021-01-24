@@ -27,53 +27,45 @@ namespace Martium.TravelInfo.CustomMapsApiClient
             return apiResponse.StatusCode == 200;
         }
 
-        public LocationInfoResponse GetLocationInfo(string address)
+        public LocationInfo GetLocationInfo(string address)
         {
-            var response = new LocationInfoResponse();
+            LocationInfo response = null;
 
             BingMapsApiRouteResponse apiResponse = GetRouteData(address, address);
 
-            response.StatusCode = apiResponse.StatusCode;
-            response.StatusDescription = apiResponse.StatusDescription;
-            response.ErrorDetails = apiResponse.ErrorDetails;
-
-            if (apiResponse.StatusCode == 200)
+            if (apiResponse.StatusCode == 200 && apiResponse.ResourceSets.Any() && apiResponse.ResourceSets.First().Resources.Any())
             {
                 RouteLeg locationRouteLeg = apiResponse.ResourceSets.First().Resources.First().RouteLegs.First();
 
-                response.Location = MapLocation(locationRouteLeg.StartLocation);
+                response = MapLocation(locationRouteLeg.StartLocation);
             }
 
             return response;
         }
 
-        public RouteInfoResponse GetRouteInfo(string departureAddress, string arrivalAddress)
+        public RouteInfo GetRouteInfo(string departureAddress, string arrivalAddress)
         {
-            var response = new RouteInfoResponse();
+            RouteInfo response = null;
 
             BingMapsApiRouteResponse apiResponse = GetRouteData(departureAddress, arrivalAddress);
 
-            response.StatusCode = apiResponse.StatusCode;
-            response.StatusDescription = apiResponse.StatusDescription;
-            response.ErrorDetails = apiResponse.ErrorDetails;
-
-            if (apiResponse.StatusCode == 200)
+            if (apiResponse.StatusCode == 200 && apiResponse.ResourceSets.Any() && apiResponse.ResourceSets.First().Resources.Any())
             {
                 Resource routeResource = apiResponse.ResourceSets.First().Resources.First();
                 RouteLeg routeLeg = routeResource.RouteLegs.First();
 
-                response.Route = new RouteInfo
+                response = new RouteInfo
                 {
                     DepartureLocation = MapLocation(routeLeg.StartLocation),
                     ArrivalLocation = MapLocation(routeLeg.EndLocation),
-                    RouteCoordinates = MapRouteCoordinates(routeResource.RoutePath),
-                    RouteSummary = new RouteInfoSummary
+                    Coordinates = MapRouteCoordinates(routeResource.RoutePath),
+                    Summary = new RouteInfoSummary
                     {
                         DistanceUnit = routeResource.DistanceUnit,
                         TotalDistanceInKm = routeResource.TravelDistance,
                         DurationUnit = routeResource.DurationUnit,
                         TotalDuration = TimeSpan.FromSeconds(routeResource.TravelDuration)
-                    }
+                    },
                 };
             }
 
@@ -123,11 +115,11 @@ namespace Martium.TravelInfo.CustomMapsApiClient
             return response;
         }
 
-        private Location MapLocation(RouteLegStartLocation location)
+        private LocationInfo MapLocation(RouteLegStartLocation location)
         {
             List<List<double>> locationCoordinates = location.Point.Coordinates;
 
-            return new Location
+            return new LocationInfo
             {
                 Address = new AddressInfo
                 {

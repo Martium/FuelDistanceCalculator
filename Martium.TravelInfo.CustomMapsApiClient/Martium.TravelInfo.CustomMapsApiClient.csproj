@@ -45,13 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\RouteInfo.cs" />
     <Compile Include="CustomMapsApiClient.cs" />
     <Compile Include="Contracts\Address.cs" />
-    <Compile Include="Contracts\Location.cs" />
-    <Compile Include="Contracts\LocationInfoResponse.cs" />
+    <Compile Include="Contracts\LocationInfo.cs" />
     <Compile Include="Contracts\Coordinates.cs" />
     <Compile Include="Contracts\Internal\BingMapsApiRouteResponse.cs" />
-    <Compile Include="Contracts\RouteInfoResponse.cs" />
     <Compile Include="Contracts\RouteInfoSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

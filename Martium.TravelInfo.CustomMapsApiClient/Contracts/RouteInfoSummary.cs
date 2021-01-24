@@ -8,6 +8,5 @@ namespace Martium.TravelInfo.CustomMapsApiClient.Contracts
         public double TotalDistanceInKm { get; set; }
         public string DurationUnit { get; set; }
         public TimeSpan TotalDuration { get; set; }
-        
     }
 }
