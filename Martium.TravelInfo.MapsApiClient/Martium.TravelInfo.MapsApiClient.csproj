@@ -7,8 +7,8 @@
     <ProjectGuid>{19808DA2-F578-4309-A3AC-6E05E6457B7B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Martium.TravelInfo.CustomMapsApiClient</RootNamespace>
-    <AssemblyName>Martium.TravelInfo.CustomMapsApiClient</AssemblyName>
+    <RootNamespace>Martium.TravelInfo.MapsApiClient</RootNamespace>
+    <AssemblyName>Martium.TravelInfo.MapsApiClient</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\RouteInfo.cs" />
-    <Compile Include="CustomMapsApiClient.cs" />
+    <Compile Include="MapsApiClient.cs" />
     <Compile Include="Contracts\Address.cs" />
     <Compile Include="Contracts\LocationInfo.cs" />
     <Compile Include="Contracts\Coordinates.cs" />

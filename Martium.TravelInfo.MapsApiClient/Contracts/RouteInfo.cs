@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Martium.TravelInfo.CustomMapsApiClient.Contracts
+namespace Martium.TravelInfo.MapsApiClient.Contracts
 {
     public class RouteInfo
     {

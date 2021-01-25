@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Martium.TravelInfo.CustomMapsApiClient.Contracts;
-using Martium.TravelInfo.CustomMapsApiClient.Contracts.Internal;
+using Martium.TravelInfo.MapsApiClient.Contracts;
+using Martium.TravelInfo.MapsApiClient.Contracts.Internal;
 using RestSharp;
 
-namespace Martium.TravelInfo.CustomMapsApiClient
+namespace Martium.TravelInfo.MapsApiClient
 {
-    public class CustomMapsApiClient
+    public class MapsApiClient
     {
         private const string BingMapsApiBaseUrl = "http://dev.virtualearth.net";
         private const string DrivingRouteApiResource = "REST/V1/Routes/Driving";
@@ -15,7 +15,7 @@ namespace Martium.TravelInfo.CustomMapsApiClient
 
         private readonly string _bingMapsApiKey;
 
-        public CustomMapsApiClient()
+        public MapsApiClient()
         {
             _bingMapsApiKey = "";  // TODO: get API key from database settings when we will have it in database
         }

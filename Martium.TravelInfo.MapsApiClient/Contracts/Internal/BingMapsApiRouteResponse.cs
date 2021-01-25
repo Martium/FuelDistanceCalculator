@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Martium.TravelInfo.CustomMapsApiClient.Contracts.Internal
+namespace Martium.TravelInfo.MapsApiClient.Contracts.Internal
 {
     internal class BingMapsApiRouteResponse
     {
