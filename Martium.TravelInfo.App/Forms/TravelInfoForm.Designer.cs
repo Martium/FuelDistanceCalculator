@@ -31,7 +31,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             this.InfoPanel = new System.Windows.Forms.Panel();
             this.TripDurationTextBox = new System.Windows.Forms.TextBox();
-            this.CalculatedDurationLabel = new System.Windows.Forms.Label();
+            this.TripDurationLabel = new System.Windows.Forms.Label();
             this.ArrivalCountryTextLabel = new System.Windows.Forms.Label();
             this.DepartureCountryTextLabel = new System.Windows.Forms.Label();
             this.ArrivalCountryLabel = new System.Windows.Forms.Label();
@@ -50,8 +50,8 @@ namespace Martium.TravelInfo.App.Forms
             this.OneWayTripPriceTextBox = new System.Windows.Forms.TextBox();
             this.TripDistanceTextBox = new System.Windows.Forms.TextBox();
             this.OneWayTripPriceLabel = new System.Windows.Forms.Label();
-            this.CalculateButton = new System.Windows.Forms.Button();
-            this.CalculatedDistanceLabel = new System.Windows.Forms.Label();
+            this.CalculateTripCostButton = new System.Windows.Forms.Button();
+            this.TripDistanceLabel = new System.Windows.Forms.Label();
             this.SearchRouteButton = new System.Windows.Forms.Button();
             this.PricePerKm = new System.Windows.Forms.TextBox();
             this.FuelPriceLabel = new System.Windows.Forms.Label();
@@ -68,7 +68,7 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Controls.Add(this.ReturnIncludedTripPriceLabel);
             this.InfoPanel.Controls.Add(this.ReturnIncludedTripPriceTextBox);
             this.InfoPanel.Controls.Add(this.TripDurationTextBox);
-            this.InfoPanel.Controls.Add(this.CalculatedDurationLabel);
+            this.InfoPanel.Controls.Add(this.TripDurationLabel);
             this.InfoPanel.Controls.Add(this.ArrivalCountryTextLabel);
             this.InfoPanel.Controls.Add(this.DepartureCountryTextLabel);
             this.InfoPanel.Controls.Add(this.ArrivalCountryLabel);
@@ -87,8 +87,8 @@ namespace Martium.TravelInfo.App.Forms
             this.InfoPanel.Controls.Add(this.OneWayTripPriceTextBox);
             this.InfoPanel.Controls.Add(this.TripDistanceTextBox);
             this.InfoPanel.Controls.Add(this.OneWayTripPriceLabel);
-            this.InfoPanel.Controls.Add(this.CalculateButton);
-            this.InfoPanel.Controls.Add(this.CalculatedDistanceLabel);
+            this.InfoPanel.Controls.Add(this.CalculateTripCostButton);
+            this.InfoPanel.Controls.Add(this.TripDistanceLabel);
             this.InfoPanel.Controls.Add(this.SearchRouteButton);
             this.InfoPanel.Controls.Add(this.PricePerKm);
             this.InfoPanel.Controls.Add(this.FuelPriceLabel);
@@ -108,12 +108,12 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculatedDurationLabel
             // 
-            this.CalculatedDurationLabel.AutoSize = true;
-            this.CalculatedDurationLabel.Location = new System.Drawing.Point(23, 256);
-            this.CalculatedDurationLabel.Name = "CalculatedDurationLabel";
-            this.CalculatedDurationLabel.Size = new System.Drawing.Size(46, 13);
-            this.CalculatedDurationLabel.TabIndex = 27;
-            this.CalculatedDurationLabel.Text = "Trukmė:";
+            this.TripDurationLabel.AutoSize = true;
+            this.TripDurationLabel.Location = new System.Drawing.Point(23, 256);
+            this.TripDurationLabel.Name = "TripDurationLabel";
+            this.TripDurationLabel.Size = new System.Drawing.Size(46, 13);
+            this.TripDurationLabel.TabIndex = 27;
+            this.TripDurationLabel.Text = "Trukmė:";
             // 
             // ArrivalCountryTextLabel
             // 
@@ -282,22 +282,22 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculateButton
             // 
-            this.CalculateButton.Location = new System.Drawing.Point(126, 435);
-            this.CalculateButton.Name = "CalculateButton";
-            this.CalculateButton.Size = new System.Drawing.Size(94, 40);
-            this.CalculateButton.TabIndex = 8;
-            this.CalculateButton.Text = "Skaičiuoti kelionės kainą";
-            this.CalculateButton.UseVisualStyleBackColor = true;
-            this.CalculateButton.Click += new System.EventHandler(this.CalculateButton_Click);
+            this.CalculateTripCostButton.Location = new System.Drawing.Point(126, 435);
+            this.CalculateTripCostButton.Name = "CalculateTripCostButton";
+            this.CalculateTripCostButton.Size = new System.Drawing.Size(94, 40);
+            this.CalculateTripCostButton.TabIndex = 8;
+            this.CalculateTripCostButton.Text = "Skaičiuoti kelionės kainą";
+            this.CalculateTripCostButton.UseVisualStyleBackColor = true;
+            this.CalculateTripCostButton.Click += new System.EventHandler(this.CalculateButton_Click);
             // 
             // CalculatedDistanceLabel
             // 
-            this.CalculatedDistanceLabel.AutoSize = true;
-            this.CalculatedDistanceLabel.Location = new System.Drawing.Point(21, 227);
-            this.CalculatedDistanceLabel.Name = "CalculatedDistanceLabel";
-            this.CalculatedDistanceLabel.Size = new System.Drawing.Size(73, 13);
-            this.CalculatedDistanceLabel.TabIndex = 7;
-            this.CalculatedDistanceLabel.Text = "Atstumas, km:";
+            this.TripDistanceLabel.AutoSize = true;
+            this.TripDistanceLabel.Location = new System.Drawing.Point(21, 227);
+            this.TripDistanceLabel.Name = "TripDistanceLabel";
+            this.TripDistanceLabel.Size = new System.Drawing.Size(73, 13);
+            this.TripDistanceLabel.TabIndex = 7;
+            this.TripDistanceLabel.Text = "Atstumas, km:";
             // 
             // SearchRouteButton
             // 
@@ -418,11 +418,11 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.TextBox PricePerKm;
         private System.Windows.Forms.Label FuelPriceLabel;
         private System.Windows.Forms.Label DepartureCountryLabel;
-        private System.Windows.Forms.Label CalculatedDistanceLabel;
+        private System.Windows.Forms.Label TripDistanceLabel;
         private System.Windows.Forms.Button SearchRouteButton;
         private System.Windows.Forms.TextBox TripDistanceTextBox;
         private System.Windows.Forms.Label OneWayTripPriceLabel;
-        private System.Windows.Forms.Button CalculateButton;
+        private System.Windows.Forms.Button CalculateTripCostButton;
         private System.Windows.Forms.TextBox OneWayTripPriceTextBox;
         private System.Windows.Forms.Button SaveAdditionalDistanceInKmButton;
         private System.Windows.Forms.Button SavePricePerKmButton;
@@ -442,7 +442,7 @@ namespace Martium.TravelInfo.App.Forms
         private System.Windows.Forms.Label ArrivalCountryTextLabel;
         private System.Windows.Forms.Label DepartureCountryTextLabel;
         private System.Windows.Forms.TextBox TripDurationTextBox;
-        private System.Windows.Forms.Label CalculatedDurationLabel;
+        private System.Windows.Forms.Label TripDurationLabel;
         private System.Windows.Forms.Label ReturnIncludedTripPriceLabel;
         private System.Windows.Forms.TextBox ReturnIncludedTripPriceTextBox;
     }

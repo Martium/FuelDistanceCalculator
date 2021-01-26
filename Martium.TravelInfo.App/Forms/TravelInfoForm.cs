@@ -67,7 +67,7 @@ namespace Martium.TravelInfo.App.Forms
 
                 _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
 
-                UpdateNewInfo();
+                UpdateSettings();
             }
             else
             {
@@ -92,9 +92,9 @@ namespace Martium.TravelInfo.App.Forms
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
             _mapService.ClearAllRoutesAndMarks();
-            ShowDurationAndDistanceTextBoxesAndLabels(false);
-            ShowCalculatedTripPriceTextBoxAndLabel(false);
-            CalculateButton.Enabled = false;
+            ToggleDurationAndDistanceComponents(false);
+            ToggleTripPriceComponents(false);
+            CalculateTripCostButton.Enabled = false;
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
@@ -114,9 +114,9 @@ namespace Martium.TravelInfo.App.Forms
                     _mapService.ShowRoute(route);
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
 
-                    ShowDurationAndDistanceTextBoxesAndLabels(true);
-                    ShowRouteDurationAndDistance(route);
-                    CalculateButton.Enabled = true;
+                    ToggleDurationAndDistanceComponents(true);
+                    ShowRouteInformation(route);
+                    CalculateTripCostButton.Enabled = true;
                 }
                 else
                 {
@@ -148,13 +148,13 @@ namespace Martium.TravelInfo.App.Forms
 
         private void PricePerKm_Validating(object sender, CancelEventArgs e)
         {
-            ValidateTextBoxOfDoubleType(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
+            ValidateNumberInput(e, PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
         }
 
         private void SavePricePerKmButton_Click(object sender, EventArgs e)
         {
             _travelInfoSettingsModel.PricePerKm = double.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
-            UpdateNewInfo();
+            UpdateSettings();
             ToggleButtonStateForNumberTextBox(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
         }
 
@@ -166,26 +166,26 @@ namespace Martium.TravelInfo.App.Forms
 
         private void AdditionalDistanceInKmTextBox_Validating(object sender, CancelEventArgs e)
         {
-            ValidateTextBoxOfDoubleType(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton,
+            ValidateNumberInput(e, AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton,
                 _travelInfoSettingsModel.AdditionalDistanceInKm, preventNegativeOrZero: false);
         }
 
         private void SaveAdditionalDistanceInKmButton_Click(object sender, EventArgs e)
         {
             _travelInfoSettingsModel.AdditionalDistanceInKm = double.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
-            UpdateNewInfo();
+            UpdateSettings();
             ToggleButtonStateForNumberTextBox(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
         }
 
         private void CalculateButton_Click(object sender, EventArgs e)
         {
-            ShowCalculatedTripPriceTextBoxAndLabel(true);
+            ToggleTripPriceComponents(true);
 
             double tripPriceOneWay = CalculateTripPrice();
             double tripPriceTwoWays = CalculateTripPrice(includeReturnPrice: true);
 
-            double roundTripPriceOneWay = RoundDouble(tripPriceOneWay);
-            double roundTripPriceTwoWay = RoundDouble(tripPriceTwoWays);
+            double roundTripPriceOneWay = RoundNumber(tripPriceOneWay);
+            double roundTripPriceTwoWay = RoundNumber(tripPriceTwoWays);
 
             OneWayTripPriceTextBox.Text = roundTripPriceOneWay.ToString(CultureInfo.InvariantCulture);
             ReturnIncludedTripPriceTextBox.Text = roundTripPriceTwoWay.ToString(CultureInfo.InvariantCulture);
@@ -207,15 +207,15 @@ namespace Martium.TravelInfo.App.Forms
             SavePricePerKmButton.Enabled = false;
             SaveAdditionalDistanceInKmButton.Enabled = false;
 
-            CalculatedDistanceLabel.Visible = false;
+            TripDistanceLabel.Visible = false;
             TripDistanceTextBox.Visible = false;
             TripDistanceTextBox.Enabled = false;
 
-            CalculatedDurationLabel.Visible = false;
+            TripDurationLabel.Visible = false;
             TripDurationTextBox.Visible = false;
             TripDurationTextBox.Enabled = false;
 
-            CalculateButton.Enabled = false;
+            CalculateTripCostButton.Enabled = false;
 
             OneWayTripPriceLabel.Visible = false;
             OneWayTripPriceTextBox.Visible = false;
@@ -252,7 +252,7 @@ namespace Martium.TravelInfo.App.Forms
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
         }
 
-        private void UpdateNewInfo()
+        private void UpdateSettings()
         {
             string successMessage = "Išsaugota sėkmingai.";
             string errorMessage = "Nepavyko išsaugoti, bandykite dar kartą!";
@@ -269,7 +269,7 @@ namespace Martium.TravelInfo.App.Forms
             }
         }
 
-        private void ValidateTextBoxOfDoubleType(CancelEventArgs e, TextBox textBox, Button button, double settingValue, bool preventNegativeOrZero = true)
+        private void ValidateNumberInput(CancelEventArgs e, TextBox textBox, Button button, double settingValue, bool preventNegativeOrZero = true)
         {
             bool isDecimal = CheckIsDouble(textBox.Text);
 
@@ -282,7 +282,7 @@ namespace Martium.TravelInfo.App.Forms
                 string biggerThanZeroMessagePart = preventNegativeOrZero ? "> 0" : string.Empty;
 
                 e.Cancel = true;
-                DisplayDecimalTextBoxError(
+                ShowNumberInputError(
                     $"* Langelyje privalo būti skaičius {biggerThanZeroMessagePart} (< 1 skiriklis: '.'), pvz.: 0.2", 
                     textBox, 
                     DecimalTextBoxErrorLabel);
@@ -291,19 +291,19 @@ namespace Martium.TravelInfo.App.Forms
             else
             {
                 e.Cancel = false;
-                HideDecimalTextBoxError(DecimalTextBoxErrorLabel, textBox);
+                HideNumberInputError(DecimalTextBoxErrorLabel, textBox);
                 ToggleButtonStateForNumberTextBox(textBox, button, settingValue);
             }
         }
 
-        private void DisplayDecimalTextBoxError(string errorText, TextBox textBox, Label label)
+        private void ShowNumberInputError(string errorText, TextBox textBox, Label label)
         {
             textBox.BackColor = Color.Red;
             label.Text = errorText;
             label.Visible = true;
         }
 
-        private void HideDecimalTextBoxError(Label label, TextBox textBox)
+        private void HideNumberInputError(Label label, TextBox textBox)
         {
             label.Visible = false;
             textBox.BackColor = Color.White;
@@ -403,25 +403,25 @@ namespace Martium.TravelInfo.App.Forms
             return $"{textBox.Text}, {label.Text}";
         }
 
-        private void ShowDurationAndDistanceTextBoxesAndLabels(bool show)
+        private void ToggleDurationAndDistanceComponents(bool show)
         {
-            CalculatedDistanceLabel.Visible = show;
+            TripDistanceLabel.Visible = show;
             TripDistanceTextBox.Visible = show;
 
-            CalculatedDurationLabel.Visible = show;
+            TripDurationLabel.Visible = show;
             TripDurationTextBox.Visible = show;
         }
 
-        private void ShowRouteDurationAndDistance(MapRoute route)
+        private void ShowRouteInformation(MapRoute route)
         {
             double routeDistance = route.Distance;
-            double roundRouteDistance = RoundDouble(routeDistance);
+            double roundRouteDistance = RoundNumber(routeDistance);
 
             TripDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
             TripDurationTextBox.Text = route.Duration;
         }
 
-        private void ShowCalculatedTripPriceTextBoxAndLabel(bool show)
+        private void ToggleTripPriceComponents(bool show)
         {
             OneWayTripPriceLabel.Visible = show;
             OneWayTripPriceTextBox.Visible = show;
@@ -442,7 +442,7 @@ namespace Martium.TravelInfo.App.Forms
             return result;
         }
 
-        private double RoundDouble(double number, int digits = 2)
+        private double RoundNumber(double number, int digits = 2)
         {
             double roundToTwoDecimal = Math.Round(number, digits, MidpointRounding.ToEven);
             return roundToTwoDecimal;
