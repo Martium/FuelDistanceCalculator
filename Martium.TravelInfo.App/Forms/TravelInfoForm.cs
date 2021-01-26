@@ -411,7 +411,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void ShowRouteDurationAndDistance(MapRoute route)
         {
-            CalculatedDistanceTextBox.Text = route.Distance.ToString();
+            CalculatedDistanceTextBox.Text = route.Distance.ToString(CultureInfo.InvariantCulture);
             CalculatedDurationTextBox.Text = route.Duration;
         }
 
