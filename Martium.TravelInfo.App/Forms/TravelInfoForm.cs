@@ -93,6 +93,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             _mapService.ClearAllRoutesAndMarks();
             ShowDurationAndDistanceTextBoxesAndLabels(false);
+            ShowCalculatedTripPriceTextBoxAndLabel(false);
             CalculateButton.Enabled = false;
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
