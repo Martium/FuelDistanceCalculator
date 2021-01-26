@@ -184,8 +184,8 @@ namespace Martium.TravelInfo.App.Forms
             double tripPriceOneWay = CalculateTripPrice(tripWays: 1);
             double tripPriceTwoWays = CalculateTripPrice(tripWays: 2);
 
-            CalculatedOneWayTripPriceTextBox.Text = tripPriceOneWay.ToString();
-            CalculateTwoWaysTripPriceTextBox.Text = tripPriceTwoWays.ToString();
+            CalculatedOneWayTripPriceTextBox.Text = tripPriceOneWay.ToString(CultureInfo.InvariantCulture);
+            CalculateTwoWaysTripPriceTextBox.Text = tripPriceTwoWays.ToString(CultureInfo.InvariantCulture);
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
