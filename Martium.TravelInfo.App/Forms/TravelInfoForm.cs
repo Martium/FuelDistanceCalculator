@@ -71,7 +71,7 @@ namespace Martium.TravelInfo.App.Forms
             }
             else
             {
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti įvesto adreso, praŠome patikslinkite arba įveskite kitą");
+                _messageDialogService.ShowErrorDialog("Nepavyko išsaugoti išvykimo adreso! Adresas nerastas, prašome patikslinti arba įvesti kitą");
             }
 
             ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
