@@ -92,8 +92,8 @@ namespace Martium.TravelInfo.App.Forms
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
             _mapService.ClearAllRoutesAndMarks();
-            ToggleDurationAndDistanceComponents(false);
-            ToggleTripPriceComponents(false);
+            ToggleRouteInfoComponentsVisibility(false);
+            ToggleTripPriceComponentsVisibility(false);
             CalculateTripCostButton.Enabled = false;
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
@@ -114,8 +114,8 @@ namespace Martium.TravelInfo.App.Forms
                     _mapService.ShowRoute(route);
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
 
-                    ToggleDurationAndDistanceComponents(true);
-                    ShowRouteInformation(route);
+                    ToggleRouteInfoComponentsVisibility(true);
+                    DisplayRouteInfo(route);
                     CalculateTripCostButton.Enabled = true;
                 }
                 else
@@ -179,7 +179,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void CalculateButton_Click(object sender, EventArgs e)
         {
-            ToggleTripPriceComponents(true);
+            ToggleTripPriceComponentsVisibility(true);
 
             double tripPriceOneWay = CalculateTripPrice();
             double tripPriceTwoWays = CalculateTripPrice(includeReturnPrice: true);
@@ -403,7 +403,7 @@ namespace Martium.TravelInfo.App.Forms
             return $"{textBox.Text}, {label.Text}";
         }
 
-        private void ToggleDurationAndDistanceComponents(bool show)
+        private void ToggleRouteInfoComponentsVisibility(bool show)
         {
             TripDistanceLabel.Visible = show;
             TripDistanceTextBox.Visible = show;
@@ -412,7 +412,7 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Visible = show;
         }
 
-        private void ShowRouteInformation(MapRoute route)
+        private void DisplayRouteInfo(MapRoute route)
         {
             double routeDistance = route.Distance;
             double roundRouteDistance = RoundNumber(routeDistance);
@@ -421,7 +421,7 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Text = route.Duration;
         }
 
-        private void ToggleTripPriceComponents(bool show)
+        private void ToggleTripPriceComponentsVisibility(bool show)
         {
             OneWayTripPriceLabel.Visible = show;
             OneWayTripPriceTextBox.Visible = show;
