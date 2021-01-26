@@ -93,6 +93,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             _mapService.ClearAllRoutesAndMarks();
             ShowDurationAndDistanceTextBoxesAndLabels(false);
+            CalculateButton.Enabled = false;
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
@@ -114,6 +115,7 @@ namespace Martium.TravelInfo.App.Forms
 
                     ShowDurationAndDistanceTextBoxesAndLabels(true);
                     ShowRouteDurationAndDistance(route);
+                    CalculateButton.Enabled = true;
                 }
                 else
                 {
@@ -172,6 +174,15 @@ namespace Martium.TravelInfo.App.Forms
             _travelInfoSettingsModel.AdditionalDistanceInKm = decimal.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
             UpdateNewInfo();
             ToggleButtonStateForDecimalTextBox(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
+        }
+
+        private void CalculateButton_Click(object sender, EventArgs e)
+        {
+            ShowCalculatedTripPriceTextBoxAndLabel(true);
+
+            double tripPrice = CalculateTripPrice();
+
+            CalculatedTripPriceTextBox.Text = tripPrice.ToString();
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -396,6 +407,23 @@ namespace Martium.TravelInfo.App.Forms
         {
             CalculatedDistanceTextBox.Text = route.Distance.ToString();
             CalculatedDurationTextBox.Text = route.Duration;
+        }
+
+        private void ShowCalculatedTripPriceTextBoxAndLabel(bool show)
+        {
+            CalculatedTripPriceLabel.Visible = show;
+            CalculatedTripPriceTextBox.Visible = show;
+        }
+
+        private double CalculateTripPrice()
+        {
+            double kmPrice = double.Parse(PricePerKm.Text);
+            double distance = double.Parse(CalculatedDistanceTextBox.Text);
+            double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
+
+            double result = kmPrice *(distance + additionalDistance);
+
+            return result;
         }
 
         #endregion
