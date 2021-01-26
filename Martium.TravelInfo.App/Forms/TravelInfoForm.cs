@@ -445,7 +445,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private double MakeRoundToTwoDecimal(double number)
         {
-            double roundToTwoDecimal = Math.Round(number, 2, MidpointRounding.AwayFromZero);
+            double roundToTwoDecimal = Math.Round(number, 2, MidpointRounding.ToEven);
             return roundToTwoDecimal;
         }
 
