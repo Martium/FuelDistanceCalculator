@@ -177,7 +177,7 @@ namespace Martium.TravelInfo.App.Forms
             ToggleButtonStateForNumberTextBox(AdditionalDistanceInKmTextBox, SaveAdditionalDistanceInKmButton, _travelInfoSettingsModel.AdditionalDistanceInKm);
         }
 
-        private void CalculateButton_Click(object sender, EventArgs e)
+        private void CalculateTripPriceButton_Click(object sender, EventArgs e)
         {
             ToggleTripPriceComponentsVisibility(true);
 

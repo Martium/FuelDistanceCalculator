@@ -288,7 +288,7 @@ namespace Martium.TravelInfo.App.Forms
             this.CalculateTripCostButton.TabIndex = 8;
             this.CalculateTripCostButton.Text = "Skaičiuoti kelionės kainą";
             this.CalculateTripCostButton.UseVisualStyleBackColor = true;
-            this.CalculateTripCostButton.Click += new System.EventHandler(this.CalculateButton_Click);
+            this.CalculateTripCostButton.Click += new System.EventHandler(this.CalculateTripPriceButton_Click);
             // 
             // CalculatedDistanceLabel
             // 
