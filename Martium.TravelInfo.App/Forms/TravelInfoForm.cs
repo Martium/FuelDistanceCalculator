@@ -181,8 +181,8 @@ namespace Martium.TravelInfo.App.Forms
         {
             ShowCalculatedTripPriceTextBoxAndLabel(true);
 
-            double tripPriceOneWay = CalculateTripPriceOneWay();
-            double tripPriceTwoWays = CalculateTripPriceTwoWays();
+            double tripPriceOneWay = CalculateTripPrice(tripWays: 1);
+            double tripPriceTwoWays = CalculateTripPrice(tripWays: 2);
 
             CalculatedOneWayTripPriceTextBox.Text = tripPriceOneWay.ToString();
             CalculateTwoWaysTripPriceTextBox.Text = tripPriceTwoWays.ToString();
@@ -423,24 +423,13 @@ namespace Martium.TravelInfo.App.Forms
             CalculateTwoWaysTripPriceTextBox.Visible = show;
         }
 
-        private double CalculateTripPriceOneWay()
+        private double CalculateTripPrice(int tripWays)
         {
             double kmPrice = double.Parse(PricePerKm.Text);
             double distance = double.Parse(CalculatedDistanceTextBox.Text);
             double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
 
-            double result = kmPrice *(distance + additionalDistance);
-
-            return result;
-        }
-
-        private double CalculateTripPriceTwoWays()
-        {
-            double kmPrice = double.Parse(PricePerKm.Text);
-            double distance = double.Parse(CalculatedDistanceTextBox.Text);
-            double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
-
-            double result = 2 * kmPrice * (distance + additionalDistance);
+            double result =  tripWays *kmPrice *(distance + additionalDistance);
 
             return result;
         }
