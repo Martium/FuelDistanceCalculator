@@ -107,8 +107,12 @@ namespace Martium.TravelInfo.App.Forms
                 {
                     _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
                     _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
+
                     _mapService.ShowRoute(route);
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
+
+                    ShowDurationAndDistanceTextBoxesAndLabels(true);
+                    CalculatedDistanceTextBox.Text = route.Distance + "Km";
                 }
                 else
                 {
@@ -380,11 +384,11 @@ namespace Martium.TravelInfo.App.Forms
 
         private void ShowDurationAndDistanceTextBoxesAndLabels(bool show)
         {
-            CalculatedDistanceLabel.Enabled = show;
-            CalculatedDistanceTextBox.Enabled = show;
+            CalculatedDistanceLabel.Visible = show;
+            CalculatedDistanceTextBox.Visible = show;
 
-            CalculatedDurationLabel.Enabled = show;
-            CalculatedDurationTextBox.Enabled = show;
+            CalculatedDurationLabel.Visible = show;
+            CalculatedDurationTextBox.Visible = show;
         }
 
         #endregion

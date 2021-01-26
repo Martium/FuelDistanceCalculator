@@ -96,7 +96,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculatedDurationTextBox
             // 
-            this.CalculatedDurationTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedDurationTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.CalculatedDurationTextBox.Location = new System.Drawing.Point(100, 253);
             this.CalculatedDurationTextBox.Name = "CalculatedDurationTextBox";
             this.CalculatedDurationTextBox.Size = new System.Drawing.Size(106, 20);
@@ -253,7 +253,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculatedTripPriceTextBox
             // 
-            this.CalculatedTripPriceTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedTripPriceTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.CalculatedTripPriceTextBox.Location = new System.Drawing.Point(64, 488);
             this.CalculatedTripPriceTextBox.Name = "CalculatedTripPriceTextBox";
             this.CalculatedTripPriceTextBox.Size = new System.Drawing.Size(106, 20);
@@ -261,7 +261,7 @@ namespace Martium.TravelInfo.App.Forms
             // 
             // CalculatedDistanceTextBox
             // 
-            this.CalculatedDistanceTextBox.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.CalculatedDistanceTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.CalculatedDistanceTextBox.Location = new System.Drawing.Point(100, 224);
             this.CalculatedDistanceTextBox.Name = "CalculatedDistanceTextBox";
             this.CalculatedDistanceTextBox.Size = new System.Drawing.Size(106, 20);
