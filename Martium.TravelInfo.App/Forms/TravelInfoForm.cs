@@ -101,12 +101,12 @@ namespace Martium.TravelInfo.App.Forms
 
             if (departureCoordinates.HasValue && arrivalCoordinates.HasValue)
             {
-                _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
-                _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
-
                 MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
+
                 if (route != null)
                 {
+                    _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
+                    _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
                     _mapService.ShowRoute(route);
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
                 }
@@ -376,6 +376,15 @@ namespace Martium.TravelInfo.App.Forms
         private string GetFullAddress(TextBox textBox, Label label)
         {
             return $"{textBox.Text}, {label.Text}";
+        }
+
+        private void ShowDurationAndDistanceTextBoxesAndLabels(bool show)
+        {
+            CalculatedDistanceLabel.Enabled = show;
+            CalculatedDistanceTextBox.Enabled = show;
+
+            CalculatedDurationLabel.Enabled = show;
+            CalculatedDurationTextBox.Enabled = show;
         }
 
         #endregion
