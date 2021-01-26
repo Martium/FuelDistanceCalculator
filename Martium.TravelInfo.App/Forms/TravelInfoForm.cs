@@ -92,6 +92,7 @@ namespace Martium.TravelInfo.App.Forms
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
             _mapService.ClearAllRoutesAndMarks();
+            ShowDurationAndDistanceTextBoxesAndLabels(false);
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
@@ -112,7 +113,7 @@ namespace Martium.TravelInfo.App.Forms
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
 
                     ShowDurationAndDistanceTextBoxesAndLabels(true);
-                    CalculatedDistanceTextBox.Text = route.Distance + "Km";
+                    ShowRouteDurationAndDistance(route);
                 }
                 else
                 {
@@ -389,6 +390,12 @@ namespace Martium.TravelInfo.App.Forms
 
             CalculatedDurationLabel.Visible = show;
             CalculatedDurationTextBox.Visible = show;
+        }
+
+        private void ShowRouteDurationAndDistance(MapRoute route)
+        {
+            CalculatedDistanceTextBox.Text = route.Distance.ToString();
+            CalculatedDurationTextBox.Text = route.Duration;
         }
 
         #endregion
