@@ -181,9 +181,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             ShowCalculatedTripPriceTextBoxAndLabel(true);
 
-            double tripPrice = CalculateTripPrice();
+            double tripPriceOneWay = CalculateTripPriceOneWay();
+            double tripPriceTwoWays = CalculateTripPriceTwoWays();
 
-            CalculatedTripPriceTextBox.Text = tripPrice.ToString();
+            CalculatedOneWayTripPriceTextBox.Text = tripPriceOneWay.ToString();
+            CalculateTwoWaysTripPriceTextBox.Text = tripPriceTwoWays.ToString();
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -212,9 +214,12 @@ namespace Martium.TravelInfo.App.Forms
 
             CalculateButton.Enabled = false;
 
-            CalculatedTripPriceLabel.Visible = false;
-            CalculatedTripPriceTextBox.Visible = false;
-            CalculatedTripPriceTextBox.Enabled = false;
+            CalculatedOneWayTripPriceLabel.Visible = false;
+            CalculatedOneWayTripPriceTextBox.Visible = false;
+            CalculateTwoWaysTripPriceLabel.Visible = false;
+            CalculateTwoWaysTripPriceTextBox.Visible = false;
+            CalculatedOneWayTripPriceTextBox.Enabled = false;
+            CalculateTwoWaysTripPriceTextBox.Enabled = false;
 
 
             DepartureCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -412,17 +417,30 @@ namespace Martium.TravelInfo.App.Forms
 
         private void ShowCalculatedTripPriceTextBoxAndLabel(bool show)
         {
-            CalculatedTripPriceLabel.Visible = show;
-            CalculatedTripPriceTextBox.Visible = show;
+            CalculatedOneWayTripPriceLabel.Visible = show;
+            CalculatedOneWayTripPriceTextBox.Visible = show;
+            CalculateTwoWaysTripPriceLabel.Visible = show;
+            CalculateTwoWaysTripPriceTextBox.Visible = show;
         }
 
-        private double CalculateTripPrice()
+        private double CalculateTripPriceOneWay()
         {
             double kmPrice = double.Parse(PricePerKm.Text);
             double distance = double.Parse(CalculatedDistanceTextBox.Text);
             double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
 
             double result = kmPrice *(distance + additionalDistance);
+
+            return result;
+        }
+
+        private double CalculateTripPriceTwoWays()
+        {
+            double kmPrice = double.Parse(PricePerKm.Text);
+            double distance = double.Parse(CalculatedDistanceTextBox.Text);
+            double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
+
+            double result = 2 * kmPrice * (distance + additionalDistance);
 
             return result;
         }
