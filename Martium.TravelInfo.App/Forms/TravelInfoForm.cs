@@ -57,12 +57,22 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
-            Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
-            _travelInfoSettingsModel.DepartureCountry = selectedCountry.TwoLetterCode;
+            string fullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
 
-            _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
+            if (coordinates.HasValue)
+            {
+                Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
+                _travelInfoSettingsModel.DepartureCountry = selectedCountry.TwoLetterCode;
 
-            UpdateNewInfo();
+                _travelInfoSettingsModel.DepartureAddress = DepartureAddressTextBox.Text;
+
+                UpdateNewInfo();
+            }
+            else
+            {
+                _messageDialogService.ShowErrorDialog("Nepavyko išsaugoti išvykimo adreso! Adresas nerastas, prašome patikslinti arba įvesti kitą");
+            }
 
             ToggleButtonStateForStringTextBox(DepartureAddressTextBox, SaveDepartureAddressButton, _travelInfoSettingsModel.DepartureAddress);
         }
