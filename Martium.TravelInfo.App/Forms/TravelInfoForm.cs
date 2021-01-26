@@ -425,9 +425,9 @@ namespace Martium.TravelInfo.App.Forms
 
         private double CalculateTripPrice(int tripWays)
         {
-            double kmPrice = double.Parse(PricePerKm.Text);
-            double distance = double.Parse(CalculatedDistanceTextBox.Text);
-            double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text);
+            double kmPrice = double.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
+            double distance = double.Parse(CalculatedDistanceTextBox.Text, CultureInfo.CurrentCulture);
+            double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
 
             double result =  tripWays *kmPrice *(distance + additionalDistance);
 
