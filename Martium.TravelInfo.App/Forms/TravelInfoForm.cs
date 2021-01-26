@@ -184,8 +184,14 @@ namespace Martium.TravelInfo.App.Forms
             double tripPriceOneWay = CalculateTripPrice(tripWays: 1);
             double tripPriceTwoWays = CalculateTripPrice(tripWays: 2);
 
-            CalculatedOneWayTripPriceTextBox.Text = tripPriceOneWay.ToString(CultureInfo.InvariantCulture);
-            CalculateTwoWaysTripPriceTextBox.Text = tripPriceTwoWays.ToString(CultureInfo.InvariantCulture);
+            double roundTripPriceOneWay = MakeRoundToTwoDecimal(tripPriceOneWay);
+            double roundTripPriceTwoWay = MakeRoundToTwoDecimal(tripPriceTwoWays);
+
+            CalculatedOneWayTripPriceTextBox.Text = roundTripPriceOneWay.ToString(CultureInfo.InvariantCulture);
+            CalculateTwoWaysTripPriceTextBox.Text = roundTripPriceTwoWay.ToString(CultureInfo.InvariantCulture);
+
+
+
         }
 
         private void MapContributorLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -411,7 +417,10 @@ namespace Martium.TravelInfo.App.Forms
 
         private void ShowRouteDurationAndDistance(MapRoute route)
         {
-            CalculatedDistanceTextBox.Text = route.Distance.ToString(CultureInfo.InvariantCulture);
+            double routeDistance = route.Distance;
+            double roundRouteDistance = MakeRoundToTwoDecimal(routeDistance);
+
+            CalculatedDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
             CalculatedDurationTextBox.Text = route.Duration;
         }
 
@@ -432,6 +441,12 @@ namespace Martium.TravelInfo.App.Forms
             double result =  tripWays *kmPrice *(distance + additionalDistance);
 
             return result;
+        }
+
+        private double MakeRoundToTwoDecimal(double number)
+        {
+            double roundToTwoDecimal = Math.Round(number, 2, MidpointRounding.AwayFromZero);
+            return roundToTwoDecimal;
         }
 
         #endregion
