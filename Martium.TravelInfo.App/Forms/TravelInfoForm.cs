@@ -92,8 +92,8 @@ namespace Martium.TravelInfo.App.Forms
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
             _mapService.ClearAllRoutesAndMarks();
-            ToggleRouteInfoComponentsVisibility(false);
-            ToggleTripPriceComponentsVisibility(false);
+            ToggleRouteInfoControlsVisibility(false);
+            ToggleTripPriceControlsVisibility(false);
             CalculateTripCostButton.Enabled = false;
 
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
@@ -114,7 +114,7 @@ namespace Martium.TravelInfo.App.Forms
                     _mapService.ShowRoute(route);
                     _mapService.SetMapPositionByAddress(fullArrivalAddress);
 
-                    ToggleRouteInfoComponentsVisibility(true);
+                    ToggleRouteInfoControlsVisibility(true);
                     DisplayRouteInfo(route);
                     CalculateTripCostButton.Enabled = true;
                 }
@@ -179,7 +179,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void CalculateTripPriceButton_Click(object sender, EventArgs e)
         {
-            ToggleTripPriceComponentsVisibility(true);
+            ToggleTripPriceControlsVisibility(true);
 
             double tripPriceOneWay = CalculateTripPrice();
             double tripPriceTwoWays = CalculateTripPrice(includeReturnPrice: true);
@@ -403,7 +403,7 @@ namespace Martium.TravelInfo.App.Forms
             return $"{textBox.Text}, {label.Text}";
         }
 
-        private void ToggleRouteInfoComponentsVisibility(bool show)
+        private void ToggleRouteInfoControlsVisibility(bool show)
         {
             TripDistanceLabel.Visible = show;
             TripDistanceTextBox.Visible = show;
@@ -421,7 +421,7 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Text = route.Duration;
         }
 
-        private void ToggleTripPriceComponentsVisibility(bool show)
+        private void ToggleTripPriceControlsVisibility(bool show)
         {
             OneWayTripPriceLabel.Visible = show;
             OneWayTripPriceTextBox.Visible = show;
