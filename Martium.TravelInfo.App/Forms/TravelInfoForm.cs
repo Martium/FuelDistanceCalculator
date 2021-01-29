@@ -47,6 +47,11 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
 
             DepartureCountryTextLabel.Text = selectedCountry.Name;
+
+            if (string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text))
+            {
+                ArrivalCountryComboBox.Text = DepartureCountryComboBox.Text;
+            }
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
