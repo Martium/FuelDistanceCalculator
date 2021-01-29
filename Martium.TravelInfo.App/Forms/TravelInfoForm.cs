@@ -252,19 +252,12 @@ namespace Martium.TravelInfo.App.Forms
 
         private void EnableSearchRouteButtonIfPossible()
         {
-            SearchRouteButton.Enabled = (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
-                                         !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
+            bool addressesIsNotEmpty = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
+                                            && !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
+            bool atLeastOneAddressIsModified = _lastArrivalAddress != ArrivalAddressTextBox.Text
+                                       || _lastDepartureAddress != DepartureAddressTextBox.Text;
 
-            if (_lastArrivalAddress == ArrivalAddressTextBox.Text)
-            {
-                DisableButton(SearchRouteButton);
-            }
-
-            if (_lastDepartureAddress != DepartureAddressTextBox.Text && (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
-                !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text)))
-            {
-                SearchRouteButton.Enabled = true;
-            }
+            SearchRouteButton.Enabled = addressesIsNotEmpty && atLeastOneAddressIsModified;
         }
 
         private void UpdateSettings()
