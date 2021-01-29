@@ -99,7 +99,7 @@ namespace Martium.TravelInfo.App.Forms
             _mapService.ClearAllRoutesAndMarks();
             ToggleRouteInfoControlsVisibility(false);
             ToggleTripPriceControlsVisibility(false);
-            CalculateTripCostButton.Enabled = false;
+            DisableButton(CalculateTripCostButton);
 
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
@@ -113,11 +113,7 @@ namespace Martium.TravelInfo.App.Forms
 
                 if (route != null)
                 {
-                    _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
-                    _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
-
-                    _mapService.ShowRoute(route);
-                    _mapService.SetMapPositionByAddress(fullArrivalAddress);
+                    SetRoadTrip(departureCoordinates, arrivalCoordinates, route);
 
                     ToggleRouteInfoControlsVisibility(true);
                     DisplayRouteInfo(route);
@@ -459,6 +455,17 @@ namespace Martium.TravelInfo.App.Forms
             PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
 
             return coordinates;
+        }
+
+        private void SetRoadTrip(PointLatLng? departureCoordinates, PointLatLng? arrivalCoordinates, MapRoute route)
+        {
+            string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+
+            _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
+            _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
+
+            _mapService.ShowRoute(route);
+            _mapService.SetMapPositionByAddress(fullArrivalAddress);
         }
 
         #endregion
