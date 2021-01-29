@@ -212,11 +212,11 @@ namespace Martium.TravelInfo.App.Forms
             OneWayTripPriceTextBox.Enabled = false;
             ReturnIncludedTripPriceTextBox.Enabled = false;
 
-            SetComboBoxControls(DepartureCountryComboBox);
-            SetComboBoxControls(ArrivalCountryComboBox);
+            ConfigureComboBoxControls(DepartureCountryComboBox);
+            ConfigureComboBoxControls(ArrivalCountryComboBox);
         }
 
-        private void SetComboBoxControls(ComboBox comboBox)
+        private void ConfigureComboBoxControls(ComboBox comboBox)
         {
             comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
