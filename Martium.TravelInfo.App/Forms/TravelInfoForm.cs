@@ -101,11 +101,11 @@ namespace Martium.TravelInfo.App.Forms
             ToggleTripPriceControlsVisibility(false);
             CalculateTripCostButton.Enabled = false;
 
-            string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(fullDepartureAddress);
-            PointLatLng? arrivalCoordinates = _mapService.GetAddressCoordinates(fullArrivalAddress);
+            PointLatLng? departureCoordinates = GetCoordinatesFromAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+
+            PointLatLng? arrivalCoordinates = GetCoordinatesFromAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
             if (departureCoordinates.HasValue && arrivalCoordinates.HasValue)
             {
@@ -451,6 +451,14 @@ namespace Martium.TravelInfo.App.Forms
         {
             double roundToTwoDecimal = Math.Round(number, digits, MidpointRounding.ToEven);
             return roundToTwoDecimal;
+        }
+
+        private PointLatLng? GetCoordinatesFromAddress(TextBox textBox, Label label)
+        {
+            string fullAddress = GetFullAddress(textBox, label);
+            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
+
+            return coordinates;
         }
 
         #endregion
