@@ -260,7 +260,8 @@ namespace Martium.TravelInfo.App.Forms
                 DisableButton(SearchRouteButton);
             }
 
-            if (_lastDepartureAddress != DepartureAddressTextBox.Text)
+            if (_lastDepartureAddress != DepartureAddressTextBox.Text && (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
+                !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text)))
             {
                 SearchRouteButton.Enabled = true;
             }
