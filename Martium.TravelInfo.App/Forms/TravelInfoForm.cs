@@ -23,6 +23,7 @@ namespace Martium.TravelInfo.App.Forms
         private TravelInfoSettingsModel _travelInfoSettingsModel;
         private readonly Country[] _countries = Country.List;
 
+        private string _lastDepartureAddress = null;
         private string _lastArrivalAddress = null;
 
         public TravelInfoForm()
@@ -98,6 +99,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
+            _lastDepartureAddress = DepartureAddressTextBox.Text;
             _lastArrivalAddress = ArrivalAddressTextBox.Text;
 
             _mapService.ClearAllRoutesAndMarks();
@@ -256,6 +258,11 @@ namespace Martium.TravelInfo.App.Forms
             if (_lastArrivalAddress == ArrivalAddressTextBox.Text)
             {
                 DisableButton(SearchRouteButton);
+            }
+
+            if (_lastDepartureAddress != DepartureAddressTextBox.Text)
+            {
+                SearchRouteButton.Enabled = true;
             }
         }
 
