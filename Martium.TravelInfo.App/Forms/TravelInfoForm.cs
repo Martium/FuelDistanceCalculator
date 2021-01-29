@@ -23,6 +23,8 @@ namespace Martium.TravelInfo.App.Forms
         private TravelInfoSettingsModel _travelInfoSettingsModel;
         private readonly Country[] _countries = Country.List;
 
+        private string LastArrivalAddress = null;
+
         public TravelInfoForm()
         {
             InitializeComponent();
@@ -96,6 +98,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
+            LastArrivalAddress = ArrivalAddressTextBox.Text;
+
             _mapService.ClearAllRoutesAndMarks();
             ToggleRouteInfoControlsVisibility(false);
             ToggleTripPriceControlsVisibility(false);
@@ -134,6 +138,8 @@ namespace Martium.TravelInfo.App.Forms
             {
                 ShowTripError("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
             }
+
+            DisableButton(SearchRouteButton);
         }
 
         private void PricePerKm_TextChanged(object sender, EventArgs e)
@@ -246,6 +252,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             SearchRouteButton.Enabled = (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
                                          !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
+
+            if (LastArrivalAddress == ArrivalAddressTextBox.Text)
+            {
+                DisableButton(SearchRouteButton);
+            }
         }
 
         private void UpdateSettings()
