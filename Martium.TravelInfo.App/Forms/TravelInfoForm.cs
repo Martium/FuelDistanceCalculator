@@ -136,8 +136,6 @@ namespace Martium.TravelInfo.App.Forms
             }
         }
 
-       
-
         private void PricePerKm_TextChanged(object sender, EventArgs e)
         {
             ToggleButtonStateForNumberTextBox(PricePerKm, SavePricePerKmButton, _travelInfoSettingsModel.PricePerKm);
@@ -221,14 +219,15 @@ namespace Martium.TravelInfo.App.Forms
             OneWayTripPriceTextBox.Enabled = false;
             ReturnIncludedTripPriceTextBox.Enabled = false;
 
+            SetComboBoxControls(DepartureCountryComboBox);
+            SetComboBoxControls(ArrivalCountryComboBox);
+        }
 
-            DepartureCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            DepartureCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-            DepartureCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            ArrivalCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            ArrivalCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-            ArrivalCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+        private void SetComboBoxControls(ComboBox comboBox)
+        {
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void LoadTravelInfoSettings()
