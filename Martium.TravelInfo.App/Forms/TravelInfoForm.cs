@@ -23,6 +23,9 @@ namespace Martium.TravelInfo.App.Forms
         private TravelInfoSettingsModel _travelInfoSettingsModel;
         private readonly Country[] _countries = Country.List;
 
+        private string _lastDepartureAddress = null;
+        private string _lastArrivalAddress = null;
+
         public TravelInfoForm()
         {
             InitializeComponent();
@@ -47,6 +50,11 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
 
             DepartureCountryTextLabel.Text = selectedCountry.Name;
+
+            if (string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text))
+            {
+                ArrivalCountryComboBox.Text = DepartureCountryComboBox.Text;
+            }
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -91,53 +99,33 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
-            _mapService.ClearAllRoutesAndMarks();
-            ToggleRouteInfoControlsVisibility(false);
-            ToggleTripPriceControlsVisibility(false);
-            CalculateTripCostButton.Enabled = false;
+            _lastDepartureAddress = DepartureAddressTextBox.Text;
+            _lastArrivalAddress = ArrivalAddressTextBox.Text;
 
-            string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
-            string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+            ClearPreviousSearchResults();
 
-            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(fullDepartureAddress);
-            PointLatLng? arrivalCoordinates = _mapService.GetAddressCoordinates(fullArrivalAddress);
+            PointLatLng? departureCoordinates = GetCoordinatesFromAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            PointLatLng? arrivalCoordinates = GetCoordinatesFromAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            if (departureCoordinates.HasValue && arrivalCoordinates.HasValue)
+            string errorMessage = ValidateRouteCoordinates(departureCoordinates, arrivalCoordinates);
+            if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
-
-                if (route != null)
-                {
-                    _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
-                    _mapService.CreateMapMarker(arrivalCoordinates.Value, GMarkerGoogleType.green);
-
-                    _mapService.ShowRoute(route);
-                    _mapService.SetMapPositionByAddress(fullArrivalAddress);
-
-                    ToggleRouteInfoControlsVisibility(true);
-                    DisplayRouteInfo(route);
-                    CalculateTripCostButton.Enabled = true;
-                }
-                else
-                {
-                    _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                    _messageDialogService.ShowErrorDialog("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
-                }
+                ShowRouteSearchError(errorMessage);
+                return;
             }
-            else if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
+
+            MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
+            if (route != null)
             {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
-            }
-            else if (!departureCoordinates.HasValue)
-            {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
+                DisplayFoundRoute(departureCoordinates.Value, arrivalCoordinates.Value, route);
+
+                SetRouteInfoControlsVisibility(visible: true);
+                DisplayRouteInfo(route);
+                CalculateTripCostButton.Enabled = true;
             }
             else
             {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
+                ShowRouteSearchError("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
             }
         }
 
@@ -179,7 +167,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private void CalculateTripPriceButton_Click(object sender, EventArgs e)
         {
-            ToggleTripPriceControlsVisibility(true);
+            SetTripPriceControlsVisibility(visible: true);
 
             double tripPriceOneWay = CalculateTripPrice();
             double tripPriceTwoWays = CalculateTripPrice(includeReturnPrice: true);
@@ -224,14 +212,15 @@ namespace Martium.TravelInfo.App.Forms
             OneWayTripPriceTextBox.Enabled = false;
             ReturnIncludedTripPriceTextBox.Enabled = false;
 
+            ConfigureComboBoxControls(DepartureCountryComboBox);
+            ConfigureComboBoxControls(ArrivalCountryComboBox);
+        }
 
-            DepartureCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            DepartureCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-            DepartureCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            ArrivalCountryComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            ArrivalCountryComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-            ArrivalCountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+        private void ConfigureComboBoxControls(ComboBox comboBox)
+        {
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void LoadTravelInfoSettings()
@@ -248,8 +237,12 @@ namespace Martium.TravelInfo.App.Forms
 
         private void EnableSearchRouteButtonIfPossible()
         {
-            SearchRouteButton.Enabled = (!string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) &&
-                                         !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text));
+            bool addressesIsNotEmpty = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
+                                            && !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
+            bool atLeastOneAddressIsModified = _lastArrivalAddress != ArrivalAddressTextBox.Text
+                                       || _lastDepartureAddress != DepartureAddressTextBox.Text;
+
+            SearchRouteButton.Enabled = addressesIsNotEmpty && atLeastOneAddressIsModified;
         }
 
         private void UpdateSettings()
@@ -403,13 +396,13 @@ namespace Martium.TravelInfo.App.Forms
             return $"{textBox.Text}, {label.Text}";
         }
 
-        private void ToggleRouteInfoControlsVisibility(bool show)
+        private void SetRouteInfoControlsVisibility(bool visible)
         {
-            TripDistanceLabel.Visible = show;
-            TripDistanceTextBox.Visible = show;
+            TripDistanceLabel.Visible = visible;
+            TripDistanceTextBox.Visible = visible;
 
-            TripDurationLabel.Visible = show;
-            TripDurationTextBox.Visible = show;
+            TripDurationLabel.Visible = visible;
+            TripDurationTextBox.Visible = visible;
         }
 
         private void DisplayRouteInfo(MapRoute route)
@@ -421,12 +414,12 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Text = route.Duration;
         }
 
-        private void ToggleTripPriceControlsVisibility(bool show)
+        private void SetTripPriceControlsVisibility(bool visible)
         {
-            OneWayTripPriceLabel.Visible = show;
-            OneWayTripPriceTextBox.Visible = show;
-            ReturnIncludedTripPriceLabel.Visible = show;
-            ReturnIncludedTripPriceTextBox.Visible = show;
+            OneWayTripPriceLabel.Visible = visible;
+            OneWayTripPriceTextBox.Visible = visible;
+            ReturnIncludedTripPriceLabel.Visible = visible;
+            ReturnIncludedTripPriceTextBox.Visible = visible;
         }
 
         private double CalculateTripPrice(bool includeReturnPrice = false)
@@ -446,6 +439,60 @@ namespace Martium.TravelInfo.App.Forms
         {
             double roundToTwoDecimal = Math.Round(number, digits, MidpointRounding.ToEven);
             return roundToTwoDecimal;
+        }
+
+        private PointLatLng? GetCoordinatesFromAddress(TextBox textBox, Label label)
+        {
+            string fullAddress = GetFullAddress(textBox, label);
+            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
+
+            return coordinates;
+        }
+
+        private void ClearPreviousSearchResults()
+        {
+            _mapService.ClearAllRoutesAndMarks();
+            SetRouteInfoControlsVisibility(visible: false);
+            SetTripPriceControlsVisibility(visible: false);
+            DisableButton(CalculateTripCostButton);
+            DisableButton(SearchRouteButton);
+        }
+
+        private string ValidateRouteCoordinates(PointLatLng? departureCoordinates, PointLatLng? arrivalCoordinates)
+        {
+            string errorMessage = null;
+
+            if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
+            {
+                errorMessage = "Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.";
+            }
+            else if (!departureCoordinates.HasValue)
+            {
+                errorMessage = "Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.";
+            }
+            else if (!arrivalCoordinates.HasValue)
+            {
+                errorMessage = "Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.";
+            }
+
+            return errorMessage;
+        }
+
+        private void DisplayFoundRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates, MapRoute route)
+        {
+            string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+
+            _mapService.CreateMapMarker(departureCoordinates, GMarkerGoogleType.red);
+            _mapService.CreateMapMarker(arrivalCoordinates, GMarkerGoogleType.green);
+
+            _mapService.ShowRoute(route);
+            _mapService.SetMapPositionByAddress(fullArrivalAddress);
+        }
+
+        private void ShowRouteSearchError(string errorMessage)
+        {
+            _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
+            _messageDialogService.ShowErrorDialog(errorMessage);
         }
 
         #endregion
