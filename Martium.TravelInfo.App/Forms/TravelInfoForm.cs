@@ -101,8 +101,6 @@ namespace Martium.TravelInfo.App.Forms
             ToggleTripPriceControlsVisibility(false);
             DisableButton(CalculateTripCostButton);
 
-            string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
-
             PointLatLng? departureCoordinates = GetCoordinatesFromAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
             PointLatLng? arrivalCoordinates = GetCoordinatesFromAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
@@ -121,26 +119,24 @@ namespace Martium.TravelInfo.App.Forms
                 }
                 else
                 {
-                    _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                    _messageDialogService.ShowErrorDialog("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
+                    ShowTripError("Nepavyko rasti maršruto ! (išvykimo ir atvykimo adresai gali būti per dideliu atstumu vienas nuo kito). Nurodykite kitus adresus(-ą).");
                 }
             }
             else if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
             {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
+                ShowTripError("Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.");
             }
             else if (!departureCoordinates.HasValue)
             {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
+                ShowTripError("Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.");
             }
             else
             {
-                _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
-                _messageDialogService.ShowErrorDialog("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
+                ShowTripError("Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.");
             }
         }
+
+       
 
         private void PricePerKm_TextChanged(object sender, EventArgs e)
         {
@@ -466,6 +462,12 @@ namespace Martium.TravelInfo.App.Forms
 
             _mapService.ShowRoute(route);
             _mapService.SetMapPositionByAddress(fullArrivalAddress);
+        }
+
+        private void ShowTripError(string errorMessage)
+        {
+            _mapService.SetMapPositionByAddress(DepartureCountryTextLabel.Text, 7);
+            _messageDialogService.ShowErrorDialog(errorMessage);
         }
 
         #endregion
