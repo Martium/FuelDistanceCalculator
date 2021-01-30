@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Martium.TravelInfo.App.Forms;
@@ -11,7 +14,10 @@ namespace Martium.TravelInfo.App
     static class Program
     {
         private static readonly DataBaseInitializerRepository DatabaseInitializerRepository = new DataBaseInitializerRepository();
+        private static readonly TravelInfoRepository TravelInfoRepository = new TravelInfoRepository();
+        private static readonly MapsApiClient.MapsApiClient MapsApiClient = new MapsApiClient.MapsApiClient();
         private static readonly MessageDialogService MessageDialogService = new MessageDialogService();
+        private static string _apiKeyFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources.rs";
 
         [STAThread]
         static void Main()
@@ -35,6 +41,17 @@ namespace Martium.TravelInfo.App
 
                 if (InitializeDatabase())
                 {
+                    bool apiKeyValid = ExtractApiKey();
+                    if (apiKeyValid)
+                    {
+                        DeleteApiKeyFile();
+                    }
+                    else
+                    {
+                        MessageDialogService.ShowErrorDialog("Nepavyko rasti reikiamo rakto, kreipkitės į administratorių!");
+                        return;
+                    }
+
                     Application.Run(new TravelInfoForm());
                 }
                 else
@@ -42,6 +59,43 @@ namespace Martium.TravelInfo.App
                     MessageDialogService.ShowErrorDialog("Nepavyko sukurti duomenų bazės todėl 'TravelInfo' aplikacija negali veikti!");
                 }
             }
+        }
+
+        private static void DeleteApiKeyFile()
+        {
+            if (File.Exists(_apiKeyFilePath))
+            {
+                try
+                {
+                    File.Delete(_apiKeyFilePath);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+        }
+
+        private static bool ExtractApiKey()
+        {
+            bool success = true;
+
+            if (File.Exists(_apiKeyFilePath))
+            {
+                string foundApiKey = File.ReadAllText(_apiKeyFilePath);
+
+                var apiKeyValid = MapsApiClient.ValidateBingMapsApiKey(foundApiKey);
+                if (apiKeyValid)
+                {
+                    TravelInfoRepository.UpdateApiKey(foundApiKey);
+                }
+                else
+                {
+                    success = false;
+                }
+            }
+
+            return success;
         }
 
         private static bool InitializeDatabase()

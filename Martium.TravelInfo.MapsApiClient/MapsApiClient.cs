@@ -94,7 +94,7 @@ namespace Martium.TravelInfo.MapsApiClient
 
             request.AddParameter("routeAttributes", "routePath", ParameterType.QueryString);
 
-            string apiKey = string.IsNullOrWhiteSpace(customApiKey) ? _bingMapsApiKey : customApiKey;
+            string apiKey = customApiKey ?? _bingMapsApiKey;
 
             request.AddParameter("key", apiKey, ParameterType.QueryString);
 
