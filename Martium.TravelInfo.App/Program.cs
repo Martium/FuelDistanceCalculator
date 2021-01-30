@@ -17,7 +17,7 @@ namespace Martium.TravelInfo.App
         private static readonly TravelInfoRepository TravelInfoRepository = new TravelInfoRepository();
         private static readonly ApiClients.MapsApiClient MapsApiClient = new ApiClients.MapsApiClient();
         private static readonly MessageDialogService MessageDialogService = new MessageDialogService();
-        private static string _apiKeyFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources.rs";
+        private static readonly string ApiKeyFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources.rs";
 
         [STAThread]
         static void Main()
@@ -63,11 +63,11 @@ namespace Martium.TravelInfo.App
 
         private static void DeleteApiKeyFile()
         {
-            if (File.Exists(_apiKeyFilePath))
+            if (File.Exists(ApiKeyFilePath))
             {
                 try
                 {
-                    File.Delete(_apiKeyFilePath);
+                    File.Delete(ApiKeyFilePath);
                 }
                 catch
                 {
@@ -80,9 +80,9 @@ namespace Martium.TravelInfo.App
         {
             bool success = true;
 
-            if (File.Exists(_apiKeyFilePath))
+            if (File.Exists(ApiKeyFilePath))
             {
-                string foundApiKey = File.ReadAllText(_apiKeyFilePath);
+                string foundApiKey = File.ReadAllText(ApiKeyFilePath);
 
                 var apiKeyValid = MapsApiClient.ValidateBingMapsApiKey(foundApiKey);
                 if (apiKeyValid)
@@ -90,6 +90,13 @@ namespace Martium.TravelInfo.App
                     TravelInfoRepository.UpdateApiKey(foundApiKey);
                 }
                 else
+                {
+                    success = false;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(TravelInfoRepository.GetApiKey()))
                 {
                     success = false;
                 }
