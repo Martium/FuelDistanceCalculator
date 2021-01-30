@@ -52,6 +52,24 @@ namespace Martium.TravelInfo.App.Repositories
             }
         }
 
+        public string GetApiKey()
+        {
+            using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))
+            {
+                dbConnection.Open();
+
+                string getExistingInfoQuery =
+                    $@"SELECT  
+                        ApiKey
+                      FROM {AppConfiguration.TableName}";
+
+
+                string apiKey = dbConnection.QuerySingle<string>(getExistingInfoQuery);
+
+                return apiKey;
+            }
+        }
+
         public bool UpdateApiKey(string apiKey)
         {
             using (var dbConnection = new SQLiteConnection(AppConfiguration.ConnectionString))

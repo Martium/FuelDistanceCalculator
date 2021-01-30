@@ -6,7 +6,7 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using Martium.TravelInfo.App.Models;
-using Martium.TravelInfo.MapsApiClient.Contracts;
+using Coordinates = Martium.TravelInfo.App.Contracts.Coordinates;
 
 namespace Martium.TravelInfo.App.Services
 {

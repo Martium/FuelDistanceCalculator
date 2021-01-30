@@ -10,14 +10,17 @@ using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Models;
 using Martium.TravelInfo.App.Repositories;
 using Martium.TravelInfo.App.Services;
-using Martium.TravelInfo.MapsApiClient.Contracts;
+using Coordinates = Martium.TravelInfo.App.Contracts.Coordinates;
+using LocationInfo = Martium.TravelInfo.App.Contracts.LocationInfo;
+using RouteInfo = Martium.TravelInfo.App.Contracts.RouteInfo;
+using RouteInfoSummary = Martium.TravelInfo.App.Contracts.RouteInfoSummary;
 
 namespace Martium.TravelInfo.App.Forms
 {
     public partial class TravelInfoForm : Form
     {
         private readonly TravelInfoRepository _travelInfoRepository;
-        private readonly MapsApiClient.MapsApiClient _mapsApiClient;
+        private readonly ApiClients.MapsApiClient _mapsApiClient;
         private readonly MapService _mapService;
         private readonly MessageDialogService _messageDialogService;
 
@@ -32,7 +35,7 @@ namespace Martium.TravelInfo.App.Forms
             InitializeComponent();
 
             _travelInfoRepository = new TravelInfoRepository();
-            _mapsApiClient = new MapsApiClient.MapsApiClient();
+            _mapsApiClient = new ApiClients.MapsApiClient();
             _mapService = new MapService(Map);
             _messageDialogService = new MessageDialogService();
 

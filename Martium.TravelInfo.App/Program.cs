@@ -15,7 +15,7 @@ namespace Martium.TravelInfo.App
     {
         private static readonly DataBaseInitializerRepository DatabaseInitializerRepository = new DataBaseInitializerRepository();
         private static readonly TravelInfoRepository TravelInfoRepository = new TravelInfoRepository();
-        private static readonly MapsApiClient.MapsApiClient MapsApiClient = new MapsApiClient.MapsApiClient();
+        private static readonly ApiClients.MapsApiClient MapsApiClient = new ApiClients.MapsApiClient();
         private static readonly MessageDialogService MessageDialogService = new MessageDialogService();
         private static string _apiKeyFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources.rs";
 
