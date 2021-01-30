@@ -413,29 +413,56 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Visible = visible;
         }
 
-        private void DisplayRouteSummary(RouteInfoSummary route)
+        private void DisplayRouteSummary(RouteInfoSummary routeSummary)
         {
-            double routeDistance = route.TotalDistanceInKm;
+            double routeDistance = routeSummary.TotalDistanceInKm;
             double roundRouteDistance = RoundNumber(routeDistance);
 
-            TripDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
+            string formattedDistance = ConvertToFormattedNumber(roundRouteDistance);
 
-            if (route.TotalDuration.Days > 0)
+            TripDistanceTextBox.Text = formattedDistance;
+
+            TripDurationTextBox.Text = FormatTripDurationText(routeSummary.TotalDuration);
+        }
+
+        private static string ConvertToFormattedNumber(double number)
+        {
+            var numberFormatInfo = (NumberFormatInfo) CultureInfo.InvariantCulture.NumberFormat.Clone();
+            numberFormatInfo.NumberGroupSeparator = " ";
+
+            string formattedNumber = number.ToString("#,0.00", numberFormatInfo);
+
+            return formattedNumber;
+        }
+
+        private string FormatTripDurationText(TimeSpan tripDuration)
+        {
+            string durationText = string.Empty;
+
+            if (tripDuration.TotalSeconds <= 0)
             {
-                TripDurationTextBox.Text = route.TotalDuration.ToString("%d") + "d " + route.TotalDuration.ToString("%h") + "h " +  route.TotalDuration.ToString(@"%m") + "min";
-            }
-            else if (route.TotalDuration.Hours > 0)
+                durationText = durationText.Insert(0, "0 min");
+            } 
+            else if (tripDuration.TotalSeconds > 0 && tripDuration.TotalSeconds < 60)
             {
-                TripDurationTextBox.Text = route.TotalDuration.ToString("%h") + "h " + route.TotalDuration.ToString(@"%m") + "min";
-            }
-            else if (route.TotalDuration.Minutes > 0)
-            {
-                TripDurationTextBox.Text = route.TotalDuration.ToString(@"%m") + "min";
+                durationText = durationText.Insert(0, "1 min");
             }
             else
             {
-                TripDurationTextBox.Text = route.TotalDuration.ToString(@"%m");
+                durationText = durationText.Insert(0, $"{tripDuration.Minutes} min");
             }
+
+            if (tripDuration.Hours > 0)
+            {
+                durationText = durationText.Insert(0, $"{tripDuration.Hours} h ");
+            }
+
+            if (tripDuration.Days > 0)
+            {
+                durationText = durationText.Insert(0, $"{tripDuration.Days} d ");
+            }
+
+            return durationText;
         }
 
         private void SetTripPriceControlsVisibility(bool visible)
