@@ -60,6 +60,8 @@ namespace Martium.TravelInfo.App.Forms
             {
                 ArrivalCountryComboBox.Text = DepartureCountryComboBox.Text;
             }
+
+            EnableSearchRouteButtonIfPossible();
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -95,6 +97,8 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = GetSelectedCountryByComboBox(ArrivalCountryComboBox);
 
             ArrivalCountryTextLabel.Text = selectedCountry.Name;
+
+            EnableSearchRouteButtonIfPossible();
         }
 
         private void ArrivalAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -104,8 +108,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
-            _lastDepartureAddress = DepartureAddressTextBox.Text;
-            _lastArrivalAddress = ArrivalAddressTextBox.Text;
+            _lastDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            _lastArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
             ClearPreviousSearchResults();
 
@@ -245,10 +249,15 @@ namespace Martium.TravelInfo.App.Forms
 
         private void EnableSearchRouteButtonIfPossible()
         {
-            bool addressesIsNotEmpty = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
-                                            && !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
-            bool atLeastOneAddressIsModified = _lastArrivalAddress != ArrivalAddressTextBox.Text
-                                       || _lastDepartureAddress != DepartureAddressTextBox.Text;
+            bool addressesIsNotEmpty = 
+                !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
+                && 
+                !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
+
+            bool atLeastOneAddressIsModified = 
+                _lastArrivalAddress != GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel)
+                || 
+                _lastDepartureAddress != GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
             SearchRouteButton.Enabled = addressesIsNotEmpty && atLeastOneAddressIsModified;
         }
@@ -413,14 +422,45 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Visible = visible;
         }
 
-        private void DisplayRouteSummary(RouteInfoSummary route)
+        private void DisplayRouteSummary(RouteInfoSummary routeSummary)
         {
-            double routeDistance = route.TotalDistanceInKm;
+            double routeDistance = routeSummary.TotalDistanceInKm;
             double roundRouteDistance = RoundNumber(routeDistance);
 
-            TripDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
+            string formattedDistance = ConvertToFormattedNumber(roundRouteDistance);
 
-            TripDurationTextBox.Text = route.TotalDuration.ToString();
+            TripDistanceTextBox.Text = formattedDistance;
+
+            TripDurationTextBox.Text = FormatTripDurationText(routeSummary.TotalDuration);
+        }
+
+        private static string ConvertToFormattedNumber(double number)
+        {
+            var numberFormatInfo = (NumberFormatInfo) CultureInfo.InvariantCulture.NumberFormat.Clone();
+            numberFormatInfo.NumberGroupSeparator = " ";
+
+            string formattedNumber = number.ToString("#,0.00", numberFormatInfo);
+
+            return formattedNumber;
+        }
+
+        private string FormatTripDurationText(TimeSpan tripDuration)
+        {
+            string durationText = string.Empty;
+
+            durationText = durationText.Insert(0, $"{tripDuration.Minutes} min");
+
+            if (tripDuration.Hours > 0)
+            {
+                durationText = durationText.Insert(0, $"{tripDuration.Hours} h ");
+            }
+
+            if (tripDuration.Days > 0)
+            {
+                durationText = durationText.Insert(0, $"{tripDuration.Days} d ");
+            }
+
+            return durationText;
         }
 
         private void SetTripPriceControlsVisibility(bool visible)
