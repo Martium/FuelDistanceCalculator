@@ -18,17 +18,17 @@ namespace Martium.TravelInfo.App.ApiClients
 {
     public class MapsApiClient
     {
+        private readonly TravelInfoRepository _travelInfoRepository;
+
         private const string BingMapsApiBaseUrl = "http://dev.virtualearth.net";
         private const string DrivingRouteApiResource = "REST/V1/Routes/Driving";
         private const string ApiKeyValidityCheckAddress = "Kaunas, Lietuva";
 
-        private readonly string _bingMapsApiKey;
+        private string _bingMapsApiKey;
 
         public MapsApiClient()
         {
-            var travelInfoRepository = new TravelInfoRepository();
-
-            _bingMapsApiKey = travelInfoRepository.GetApiKey();
+            _travelInfoRepository = new TravelInfoRepository();
         }
 
         public bool ValidateBingMapsApiKey(string apiKey)
@@ -91,6 +91,8 @@ namespace Martium.TravelInfo.App.ApiClients
 
         private BingMapsApiRouteResponse GetRouteData(string departureAddress, string arrivalAddress, string customApiKey = null)
         {
+            LoadApiKey();
+            
             BingMapsApiRouteResponse response;
 
             var restClient = new RestClient(BingMapsApiBaseUrl);
@@ -130,6 +132,14 @@ namespace Martium.TravelInfo.App.ApiClients
             }
 
             return response;
+        }
+
+        private void LoadApiKey()
+        {
+            if (string.IsNullOrWhiteSpace(_bingMapsApiKey))
+            {
+                _bingMapsApiKey = _travelInfoRepository.GetApiKey();
+            }
         }
 
         private LocationInfo MapLocation(RouteLegStartLocation location)
