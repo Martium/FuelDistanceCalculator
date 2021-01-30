@@ -60,6 +60,8 @@ namespace Martium.TravelInfo.App.Forms
             {
                 ArrivalCountryComboBox.Text = DepartureCountryComboBox.Text;
             }
+
+            EnableSearchRouteButtonIfPossible();
         }
 
         private void DepartureAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -95,6 +97,8 @@ namespace Martium.TravelInfo.App.Forms
             Country selectedCountry = GetSelectedCountryByComboBox(ArrivalCountryComboBox);
 
             ArrivalCountryTextLabel.Text = selectedCountry.Name;
+
+            EnableSearchRouteButtonIfPossible();
         }
 
         private void ArrivalAddressTextBox_TextChanged(object sender, EventArgs e)
@@ -104,8 +108,8 @@ namespace Martium.TravelInfo.App.Forms
 
         private void SearchRouteButton_Click(object sender, EventArgs e)
         {
-            _lastDepartureAddress = DepartureAddressTextBox.Text;
-            _lastArrivalAddress = ArrivalAddressTextBox.Text;
+            _lastDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            _lastArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
             ClearPreviousSearchResults();
 
@@ -245,10 +249,15 @@ namespace Martium.TravelInfo.App.Forms
 
         private void EnableSearchRouteButtonIfPossible()
         {
-            bool addressesIsNotEmpty = !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
-                                            && !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
-            bool atLeastOneAddressIsModified = _lastArrivalAddress != ArrivalAddressTextBox.Text
-                                       || _lastDepartureAddress != DepartureAddressTextBox.Text;
+            bool addressesIsNotEmpty = 
+                !string.IsNullOrWhiteSpace(DepartureAddressTextBox.Text) 
+                && 
+                !string.IsNullOrWhiteSpace(ArrivalAddressTextBox.Text);
+
+            bool atLeastOneAddressIsModified = 
+                _lastArrivalAddress != GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel)
+                || 
+                _lastDepartureAddress != GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
             SearchRouteButton.Enabled = addressesIsNotEmpty && atLeastOneAddressIsModified;
         }
@@ -439,18 +448,7 @@ namespace Martium.TravelInfo.App.Forms
         {
             string durationText = string.Empty;
 
-            if (tripDuration.TotalSeconds <= 0)
-            {
-                durationText = durationText.Insert(0, "0 min");
-            } 
-            else if (tripDuration.TotalSeconds > 0 && tripDuration.TotalSeconds < 60)
-            {
-                durationText = durationText.Insert(0, "1 min");
-            }
-            else
-            {
-                durationText = durationText.Insert(0, $"{tripDuration.Minutes} min");
-            }
+            durationText = durationText.Insert(0, $"{tripDuration.Minutes} min");
 
             if (tripDuration.Hours > 0)
             {
