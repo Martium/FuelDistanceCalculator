@@ -29,6 +29,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private string _lastDepartureAddress = null;
         private string _lastArrivalAddress = null;
+        private double _tripDistance = 0;
 
         public TravelInfoForm()
         {
@@ -425,6 +426,9 @@ namespace Martium.TravelInfo.App.Forms
         private void DisplayRouteSummary(RouteInfoSummary routeSummary)
         {
             double routeDistance = routeSummary.TotalDistanceInKm;
+
+            _tripDistance = routeDistance;
+
             double roundRouteDistance = RoundNumber(routeDistance);
 
             string formattedDistance = ConvertToFormattedNumber(roundRouteDistance);
@@ -436,7 +440,10 @@ namespace Martium.TravelInfo.App.Forms
 
         private static string ConvertToFormattedNumber(double number)
         {
-            string formattedNumber = number.ToString(CultureInfo.InvariantCulture);
+            var numberFormatInfo = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+            numberFormatInfo.NumberGroupSeparator = " ";
+
+            string formattedNumber = number.ToString("#,0.00", numberFormatInfo);
 
             return formattedNumber;
         }
@@ -473,10 +480,9 @@ namespace Martium.TravelInfo.App.Forms
             int priceRate = includeReturnPrice ? 2 : 1;
 
             double kmPrice = double.Parse(PricePerKm.Text, CultureInfo.InvariantCulture);
-            double distance = double.Parse(TripDistanceTextBox.Text, CultureInfo.InvariantCulture);
             double additionalDistance = double.Parse(AdditionalDistanceInKmTextBox.Text, CultureInfo.InvariantCulture);
 
-            double result = priceRate * kmPrice * (distance + additionalDistance);
+            double result = priceRate * kmPrice * (_tripDistance + additionalDistance);
 
             return result;
         }
