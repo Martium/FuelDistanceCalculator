@@ -420,7 +420,22 @@ namespace Martium.TravelInfo.App.Forms
 
             TripDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
 
-            TripDurationTextBox.Text = route.TotalDuration.ToString();
+            if (route.TotalDuration.Days > 0)
+            {
+                TripDurationTextBox.Text = route.TotalDuration.ToString("%d") + "d " + route.TotalDuration.ToString("%h") + "h " +  route.TotalDuration.ToString(@"%m") + "min";
+            }
+            else if (route.TotalDuration.Hours > 0)
+            {
+                TripDurationTextBox.Text = route.TotalDuration.ToString("%h") + "h " + route.TotalDuration.ToString(@"%m") + "min";
+            }
+            else if (route.TotalDuration.Minutes > 0)
+            {
+                TripDurationTextBox.Text = route.TotalDuration.ToString(@"%m") + "min";
+            }
+            else
+            {
+                TripDurationTextBox.Text = route.TotalDuration.ToString(@"%m");
+            }
         }
 
         private void SetTripPriceControlsVisibility(bool visible)
