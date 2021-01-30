@@ -91,6 +91,7 @@
     <Compile Include="Forms\TravelInfoForm.Designer.cs">
       <DependentUpon>TravelInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\MapMarkerType.cs" />
     <Compile Include="Models\TravelInfoSettingsModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,7 +126,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Martium.TravelInfo.MapsApiClient\Martium.TravelInfo.MapsApiClient.csproj">
+      <Project>{19808DA2-F578-4309-A3AC-6E05E6457B7B}</Project>
+      <Name>Martium.TravelInfo.MapsApiClient</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

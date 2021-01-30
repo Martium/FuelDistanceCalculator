@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using GMap.NET;
-using GMap.NET.WindowsForms.Markers;
 using ISO3166;
 using Martium.TravelInfo.App.Constants;
 using Martium.TravelInfo.App.Models;
 using Martium.TravelInfo.App.Repositories;
 using Martium.TravelInfo.App.Services;
+using Martium.TravelInfo.MapsApiClient.Contracts;
 
 namespace Martium.TravelInfo.App.Forms
 {
     public partial class TravelInfoForm : Form
     {
         private readonly TravelInfoRepository _travelInfoRepository;
+        private readonly MapsApiClient.MapsApiClient _mapsApiClient;
         private readonly MapService _mapService;
         private readonly MessageDialogService _messageDialogService;
 
@@ -31,6 +32,7 @@ namespace Martium.TravelInfo.App.Forms
             InitializeComponent();
 
             _travelInfoRepository = new TravelInfoRepository();
+            _mapsApiClient = new MapsApiClient.MapsApiClient();
             _mapService = new MapService(Map);
             _messageDialogService = new MessageDialogService();
 
@@ -66,9 +68,9 @@ namespace Martium.TravelInfo.App.Forms
         private void SaveDepartureAddressButton_Click(object sender, EventArgs e)
         {
             string fullAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
-            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
+            LocationInfo departureLocationInfo = _mapsApiClient.GetLocationInfo(fullAddress);
 
-            if (coordinates.HasValue)
+            if (departureLocationInfo != null)
             {
                 Country selectedCountry = GetSelectedCountryByComboBox(DepartureCountryComboBox);
                 _travelInfoSettingsModel.DepartureCountry = selectedCountry.TwoLetterCode;
@@ -104,23 +106,26 @@ namespace Martium.TravelInfo.App.Forms
 
             ClearPreviousSearchResults();
 
-            PointLatLng? departureCoordinates = GetCoordinatesFromAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
-            PointLatLng? arrivalCoordinates = GetCoordinatesFromAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
+            string departureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
+            string arrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            string errorMessage = ValidateRouteCoordinates(departureCoordinates, arrivalCoordinates);
+            LocationInfo departureLocation = _mapsApiClient.GetLocationInfo(departureAddress);
+            LocationInfo arrivalLocation = _mapsApiClient.GetLocationInfo(arrivalAddress);
+
+            string errorMessage = ValidateRouteCoordinates(departureLocation, arrivalLocation);
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
                 ShowRouteSearchError(errorMessage);
                 return;
             }
 
-            MapRoute route = _mapService.GetRoute(departureCoordinates.Value, arrivalCoordinates.Value);
+            RouteInfo route = _mapsApiClient.GetRouteInfo(departureAddress, arrivalAddress);
             if (route != null)
             {
-                DisplayFoundRoute(departureCoordinates.Value, arrivalCoordinates.Value, route);
+                DisplayFoundRoute(departureLocation.Coordinates, arrivalLocation.Coordinates, route.Coordinates);
 
                 SetRouteInfoControlsVisibility(visible: true);
-                DisplayRouteInfo(route);
+                DisplayRouteSummary(route.Summary);
                 CalculateTripCostButton.Enabled = true;
             }
             else
@@ -378,11 +383,11 @@ namespace Martium.TravelInfo.App.Forms
         {
             string fullDepartureAddress = GetFullAddress(DepartureAddressTextBox, DepartureCountryTextLabel);
 
-            PointLatLng? departureCoordinates = _mapService.GetAddressCoordinates(fullDepartureAddress);
+            LocationInfo departureLocationInfo = _mapsApiClient.GetLocationInfo(fullDepartureAddress);
 
-            if (departureCoordinates.HasValue && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
+            if (departureLocationInfo != null && !string.IsNullOrWhiteSpace(_travelInfoSettingsModel.DepartureAddress))
             {
-                _mapService.CreateMapMarker(departureCoordinates.Value, GMarkerGoogleType.red);
+                _mapService.CreateMapMarker(departureLocationInfo.Coordinates, MapMarkerType.DepartureAddress);
                 _mapService.SetMapPositionByAddress(fullDepartureAddress);
             }
             else
@@ -405,13 +410,14 @@ namespace Martium.TravelInfo.App.Forms
             TripDurationTextBox.Visible = visible;
         }
 
-        private void DisplayRouteInfo(MapRoute route)
+        private void DisplayRouteSummary(RouteInfoSummary route)
         {
-            double routeDistance = route.Distance;
+            double routeDistance = route.TotalDistanceInKm;
             double roundRouteDistance = RoundNumber(routeDistance);
 
             TripDistanceTextBox.Text = roundRouteDistance.ToString(CultureInfo.InvariantCulture);
-            TripDurationTextBox.Text = route.Duration;
+
+            TripDurationTextBox.Text = route.TotalDuration.ToString();
         }
 
         private void SetTripPriceControlsVisibility(bool visible)
@@ -441,14 +447,6 @@ namespace Martium.TravelInfo.App.Forms
             return roundToTwoDecimal;
         }
 
-        private PointLatLng? GetCoordinatesFromAddress(TextBox textBox, Label label)
-        {
-            string fullAddress = GetFullAddress(textBox, label);
-            PointLatLng? coordinates = _mapService.GetAddressCoordinates(fullAddress);
-
-            return coordinates;
-        }
-
         private void ClearPreviousSearchResults()
         {
             _mapService.ClearAllRoutesAndMarks();
@@ -458,19 +456,19 @@ namespace Martium.TravelInfo.App.Forms
             DisableButton(SearchRouteButton);
         }
 
-        private string ValidateRouteCoordinates(PointLatLng? departureCoordinates, PointLatLng? arrivalCoordinates)
+        private string ValidateRouteCoordinates(LocationInfo departureLocation, LocationInfo arrivalLocation)
         {
             string errorMessage = null;
 
-            if (!departureCoordinates.HasValue && !arrivalCoordinates.HasValue)
+            if (departureLocation == null && arrivalLocation == null)
             {
                 errorMessage = "Nepavyko rasti išvykimo ir atvykimo adresų! Įveskite kitus adresus.";
             }
-            else if (!departureCoordinates.HasValue)
+            else if (departureLocation == null)
             {
                 errorMessage = "Nepavyko rasti išvykimo adreso! Įveskite kitą adresą.";
             }
-            else if (!arrivalCoordinates.HasValue)
+            else if (arrivalLocation == null)
             {
                 errorMessage = "Nepavyko rasti atvykimo adreso! Įveskite kitą adresą.";
             }
@@ -478,14 +476,14 @@ namespace Martium.TravelInfo.App.Forms
             return errorMessage;
         }
 
-        private void DisplayFoundRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates, MapRoute route)
+        private void DisplayFoundRoute(Coordinates departureCoordinates, Coordinates arrivalCoordinates, List<Coordinates> routePath)
         {
             string fullArrivalAddress = GetFullAddress(ArrivalAddressTextBox, ArrivalCountryTextLabel);
 
-            _mapService.CreateMapMarker(departureCoordinates, GMarkerGoogleType.red);
-            _mapService.CreateMapMarker(arrivalCoordinates, GMarkerGoogleType.green);
+            _mapService.CreateMapMarker(departureCoordinates, MapMarkerType.DepartureAddress);
+            _mapService.CreateMapMarker(arrivalCoordinates, MapMarkerType.ArrivalAddress);
 
-            _mapService.ShowRoute(route);
+            _mapService.DrawRoute(routePath);
             _mapService.SetMapPositionByAddress(fullArrivalAddress);
         }
 

@@ -37,7 +37,13 @@ namespace Martium.TravelInfo.MapsApiClient
             {
                 RouteLeg locationRouteLeg = apiResponse.ResourceSets.First().Resources.First().RouteLegs.First();
 
-                response = MapLocation(locationRouteLeg.StartLocation);
+                LocationInfo mappedResponse = MapLocation(locationRouteLeg.StartLocation);
+
+                if (!(mappedResponse.Address.Locality == null && mappedResponse.Address.AddressLine == null 
+                    && mappedResponse.Address.PostalCode == null && mappedResponse.Address.AdminDistrict == null))
+                {
+                    response = mappedResponse;
+                }
             }
 
             return response;
