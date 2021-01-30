@@ -436,10 +436,7 @@ namespace Martium.TravelInfo.App.Forms
 
         private static string ConvertToFormattedNumber(double number)
         {
-            var numberFormatInfo = (NumberFormatInfo) CultureInfo.InvariantCulture.NumberFormat.Clone();
-            numberFormatInfo.NumberGroupSeparator = " ";
-
-            string formattedNumber = number.ToString("#,0.00", numberFormatInfo);
+            string formattedNumber = number.ToString(CultureInfo.InvariantCulture);
 
             return formattedNumber;
         }
