@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Martium.TravelInfo.MapsApiClient.Contracts;
-using Martium.TravelInfo.MapsApiClient.Contracts.Internal;
+using Martium.TravelInfo.App.Repositories;
 using RestSharp;
+using AddressInfo = Martium.TravelInfo.App.Contracts.AddressInfo;
+using BingMapsApiRouteResponse = Martium.TravelInfo.App.Contracts.Internal.BingMapsApiRouteResponse;
+using Coordinates = Martium.TravelInfo.App.Contracts.Coordinates;
+using LocationInfo = Martium.TravelInfo.App.Contracts.LocationInfo;
+using Resource = Martium.TravelInfo.App.Contracts.Internal.Resource;
+using RouteInfo = Martium.TravelInfo.App.Contracts.RouteInfo;
+using RouteInfoSummary = Martium.TravelInfo.App.Contracts.RouteInfoSummary;
+using RouteLeg = Martium.TravelInfo.App.Contracts.Internal.RouteLeg;
+using RouteLegStartLocation = Martium.TravelInfo.App.Contracts.Internal.RouteLegStartLocation;
+using RoutePath = Martium.TravelInfo.App.Contracts.Internal.RoutePath;
 
-namespace Martium.TravelInfo.MapsApiClient
+namespace Martium.TravelInfo.App.ApiClients
 {
     public class MapsApiClient
     {
-        private readonly TravelInfoSettingsRepository _infoSettingsRepository;
-
         private const string BingMapsApiBaseUrl = "http://dev.virtualearth.net";
         private const string DrivingRouteApiResource = "REST/V1/Routes/Driving";
         private const string ApiKeyValidityCheckAddress = "Kaunas, Lietuva";
@@ -19,7 +26,9 @@ namespace Martium.TravelInfo.MapsApiClient
 
         public MapsApiClient()
         {
-            _bingMapsApiKey = "";  // TODO: get API key from database settings when we will have it in database
+            var travelInfoRepository = new TravelInfoRepository();
+
+            _bingMapsApiKey = travelInfoRepository.GetApiKey();
         }
 
         public bool ValidateBingMapsApiKey(string apiKey)

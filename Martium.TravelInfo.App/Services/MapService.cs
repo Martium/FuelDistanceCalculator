@@ -1,8 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using Martium.TravelInfo.App.Models;
+using Coordinates = Martium.TravelInfo.App.Contracts.Coordinates;
 
 namespace Martium.TravelInfo.App.Services
 {
@@ -33,41 +37,15 @@ namespace Martium.TravelInfo.App.Services
             _map.Overlays.Clear();
         }
 
-        public PointLatLng? GetAddressCoordinates(string fullAddress)
+        public void CreateMapMarker(Coordinates coordinates, MapMarkerType type)
         {
-            PointLatLng? coordinates;
+            var latLng = new PointLatLng(coordinates.Latitude, coordinates.Longitude);
 
-            PointLatLng? foundCoordinates = GMapProviders.OpenStreetMap.GetPoint(fullAddress, out GeoCoderStatusCode status);
+            GMarkerGoogleType markerType = type == MapMarkerType.DepartureAddress 
+                ? GMarkerGoogleType.red 
+                : GMarkerGoogleType.green;
 
-            if (status == GeoCoderStatusCode.OK && foundCoordinates.HasValue)
-            {
-                coordinates = foundCoordinates;
-            }
-            else
-            {
-                coordinates = null;
-            }
-
-            return coordinates;
-        }
-
-        public MapRoute GetRoute(PointLatLng departureCoordinates, PointLatLng arrivalCoordinates)
-        {
-            MapRoute route = null;
-
-            MapRoute routeResponse = OpenStreetMapProvider.Instance.GetRoute(departureCoordinates, arrivalCoordinates, false, false, 14);
-
-            if (routeResponse != null)
-            {
-                route = routeResponse;
-            }
-
-            return route;
-        }
-
-        public void CreateMapMarker(PointLatLng coordinates, GMarkerGoogleType type)
-        {
-            GMapMarker mapMarker = new GMarkerGoogle(coordinates, type);
+            GMapMarker mapMarker = new GMarkerGoogle(latLng, markerType);
             GMapOverlay markers = new GMapOverlay("Markers Overlay");
 
             markers.Markers.Add(mapMarker);
@@ -75,9 +53,14 @@ namespace Martium.TravelInfo.App.Services
             _map.Overlays.Add(markers);
         }
 
-        public void ShowRoute(MapRoute route)
+        public void DrawRoute(List<Coordinates> routePathCoordinates)
         {
-            var gMapRoute = new GMapRoute(route);
+            IEnumerable<PointLatLng> mappedCoordinates =
+                routePathCoordinates.Select(c => new PointLatLng { Lat = c.Latitude, Lng = c.Longitude });
+
+            var routeFromBingMaps = new MapRoute(mappedCoordinates, "Bing Maps Route");
+
+            var gMapRoute = new GMapRoute(routeFromBingMaps);
             var routeOverlay = new GMapOverlay("Route Overlay");
 
             _map.Overlays.Remove(routeOverlay);
