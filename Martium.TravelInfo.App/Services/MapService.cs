@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -19,11 +20,19 @@ namespace Martium.TravelInfo.App.Services
             _map = map;
         }
         public void InitializeMap()
-        { 
+        {
+            FixMapForOlderWindowsVersion();
+
             GMaps.Instance.Mode = AccessMode.ServerOnly; 
             _map.MapProvider = OpenStreetMapProvider.Instance;
             _map.ShowCenter = false;
             _map.DragButton = MouseButtons.Left;
+        }
+
+        private static void FixMapForOlderWindowsVersion()
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         public void SetMapPositionByAddress(string address, double zoomLevel = 14) 
